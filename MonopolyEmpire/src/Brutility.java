@@ -1,7 +1,9 @@
+import javax.swing.Icon;
+
 
 public abstract class Brutility extends Space {
 	
-	private int picture;// ???
+	private Icon picture;// ???
 	protected int buyCost;
 
 }
