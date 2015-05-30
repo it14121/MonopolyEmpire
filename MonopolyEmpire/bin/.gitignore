@@ -2,6 +2,10 @@
 /Brutility.class
 /Card.class
 /FreeParking.class
+/GUI$1.class
+/GUI$2.class
+/GUI$3.class
+/GUI$4.class
 /GUI.class
 /Game.class
 /Go.class
@@ -13,7 +17,3 @@
 /Space.class
 /TowerTax.class
 /Utility.class
-/GUI$1.class
-/GUI$2.class
-/GUI$3.class
-/GUI$4.class

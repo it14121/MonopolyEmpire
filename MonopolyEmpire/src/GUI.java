@@ -26,11 +26,18 @@ public class GUI {
 		mainPanel.setLayout(new GridLayout(4,1));
 		secondaryPanel = new JPanel();
 		
-		newGame = new JButton(new ImageIcon("new.png"));
-	    
-		instructions = new  JButton(new ImageIcon("instructions.png"));
-		highscore = new  JButton(new ImageIcon("high.png"));
-		exit = new  JButton(new ImageIcon("exit.png"));
+		newGame = new  JButton(" New Game");
+		newGame.setBackground(Color.LIGHT_GRAY);
+		newGame.setFont(new Font("Arial", Font.BOLD, 16));
+		instructions = new  JButton("Instructions");
+		instructions.setBackground(Color.LIGHT_GRAY);
+		instructions.setFont(new Font("Arial", Font.BOLD, 16));
+		highscore = new  JButton("Highscore");
+		highscore.setBackground(Color.LIGHT_GRAY);
+		highscore.setFont(new Font("Arial", Font.BOLD, 16));
+		exit = new  JButton("Exit");
+		exit.setBackground(Color.LIGHT_GRAY);
+		exit.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		
 		//Add Action Listeners for the 4 available buttons when you open the game
@@ -66,10 +73,9 @@ public class GUI {
 		ImageIcon pic = new ImageIcon("Background.jpg");
 	    secondaryPanel.add(new JLabel(pic));
 		
-		
 		frame.setLayout(new BorderLayout());
 		frame.add(mainPanel, BorderLayout.CENTER);
-        mainPanel.setBounds(360, 370, 150, 100);
+        mainPanel.setBounds(360, 370, 150, 110);
         mainPanel.setOpaque(true);
         frame.add(secondaryPanel, BorderLayout.CENTER);
         secondaryPanel.setBounds(0, 0, 850, 628);
