@@ -17,6 +17,8 @@ public class GUI {
 	 private JPanel  secondaryPanel;
 	 private JButton newGame, instructions, highscore, exit;
 	 private BufferedImage image;
+	 int pagePointer = 0; //Initialize on first page
+	 final JPanel instructionsPanel = new JPanel();
 	
 	public void createGUI() {
 		
@@ -97,60 +99,114 @@ public class GUI {
 	}
 	
 	private void instructionsActionPerformed(){
-		//Incomplete. Need to fix it so that the instructions appear properly on screen. Arrows should be located near the bottom middle. 
+		
 		//Left/Right will cycle through the available pages.
 		
-		JDialog instructionsDialog;
-		JPanel instructionsPanel;
+		final JDialog instructionsDialog;
+		
+		
+		
 		JLayeredPane instructionsArrowsPanel;
-		JButton leftArrow, rightArrow;
-		int pagePointer;
-		ArrayList<ImageIcon> instructionsImageList = new ArrayList<ImageIcon>();  	
+		GridLayout instructionsArrowGrid;
+		final JButton leftArrow;
+		final JButton rightArrow;
+		
+		final ArrayList<ImageIcon> instructionsImageList = new ArrayList<ImageIcon>();  	
 		
 		
 		instructionsDialog = new JDialog();
-		instructionsPanel = new JPanel();
+		
 		
 		instructionsArrowsPanel = new JLayeredPane();
-		instructionsArrowsPanel.setLayout(new GridLayout(1,2));
+		
+		instructionsArrowGrid = new GridLayout(1,2);
+		instructionsArrowGrid.setHgap(15);
+		instructionsArrowsPanel.setLayout(instructionsArrowGrid);
 		leftArrow = new JButton("Prev");
 		rightArrow = new JButton("Next");
 		instructionsArrowsPanel.add(leftArrow);
 		instructionsArrowsPanel.add(rightArrow);
 		
-		ImageIcon instructionsImage1 = new ImageIcon("Images/Screenshot_1.jpg");
+		leftArrow.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                pagePointer = instructionsArrowActionPerformed(pagePointer, instructionsImageList, evt);
+                
+            }
+            
+        });
 		
+		rightArrow.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	pagePointer = instructionsArrowActionPerformed(pagePointer, instructionsImageList, evt);
+            	
+            }
+        });
+		
+		ImageIcon instructionsImage1 = new ImageIcon("Instructions_1.jpg");		
 		instructionsImageList.add(instructionsImage1);
-		ImageIcon instructionsImage2 = new ImageIcon("Images/Screenshot_2.jpg");
+		ImageIcon instructionsImage2 = new ImageIcon("Instructions_2.jpg");
 		instructionsImageList.add(instructionsImage2);
-		ImageIcon instructionsImage3 = new ImageIcon("Images/Screenshot_3.jpg");
+		ImageIcon instructionsImage3 = new ImageIcon("Instructions_3.jpg");
 		instructionsImageList.add(instructionsImage3);
-		ImageIcon instructionsImage4 = new ImageIcon("Images/Screenshot_4.jpg");
+		ImageIcon instructionsImage4 = new ImageIcon("Instructions_4.jpg");
 		instructionsImageList.add(instructionsImage4);
-		ImageIcon instructionsImage5 = new ImageIcon("Images/Screenshot_5.jpg");
+		ImageIcon instructionsImage5 = new ImageIcon("Instructions_5.jpg");
 		instructionsImageList.add(instructionsImage5);
+		ImageIcon instructionsImage6 = new ImageIcon("Instructions_6.jpg");
+		instructionsImageList.add(instructionsImage6);
 		
-		pagePointer = 0; //Initialize on first page
+		
 		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));			
 		
+		
 		instructionsDialog.setLayout(new BorderLayout());
-		instructionsDialog.add(instructionsPanel, BorderLayout.CENTER);
-		
-		
-		instructionsArrowsPanel.setBounds(360, 370, 150, 100);
-		instructionsArrowsPanel.setOpaque(true);
 		instructionsDialog.add(instructionsArrowsPanel, BorderLayout.CENTER);
-		instructionsArrowsPanel.setBounds(0, 0, 850, 628);
+		
+		
+		instructionsArrowsPanel.setBounds(495,600,150,100);
+		//495,700,150,100
+		instructionsArrowsPanel.setOpaque(true);
+		instructionsDialog.add(instructionsPanel, BorderLayout.CENTER);
+		//instructionsPanel.setBounds(0, 0, 850, 628);
 		
 		instructionsDialog.pack();
 		instructionsDialog.setTitle("Instructions");
+		ImageIcon icon2 = new ImageIcon("info.png");
+		instructionsDialog.setIconImage(icon2.getImage());
 		instructionsDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		instructionsDialog.setVisible(true);
-		instructionsDialog.setPreferredSize(new Dimension(1120, 790));
+		instructionsDialog.setPreferredSize(new Dimension(1120,790));
 
-		//instructionsDialog.setResizable(false);
+		//instructionsDialog.setResizable(true);
 		
 	}
+
+
+
+	private int instructionsArrowActionPerformed(int pagePointer,  ArrayList<ImageIcon> instructionsImageList, ActionEvent evt){
+		
+		if (evt.getActionCommand().equals("Prev")){
+			if (pagePointer > 0 ) { 
+				pagePointer--;					
+			}
+		}
+		else
+			if(pagePointer < 5){
+				pagePointer++;
+			}
+		
+		//Remove the instruction page-image and replace it with the new one
+		//This is a waste when the page is not changed, but is chosen over code repetition
+		instructionsPanel.removeAll();
+		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));		
+		instructionsPanel.revalidate();
+
+		return pagePointer;
+	}
+
+
+
+	
 
 	private void highscoreActionPerformed(){
 	
