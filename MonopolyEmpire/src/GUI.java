@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import javax.imageio.*;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 
 public class GUI {
 	 private JFrame frame;
@@ -98,82 +97,61 @@ public class GUI {
 	}
 	
 	private void instructionsActionPerformed(){
-		//Incomplete. Need to fix it so that the instructions appear properly on screen.
-		//Arrows should be located near the bottom middle. 
+		//Incomplete. Need to fix it so that the instructions appear properly on screen. Arrows should be located near the bottom middle. 
 		//Left/Right will cycle through the available pages.
 		
 		JDialog instructionsDialog;
-		JPanel secondaryPanel;
-		JLayeredPane mainPanel;
-		BasicArrowButton leftArrow, rightArrow;
-		ArrayList<ImageIcon> instructionsImageList = new ArrayList<ImageIcon>(); 
-		final int pagePointer = 0; 	//Initialize on first page
+		JPanel instructionsPanel;
+		JLayeredPane instructionsArrowsPanel;
+		JButton leftArrow, rightArrow;
+		int pagePointer;
+		ArrayList<ImageIcon> instructionsImageList = new ArrayList<ImageIcon>();  	
 		
 		
 		instructionsDialog = new JDialog();
-		secondaryPanel = new JPanel();
+		instructionsPanel = new JPanel();
 		
-		mainPanel = new JLayeredPane();
-		mainPanel.setLayout(new GridLayout(1,2));
-		leftArrow = new BasicArrowButton(BasicArrowButton.WEST);
-		rightArrow = new BasicArrowButton(BasicArrowButton.EAST);
-		leftArrow.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(pagePointer<6)
-					increasePage(pagePointer);			
-			}			
-		});
-		rightArrow.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(pagePointer>0)
-					decreasePage(pagePointer);			
-			}			
-		});
-		mainPanel.add(leftArrow);
-		mainPanel.add(rightArrow);
+		instructionsArrowsPanel = new JLayeredPane();
+		instructionsArrowsPanel.setLayout(new GridLayout(1,2));
+		leftArrow = new JButton("Prev");
+		rightArrow = new JButton("Next");
+		instructionsArrowsPanel.add(leftArrow);
+		instructionsArrowsPanel.add(rightArrow);
 		
-		ImageIcon instructionsImage1 = new ImageIcon("Instructions1.jpg");
+		ImageIcon instructionsImage1 = new ImageIcon("Images/Screenshot_1.jpg");
+		
 		instructionsImageList.add(instructionsImage1);
-		ImageIcon instructionsImage2 = new ImageIcon("Énstructions2.jpg");
+		ImageIcon instructionsImage2 = new ImageIcon("Images/Screenshot_2.jpg");
 		instructionsImageList.add(instructionsImage2);
-		ImageIcon instructionsImage3 = new ImageIcon("Instructions3.jpg");
+		ImageIcon instructionsImage3 = new ImageIcon("Images/Screenshot_3.jpg");
 		instructionsImageList.add(instructionsImage3);
-		ImageIcon instructionsImage4 = new ImageIcon("Instructions4.jpg");
+		ImageIcon instructionsImage4 = new ImageIcon("Images/Screenshot_4.jpg");
 		instructionsImageList.add(instructionsImage4);
-		ImageIcon instructionsImage5 = new ImageIcon("Instructions5.jpg");
+		ImageIcon instructionsImage5 = new ImageIcon("Images/Screenshot_5.jpg");
 		instructionsImageList.add(instructionsImage5);
-		ImageIcon instructionsImage6 = new ImageIcon("Instructions6.jpg");
-		instructionsImageList.add(instructionsImage6);
 		
-		secondaryPanel.add(new JLabel(instructionsImageList.get(pagePointer)));			
+		pagePointer = 0; //Initialize on first page
+		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));			
 		
 		instructionsDialog.setLayout(new BorderLayout());
-		instructionsDialog.add(secondaryPanel, BorderLayout.CENTER);
-		secondaryPanel.setBounds(0, 0, 700, 500);
-		instructionsDialog.add(mainPanel, BorderLayout.PAGE_END);
+		instructionsDialog.add(instructionsPanel, BorderLayout.CENTER);
+		
+		
+		instructionsArrowsPanel.setBounds(360, 370, 150, 100);
+		instructionsArrowsPanel.setOpaque(true);
+		instructionsDialog.add(instructionsArrowsPanel, BorderLayout.CENTER);
+		instructionsArrowsPanel.setBounds(0, 0, 850, 628);
 		
 		instructionsDialog.pack();
 		instructionsDialog.setTitle("Instructions");
 		instructionsDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		instructionsDialog.setVisible(true);
-		instructionsDialog.setSize(750, 510);
-		instructionsDialog.setResizable(false);
+		instructionsDialog.setPreferredSize(new Dimension(1120, 790));
+
+		//instructionsDialog.setResizable(false);
 		
-		ImageIcon icon = new ImageIcon("Info.png");
-		instructionsDialog.setIconImage(icon.getImage());
-		
-	}
-	
-	private void increasePage(int pagePointer){
-		pagePointer++;
 	}
 
-	private void decreasePage(int pagePointer){
-		pagePointer--;
-	}
-	
 	private void highscoreActionPerformed(){
 	
 		JOptionPane.showMessageDialog(frame, "This feature is currently disabled");
