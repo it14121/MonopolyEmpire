@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.*;
 import javax.swing.*;
@@ -114,13 +115,13 @@ public class GUI {
 		
 		
 		//roll.setBackground(Color.RED);
-		//roll.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		//roll.setFont(new Font("Arial", Font.BOLD, 16));
 		
 	    
 		exit.setBackground(Color.LIGHT_GRAY);
-		exit.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		exit.setFont(new Font("Arial", Font.BOLD, 16));
 		nG.setBackground(Color.lightGray);
-		nG.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		nG.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanel.setLayout(new GridLayout(3,1));
 		buttonPanel.add(nG);
 		buttonPanel.add(roll);
@@ -128,9 +129,16 @@ public class GUI {
 		
 		
 		
+		roll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+               rollActionPerformed();
+            }
+        });
+		
 		mainGame.add(boardPanel, BorderLayout.CENTER);
 		mainGame.add(buttonPanel, BorderLayout.LINE_END);
-		mainGame.add(backgroundPanel);
+		mainGame.add(backgroundPanel, BorderLayout.CENTER);
+		
 		mainGame.setPreferredSize(new Dimension(1024, 740));
 		mainGame.pack();
 		
@@ -255,7 +263,6 @@ public class GUI {
 	
 		JOptionPane.showMessageDialog(frame, "This feature is currently disabled");
 		
-		
 	}
 
 	private void exitActionPerformed(){
@@ -264,6 +271,12 @@ public class GUI {
 		if (flag == JOptionPane.YES_OPTION) frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));    	
 		
 	
+	}
+	
+	private void rollActionPerformed(){
+		
+		
+		
 	}
 	/*public class ImagePanel extends JPanel{
 

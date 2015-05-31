@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -17,6 +18,7 @@ public class Card extends Space {
 	private ArrayList<String> empire;
 	private int type;
 	private Random randomizer = new Random();
+	ImageIcon icon = new ImageIcon("Mr.GIF");
 	
 	public void readChance(){
 		try{
@@ -76,11 +78,13 @@ public class Card extends Space {
     public void holdCard(Player p ){
     	if (p.getPosition() == 6 || p.getPosition() == 15 || p.getPosition() == 21 || p.getPosition() == 32){
     		String random = getRandomCard(1);
-    		JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE);
+    		//JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE,icon);
     	}
     	else if(p.getPosition() == 4 || p.getPosition() == 24){
     		String random = getRandomCard(2);
-    		JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE);
+    		//JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE, icon);   	
     	}
     }
     
