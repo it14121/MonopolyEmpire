@@ -96,6 +96,49 @@ public class GUI {
 	private void newGameActionPerformed(){
 		
 		//Not implemented yet
+		final JFrame mainGame = new JFrame();
+		JPanel boardPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
+		ImageIcon dices = new ImageIcon("dices.png");
+		JButton roll = new JButton(dices);
+		JButton exit = new JButton("Exit Game");
+		JButton nG = new JButton("New Game");
+		JPanel backgroundPanel = new JPanel();
+		
+		ImageIcon bP = new ImageIcon("bP.jpg");
+	    backgroundPanel.add(new JLabel(bP));
+	    backgroundPanel.setBounds(0, 0, 1024, 740);
+		ImageIcon board = new ImageIcon("board.jpg");
+	    boardPanel.add(new JLabel(board));
+		boardPanel.setBounds(0, 0, 700, 700);
+		
+		
+		//roll.setBackground(Color.RED);
+		//roll.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		
+	    
+		exit.setBackground(Color.LIGHT_GRAY);
+		exit.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		nG.setBackground(Color.lightGray);
+		nG.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		buttonPanel.setLayout(new GridLayout(3,1));
+		buttonPanel.add(nG);
+		buttonPanel.add(roll);
+		buttonPanel.add(exit);
+		
+		
+		
+		mainGame.add(boardPanel, BorderLayout.CENTER);
+		mainGame.add(buttonPanel, BorderLayout.LINE_END);
+		mainGame.add(backgroundPanel);
+		mainGame.setPreferredSize(new Dimension(1024, 740));
+		mainGame.pack();
+		
+		mainGame.setResizable(false);
+		mainGame.setVisible(true);
+		mainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 	}
 	
 	private void instructionsActionPerformed(){
