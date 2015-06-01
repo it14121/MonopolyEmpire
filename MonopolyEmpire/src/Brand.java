@@ -26,7 +26,7 @@ public class Brand extends Brutility {
 	public ArrayList<Brand> readBrands() {
 		ArrayList<Brand> lines = new ArrayList<Brand>();
 		try{
-			FileReader fileIn = new FileReader(name);
+			FileReader fileIn = new FileReader("Brands.txt");
 			BufferedReader in = new BufferedReader(fileIn);
 			String currentLine;
 			int pos;
