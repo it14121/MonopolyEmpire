@@ -66,8 +66,14 @@ public class Brand extends Brutility {
 		}	
 		return lines;
 	}
-	public Brand returnBrand() {
-		return this;
+	public static Brand returnBrandWithPosition(int pos) {
+		Brand b;
+		for(int i = 0; i<brands.size(); i++) {
+			b = brands.get(i);
+			if(b.getPosition() == pos)
+				return b;
+		}
+		return null;
 	}
 	
 	public boolean hawOwner() {
@@ -84,6 +90,9 @@ public class Brand extends Brutility {
 			System.out.println("Sorry, but player " + p.getCode() + " cannot buy this brand!");
 	}
 	
+	public int getPosition() {
+		return position;
+	}
 	public Player getOwner() {
 		return owner;
 	}

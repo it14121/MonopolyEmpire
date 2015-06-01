@@ -4,13 +4,16 @@ import javax.swing.JLayeredPane;
 public class Game {
 	
 	private ArrayList<Player> players;
-	private ArrayList<Card> cards;
-	private ArrayList<Space> spaces;
 	private Go go;
-	
+	private Brand brand;
+	private Card card;
+	private Utility utility;
 	
 	public Game() {
-		go = new Go();
+		go = new Go(); //Initializing Go
+		brand = new Brand(); //Reading Brands
+		card = new Card(); //Reading Cards
+		utility = new Utility(); //Initializing Utilities
 	}
 	
 	public void playerActOnPosition(Player player) {
@@ -25,7 +28,15 @@ public class Game {
 				position == 20 || position == 22 || position == 23 || position == 25 ||
 				position == 26 || position == 28 || position == 29 || position == 31 ||
 				position == 33 || position == 35) {//Brand
-			
+			Brand brand = Brand.returnBrandWithPosition(position);
+			if(brand.hawOwner()) {
+				if(player.hasMoney(brand.getOwner().getMoney())) {
+					player.decreaseMoney(brand.getOwner().getMoney());
+				}
+				else{
+					// ???
+				}
+			}
 		} else if(position == 12 || position == 30) {//Utility
 			
 		} else if(position == 2 || position == 34) {//TowerTax
