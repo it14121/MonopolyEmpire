@@ -9,11 +9,23 @@ public class Utility extends Brutility {
 		countWater = 4;
 	}
 	
-	public void decreaseElectric() {
+	public static void decreaseElectric() {
 		countElectric--;
 	}
 	
-	public void decreaseWater() {
+	public static void decreaseWater() {
 		countWater--;
+	}
+	
+	public static boolean hasMoreElectric() {
+		if(countElectric>0) 
+			return true;
+		return false;
+	}
+
+	public static boolean hasMoreWater() {
+		if(countWater>0) 
+			return true;
+		return false;
 	}
 }

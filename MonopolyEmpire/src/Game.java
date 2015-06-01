@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 public class Game {
 	
@@ -37,7 +39,36 @@ public class Game {
 					// ???
 				}
 			}
-		} else if(position == 12 || position == 30) {//Utility
+			else {
+				// ???
+			}
+		} else if(position == 12 || position == 30) {//Utility //??????????
+			if(position == 12 && Utility.hasMoreElectric()){
+				if(player.hasMoney(150)) {
+					int optionPane = JOptionPane.showConfirmDialog(null, 
+							"Would you like to buy the electric company?",
+							"Electric Company",
+							JOptionPane.YES_NO_OPTION);
+					if(optionPane == JOptionPane.YES_OPTION){
+						player.decreaseMoney(150);
+						player.getMyScyscraper().addBrutility(new Utility());
+						Utility.decreaseElectric();
+					}
+				}
+			}
+			if(position == 30 && Utility.hasMoreWater()){
+				if(player.hasMoney(150)) {
+					int optionPane = JOptionPane.showConfirmDialog(null, 
+							"Would you like to buy the water works?",
+							"Electric Company",
+							JOptionPane.YES_NO_OPTION);
+					if(optionPane == JOptionPane.YES_OPTION){
+						player.decreaseMoney(150);
+						player.getMyScyscraper().addBrutility(new Utility());
+						Utility.decreaseWater();
+					}
+				}
+			}
 			
 		} else if(position == 2 || position == 34) {//TowerTax
 			
