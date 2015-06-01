@@ -16,14 +16,28 @@ import javax.swing.JOptionPane;
 
 public class Card extends Space {
 	
+	private static ArrayList<String> chance ;
+	private static ArrayList<String> empire;
 	private int type;
-	private String name;
+	private String content;
 	private ImageIcon icon;
 	
-	public Card(int typeOfCard){
+	public Card(){
+		chance = new ArrayList<String>();
+		empire = new ArrayList<String>();
+		chance = readCards("емтокг.txt");
+		empire = readCards("аутойяатояиа.txt");
+	}
+	
+	public Card takeACard(int typeOfCard, String theContent) {
 		type = typeOfCard;
-		name = this.getRandomCard(typeOfCard);
-		icon = new ImageIcon(typeOfCard + ".jpg");		
+		if(typeOfCard == 1 )
+			name = "chance";
+		else
+			name = "empire";
+		content = theContent;
+		icon = new ImageIcon(typeOfCard + ".jpg");
+		return this;
 	}
  
     private ArrayList<String> readCards(String name){
@@ -53,17 +67,16 @@ public class Card extends Space {
     }
     
     
-    public String getRandomCard(int type) {
+    public Card getRandomCard(int type) {
     	ArrayList<String> lines;
-    	String name;
     	if(type == 1)
-    		name = "емтокг.txt";
+    		lines = chance;
     	else
-    		name = "аутойяатояиа.txt";
-    	lines = readCards(name);
+    		lines = empire;
     	Random r = new Random();
 		String randomString = lines.get(r.nextInt(lines.size()));
-		return randomString;
+		Card randomCard = this.takeACard(type, randomString);
+		return randomCard;
     }
     
     public void holdCard(Player p){
@@ -78,16 +91,6 @@ public class Card extends Space {
     	    	p.addCardInHand(this);
     	    } 
     	}
-//    	if (p.getPosition() == 6 || p.getPosition() == 15 || p.getPosition() == 21 || p.getPosition() == 32){
-//    		String random = getRandomCard(1);
-//    		//JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE);
-//            JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE,icon);
-//    	}
-//    	else if(p.getPosition() == 4 || p.getPosition() == 24){
-//    		String random = getRandomCard(2);
-//    		//JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE);
-//    		JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE, icon);   	
-//    	}
     }
     
 }

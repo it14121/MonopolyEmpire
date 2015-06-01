@@ -4,6 +4,13 @@ public class Brand extends Brutility {
 	private String color;
 	private int owner = 0;
 	
+	public Brand(String aColor, String aName, int  aPosition, int aBuyCost) {
+		color = aColor;
+		name = aName;
+		position = aPosition;
+		buyCost = aBuyCost;
+	}
+	
 	public boolean hawOwner() {
 		if(owner == 0)
 			return false;

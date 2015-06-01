@@ -1,6 +1,6 @@
 
 public abstract class  Space {
 	
-	private String name;
-	private int position;
+	protected String name;
+	protected int position;
 }

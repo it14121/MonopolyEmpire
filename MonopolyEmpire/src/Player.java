@@ -9,6 +9,7 @@ public class Player {
 	private int position, previousPosition;
 	private ArrayList<Card> cardsInHand;
 	private boolean inJail;
+	private Go go;
 	
 	public void Player(int aCode, int someMoney, int aPosition) {
 		code = aCode;
@@ -17,10 +18,10 @@ public class Player {
 		position = aPosition;
 		cardsInHand = new ArrayList<Card>();
 		inJail = false;
+		go = new Go();
 	}
 	
 	public void actOnPosition() {
-		Go go = new Go();
 		
 		if(position == 0) {//Go
 			go.passGo(this);
