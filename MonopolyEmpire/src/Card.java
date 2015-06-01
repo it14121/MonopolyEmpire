@@ -9,20 +9,21 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
 public class Card extends Space {
 	
 	private int type;
-	private Random randomizer = new Random();
-	ImageIcon icon = new ImageIcon("Mr.GIF");
+	private String name;
+	private ImageIcon icon;
 	
-	public Card(){
-		
-		readCards("≈Õ‘œÀ«.txt");
-		readCards("¡’‘œ —¡‘œ—…¡.txt");
-		
+	public Card(int typeOfCard){
+		type = typeOfCard;
+		name = this.getRandomCard(typeOfCard);
+		icon = new ImageIcon(typeOfCard + ".jpg");		
 	}
  
     private ArrayList<String> readCards(String name){
@@ -65,17 +66,28 @@ public class Card extends Space {
 		return randomString;
     }
     
-    public void holdCard(Player p ){
-    	if (p.getPosition() == 6 || p.getPosition() == 15 || p.getPosition() == 21 || p.getPosition() == 32){
-    		String random = getRandomCard(1);
-    		//JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE,icon);
+    public void holdCard(Player p){
+    	if(name.contains(" Ò‹ÙÁÛÂ ·ıÙﬁÌ ÙÁÌ Í‹ÒÙ·")) {
+    		JDialog.setDefaultLookAndFeelDecorated(true);
+    	    int response = JOptionPane.showConfirmDialog(null, 
+    	    		"Do you want to continue?", 
+    	    		"Confirm",
+    	    		JOptionPane.YES_NO_OPTION,
+    	    		JOptionPane.QUESTION_MESSAGE);
+    	    if (response == JOptionPane.YES_OPTION) {
+    	    	p.addCardInHand(this);
+    	    } 
     	}
-    	else if(p.getPosition() == 4 || p.getPosition() == 24){
-    		String random = getRandomCard(2);
-    		//JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE);
-    		JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE, icon);   	
-    	}
+//    	if (p.getPosition() == 6 || p.getPosition() == 15 || p.getPosition() == 21 || p.getPosition() == 32){
+//    		String random = getRandomCard(1);
+//    		//JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, random, "Chance Card", JOptionPane.INFORMATION_MESSAGE,icon);
+//    	}
+//    	else if(p.getPosition() == 4 || p.getPosition() == 24){
+//    		String random = getRandomCard(2);
+//    		//JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE);
+//    		JOptionPane.showMessageDialog(null, random, "Empire Card", JOptionPane.INFORMATION_MESSAGE, icon);   	
+//    	}
     }
     
 }

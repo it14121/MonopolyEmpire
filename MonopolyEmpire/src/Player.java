@@ -10,6 +10,10 @@ public class Player {
 	private ArrayList<Card> cardsInHand;
 	private boolean inJail;
 	
+	public void addCardInHand(Card card) {
+		cardsInHand.add(card);
+	}
+	
 	public void addMoney(int m) {
 		money += m;
 	}
