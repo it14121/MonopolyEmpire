@@ -1,15 +1,11 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
-import java.util.Random;
 
-import javax.imageio.*;
 import javax.swing.*;
 
 public class GUI {
@@ -17,7 +13,7 @@ public class GUI {
 	 private JLayeredPane  mainPanel;
 	 private JPanel  secondaryPanel;
 	 private JButton newGame, instructions, highscore, exit;
-	 private BufferedImage image;
+	 
 	 int pagePointer = 0; //Initialize on first page
 	 final JPanel instructionsPanel = new JPanel();
 	
@@ -91,63 +87,24 @@ public class GUI {
 		ImageIcon icon1 = new ImageIcon("Icon.jpg");
 		frame.setIconImage(icon1.getImage());
 		
-		
-	}
+	}	
+
 	
 	private void newGameActionPerformed(){
 		
-		//Not implemented yet
-		final JFrame mainGame = new JFrame();
-		JPanel boardPanel = new JPanel();
-		JPanel buttonPanel = new JPanel();
-		ImageIcon dices = new ImageIcon("dices.png");
-		JButton roll = new JButton(dices);
-		JButton exit = new JButton("Exit Game");
-		JButton nG = new JButton("New Game");
-		JPanel backgroundPanel = new JPanel();
+
 		
-		ImageIcon bP = new ImageIcon("bP.jpg");
-	    backgroundPanel.add(new JLabel(bP));
-	    backgroundPanel.setBounds(0, 0, 1024, 740);
-		ImageIcon board = new ImageIcon("board.jpg");
-	    boardPanel.add(new JLabel(board));
-		boardPanel.setBounds(0, 0, 700, 700);
+		gameGUI game = new gameGUI(); 
+		frame.setVisible(false);
+				
+		 WindowListener listener = new WindowAdapter() {
+		      public void windowClosing(WindowEvent w) {
+		        frame.setVisible(true);;
 		
-		
-		//roll.setBackground(Color.RED);
-		//roll.setFont(new Font("Arial", Font.BOLD, 16));
-		
-	    
-		exit.setBackground(Color.LIGHT_GRAY);
-		exit.setFont(new Font("Arial", Font.BOLD, 16));
-		nG.setBackground(Color.lightGray);
-		nG.setFont(new Font("Arial", Font.BOLD, 16));
-		buttonPanel.setLayout(new GridLayout(3,1));
-		buttonPanel.add(nG);
-		buttonPanel.add(roll);
-		buttonPanel.add(exit);
-		
-		
-		
-		roll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-               rollActionPerformed();
-            }
-        });
-		
-		mainGame.add(boardPanel, BorderLayout.CENTER);
-		mainGame.add(buttonPanel, BorderLayout.LINE_END);
-		mainGame.add(backgroundPanel, BorderLayout.CENTER);
-		
-		mainGame.setPreferredSize(new Dimension(1024, 740));
-		mainGame.pack();
-		
-		mainGame.setResizable(false);
-		mainGame.setVisible(true);
-		mainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-	}
+		      }};
+		      game.setWindowListener(listener);
+		      }
+	
 	
 	private void instructionsActionPerformed(){
 		
@@ -228,7 +185,7 @@ public class GUI {
 		instructionsDialog.setVisible(true);
 		instructionsDialog.setPreferredSize(new Dimension(1120,790));
 
-		//instructionsDialog.setResizable(true);
+		instructionsDialog.setResizable(true);
 		
 	}
 
@@ -273,30 +230,8 @@ public class GUI {
 	
 	}
 	
-	private void rollActionPerformed(){
-		
-		
-		
-	}
-	/*public class ImagePanel extends JPanel{
-
-	    private BufferedImage image;
-
-	    public ImagePanel() {
-	       try {                
-	          image = ImageIO.read(new File("Background.jpg"));
-	       } catch (IOException ex) {
-	            ex.printStackTrace();
-	       }
-	    }
-
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-	        g.drawImage(image, 850, 628, null);            
-	    }
-
-	}*/
+	
+	
 
 	
 		

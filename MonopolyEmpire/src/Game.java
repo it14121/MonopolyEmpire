@@ -10,7 +10,7 @@ public class Game {
 	private JLayeredPane board;
 	
 	public Game() {
-		board = new JLayeredPane();
+		//board = new JLayeredPane();
 	}
 	
 
