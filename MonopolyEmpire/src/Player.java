@@ -6,22 +6,24 @@ public class Player {
 	private int code;
 	private int money;	
 	private Skyscraper myScyscraper;
-	private int position;
+	private int position, previousPosition;
 	private ArrayList<Card> cardsInHand;
 	private boolean inJail;
 	
-	public void Player(int aCode, int someMoney, Skyscraper aScyscraper, int aPosition) {
+	public void Player(int aCode, int someMoney, int aPosition) {
 		code = aCode;
 		money = someMoney;
-		myScyscraper = aScyscraper;
+		myScyscraper = new Skyscraper(0);
 		position = aPosition;
 		cardsInHand = new ArrayList<Card>();
 		inJail = false;
 	}
 	
 	public void actOnPosition() {
+		Go go = new Go();
+		
 		if(position == 0) {//Go
-			
+			go.passGo(this);
 		} else if(position == 1 || position == 3 || position == 5 || position == 7 || 
 				position == 8 || position == 10 || position == 11 || position == 13 ||
 				position ==14 || position == 16 || position == 17 || position == 19 ||
@@ -44,6 +46,11 @@ public class Player {
 		} else if(position == 27) {//GoToJail
 			
 		}
+		
+		// If the player passed GO without standing on GO.
+		if( (previousPosition<=35 && previousPosition>= 25) && (position>=1 && position<=12) )
+			go.passGo(this);
+		previousPosition = position;
 	}
 	
 	public void addCardInHand(Card card) {
@@ -88,4 +95,9 @@ public class Player {
 	public int getMoney() {
 		return money;
 	}
+
+	public Skyscraper getMyScyscraper() {
+		return myScyscraper;
+	}
+	
 }

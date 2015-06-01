@@ -6,6 +6,10 @@ public class Skyscraper {
 	private int height;
 	private ArrayList<Brutility> ownership;
 	
+	public Skyscraper(int aHeight) {
+		height = aHeight;
+	}
+	
 	public boolean isFull() {
 		if(height == 800)
 			return true;
@@ -19,5 +23,9 @@ public class Skyscraper {
 		else {
 			
 		}
+	}
+	 
+	public int getHeight() {
+		return height;
 	}
 }
