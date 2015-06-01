@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 
 public class Card extends Space {
 	
-	private ArrayList<String> chance;
-	private ArrayList<String> empire;
 	private int type;
 	private Random randomizer = new Random();
 	ImageIcon icon = new ImageIcon("Mr.GIF");
@@ -27,8 +25,8 @@ public class Card extends Space {
 		
 	}
  
-    private void readCards(String name){
-    	
+    private ArrayList<String> readCards(String name){
+    	ArrayList<String> lines = new ArrayList<String>();
     	try{
 			FileReader fileIn = new FileReader(name);
 			BufferedReader in = new BufferedReader(fileIn);
@@ -38,7 +36,7 @@ public class Card extends Space {
 				String line1 = currentLine;
 				String line2 = in.readLine();
 				String line3 = in.readLine();
-				empire.add(line1 + System.lineSeparator() + line2 
+				lines.add(line1 + System.lineSeparator() + line2 
 						+ System.lineSeparator() +line3 + System.lineSeparator() );
 			}
 			
@@ -50,15 +48,18 @@ public class Card extends Space {
 		catch(IOException e) {
 			e.printStackTrace();
 		}	
+    	return lines;
     }
     
     
     public String getRandomCard(int type) {
     	ArrayList<String> lines;
+    	String name;
     	if(type == 1)
-    		lines = chance;
+    		name = "емтокг.txt";
     	else
-    		lines = empire;
+    		name = "аутойяатояиа.txt";
+    	lines = readCards(name);
     	Random r = new Random();
 		String randomString = lines.get(r.nextInt(lines.size()));
 		return randomString;

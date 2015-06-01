@@ -6,6 +6,9 @@
 /GUI$2.class
 /GUI$3.class
 /GUI$4.class
+/GUI$5.class
+/GUI$6.class
+/GUI$7.class
 /GUI.class
 /Game.class
 /Go.class
@@ -17,10 +20,6 @@
 /Space.class
 /TowerTax.class
 /Utility.class
-/GUI$5.class
-/GUI$6.class
-/ClickableDice.class
-/GUI$7.class
-/gameGUI.class
 /gameGUI$1.class
 /gameGUI$2.class
+/gameGUI.class
