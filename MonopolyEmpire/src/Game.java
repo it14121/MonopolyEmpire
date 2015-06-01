@@ -45,7 +45,7 @@ public class Game {
 		// If the player passed GO without standing on GO.
 		if( (previousPosition<=35 && previousPosition>= 25) && (position>=1 && position<=12) )
 			go.passGo(player);
-		previousPosition = position;
+		player.setPreviousPosition(position);
 	}
 	
 
