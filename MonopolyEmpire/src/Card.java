@@ -20,31 +20,17 @@ public class Card extends Space {
 	private Random randomizer = new Random();
 	ImageIcon icon = new ImageIcon("Mr.GIF");
 	
-	public void readChance(){
-		try{
-			FileReader fileIn = new FileReader("емтокг.txt");
-			BufferedReader in = new BufferedReader(fileIn);
-			String currentLine;
-			
-			while((currentLine = in.readLine()) != null){
-				String line1 = currentLine;
-				String line2 = in.readLine();
-				String line3 = in.readLine();
-				chance.add(line1 + System.lineSeparator() + line2 
-						+ System.lineSeparator() +line3 + System.lineSeparator() );
-			}
-		}
-		catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
+	public Card(){
+		
+		readCards("емтокг.txt");
+		readCards("аутойяатояиа.txt");
+		
 	}
-	
-    public void readEmpire(){
-		try{
-			FileReader fileIn = new FileReader("аутойяатояиа.txt");
+ 
+    private void readCards(String name){
+    	
+    	try{
+			FileReader fileIn = new FileReader(name);
 			BufferedReader in = new BufferedReader(fileIn);
 			String currentLine;
 			
@@ -55,6 +41,8 @@ public class Card extends Space {
 				empire.add(line1 + System.lineSeparator() + line2 
 						+ System.lineSeparator() +line3 + System.lineSeparator() );
 			}
+			
+			in.close();
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
@@ -63,6 +51,7 @@ public class Card extends Space {
 			e.printStackTrace();
 		}	
     }
+    
     
     public String getRandomCard(int type) {
     	ArrayList<String> lines;
