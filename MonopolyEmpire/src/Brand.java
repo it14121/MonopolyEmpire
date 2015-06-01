@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Brand extends Brutility {
 	
-	private ArrayList<Brand> brands;
+	private static ArrayList<Brand> brands;
 	private String color;
-	private int owner = 0;
+	private Player owner;
 	
 	public Brand() {
 		brands = new ArrayList<Brand>();
@@ -20,6 +20,7 @@ public class Brand extends Brutility {
 		name = aName;
 		position = aPosition;
 		buyCost = aBuyCost;
+		owner = null;
 		return this;
 	}
 	
@@ -70,7 +71,7 @@ public class Brand extends Brutility {
 	}
 	
 	public boolean hawOwner() {
-		if(owner == 0)
+		if(owner == null)
 			return false;
 		else
 			return true;
@@ -78,12 +79,12 @@ public class Brand extends Brutility {
 	
 	public void setOwner(Player p) {
 		if((p.getMoney()>= this.buyCost) )/// ???
-			owner = p.getCode();
+			owner = p;
 		else
 			System.out.println("Sorry, but player " + p.getCode() + " cannot buy this brand!");
 	}
 	
-	public int getOwner() {
+	public Player getOwner() {
 		return owner;
 	}
 	
