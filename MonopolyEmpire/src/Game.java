@@ -11,20 +11,15 @@ public class Game {
 	private Card card;
 	private Utility utility;
 	
-	private Player activePlayer;
-	private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
-	
 	public Game() {
 		go = new Go(); //Initializing Go
 		brand = new Brand(); //Reading Brands
 		card = new Card(); //Reading Cards
 		utility = new Utility(); //Initializing Utilities
 		
-		players = new ArrayList<Player>();
-		for(int i = 0; i < 4; i++){ //Initializing Players
-			players.add(new Player(i));
+		for(int i = 0; i<4; i++){ //Initializing Players
+			new Player(i);
 		}
-		setActivePlayer(activePlayerCode); //Set Player 0 as starting player
 	}
 	
 	public void playerActOnPosition(Player player) {
@@ -100,10 +95,4 @@ public class Game {
 	}
 	
 
-	public void setActivePlayer(int activePlayerCode){
-		activePlayer = players.get(activePlayerCode);
-	}
-	public Player getActivePlayer(){
-		return activePlayer;
-	}
 }
