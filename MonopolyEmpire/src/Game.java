@@ -16,10 +16,13 @@ public class Game {
 		brand = new Brand(); //Reading Brands
 		card = new Card(); //Reading Cards
 		utility = new Utility(); //Initializing Utilities
-		
+
+		players = new ArrayList<Player> ();
 		for(int i = 0; i<4; i++){ //Initializing Players
-			new Player(i);
+			players.add(new Player(i));
+			
 		}
+		
 	}
 	
 	public void playerActOnPosition(Player player) {
