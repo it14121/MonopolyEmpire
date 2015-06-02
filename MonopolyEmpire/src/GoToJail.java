@@ -5,8 +5,7 @@ import javax.swing.JOptionPane;
 public class GoToJail extends Space {
 	
 	public GoToJail(String aName, int aPos) {
-		name = aName;
-		position = aPos;
+		super(aName, aPos);
 	}
 	
 	public void sendToJail(Player p){
