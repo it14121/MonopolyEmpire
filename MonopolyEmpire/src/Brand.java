@@ -10,7 +10,8 @@ public class Brand extends Brutility {
 	private String color;
 	private Player owner;
 	
-	public Brand() {
+	public Brand(String aName, int aPos) {
+		super(aName, aPos);
 		name = "Brand";
 		brands = new ArrayList<Brand>();
 		brands = readBrands();

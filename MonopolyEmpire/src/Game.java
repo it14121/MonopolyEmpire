@@ -16,8 +16,8 @@ public class Game {
 	
 	public Game() {
 		
-		brand = new Brand(); //Reading Brands
-		card = new Card(); //Reading Cards
+		brand = new Brand(null, activePlayerCode); //Reading Brands
+		card = new Card(null, activePlayerCode); //Reading Cards
 		dice = new Dice(); //Create a dice
 
 		players = new ArrayList<Player>();

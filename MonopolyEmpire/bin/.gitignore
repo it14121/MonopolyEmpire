@@ -1,6 +1,7 @@
 /Brand.class
 /Brutility.class
 /Card.class
+/Dice.class
 /FreeParking.class
 /GUI$1.class
 /GUI$2.class
@@ -22,5 +23,5 @@
 /Utility.class
 /gameGUI$1.class
 /gameGUI$2.class
-/gameGUI.class
 /gameGUI$Coordinates.class
+/gameGUI.class
