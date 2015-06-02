@@ -80,7 +80,7 @@ public class Card extends Space {
     }
     
     public void holdCard(Player p){
-    	if(name.contains("Κράτησε αυτήν την κάρτα")) {
+    	if(content.contains("Κράτησε αυτήν την κάρτα")) {
     		JDialog.setDefaultLookAndFeelDecorated(true);
     	    int response = JOptionPane.showConfirmDialog(null, 
     	    		"Do you want to continue?", 

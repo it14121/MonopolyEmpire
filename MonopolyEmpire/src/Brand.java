@@ -84,8 +84,10 @@ public class Brand extends Brutility {
 	}
 	
 	public void setOwner(Player p) {
-		if((p.getMoney()>= this.buyCost) )/// ???
+		if((p.getMoney()>= this.buyCost) ) { /// ???
 			owner = p;
+			p.decreaseMoney(this.buyCost);
+		}
 		else
 			System.out.println("Sorry, but player " + p.getCode() + " cannot buy this brand!");
 	}
