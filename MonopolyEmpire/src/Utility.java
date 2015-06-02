@@ -5,8 +5,7 @@ public class Utility extends Brutility {
 	private static int countWater = 4;
 	
 	public Utility(String aName, int aPos) {
-		name = aName;
-		position = aPos;
+		super(aName, aPos);
 	}
 	
 	public static void decreaseElectric() {
