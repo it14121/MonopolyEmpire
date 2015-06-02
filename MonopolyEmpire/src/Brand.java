@@ -11,6 +11,7 @@ public class Brand extends Brutility {
 	private Player owner;
 	
 	public Brand() {
+		name = "Brand";
 		brands = new ArrayList<Brand>();
 		brands = readBrands();
 	}

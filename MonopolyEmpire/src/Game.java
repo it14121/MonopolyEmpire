@@ -12,14 +12,12 @@ public class Game {
 	private Go go;
 	private Brand brand;
 	private Card card;
-	private Utility utility;
 	private Dice dice;
 	
 	public Game() {
 		
 		brand = new Brand(); //Reading Brands
 		card = new Card(); //Reading Cards
-		utility = new Utility(); //Initializing Utilities
 		dice = new Dice(); //Create a dice
 
 		players = new ArrayList<Player>();
@@ -42,26 +40,29 @@ public class Game {
 				if(i == 1) {
 					ArrayList<Brand> brands = brand.getBrands();
 					for(int j = 0; j<=brands.size(); j++) {
-						spaces.add(brands.get(j));
+						spaces.add(brand.returnBrandWithPosition(j));
 					}
 				}
-				
 			} else if(i == 12 || i == 30) {//Utility 
 				if(i == 12)
-					spaces.add(new Utility());
-				
+					spaces.add(new Utility("ElectricUtility", 12));
+				else
+					spaces.add(new Utility("WaterWorksUtility", 30));			
 			} else if(i == 2 || i == 34) {//TowerTax
-				
+				if(i == 2)
+					spaces.add(new TowerTax("RivalTowerTax", 2));
+				else
+					spaces.add(new TowerTax("TowerTax", 34));
 			} else if(i == 4 || i == 25) {//Empire
 				
 			} else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
 				
 			} else if(i == 9) {//JustVisiting
-				
+				spaces.add(new JustVisiting("JustVisiting", 9));
 			} else if(i == 18) {//FreeParking
-				
+				spaces.add(new FreeParking("FreeParking", 18));
 			} else if(i == 27) {//GoToJail
-				
+				spaces.add(new GoToJail("GoToJail", 18));
 			}
 		}
 	}

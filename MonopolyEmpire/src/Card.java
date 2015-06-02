@@ -29,7 +29,8 @@ public class Card extends Space {
 		empire = readCards("аутойяатояиа.txt");
 	}
 	
-	public Card takeACard(int typeOfCard, String theContent) {
+	public Card takeACard(int typeOfCard, String theContent, int aPos) {
+		position = aPos;
 		type = typeOfCard;
 		if(typeOfCard == 1 )
 			name = "chance";

@@ -1,8 +1,9 @@
 
 public class FreeParking extends Space {
 	
-	public void doYouWantToMove(Player p){
-		
+	public FreeParking(String aName, int aPos) {
+		name = aName;
+		position = aPos;		
 	}
 
 }
