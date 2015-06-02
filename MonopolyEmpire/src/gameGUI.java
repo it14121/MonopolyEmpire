@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,10 +27,18 @@ public class gameGUI extends JFrame{
 	
 	public gameGUI(){
 		
+		//new Game();
 		
 		
-		//Not implemented yet
-		//final JFrame mainGame = new JFrame();
+		
+		createGameGUI();
+		
+		
+		
+	}
+	
+	private void createGameGUI(){
+		
 		mainGame = new JFrame();
 		JPanel boardPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
@@ -75,17 +84,21 @@ public class gameGUI extends JFrame{
 	        	});
 			
 		mainGame.add(boardPanel, BorderLayout.CENTER);
-		mainGame.add(buttonPanel, BorderLayout.LINE_END);
-		mainGame.add(backgroundPanel, BorderLayout.CENTER);
+		mainGame.add(buttonPanel, BorderLayout.LINE_END);		mainGame.add(backgroundPanel, BorderLayout.CENTER);
+		
 				
 		mainGame.setPreferredSize(new Dimension(1024, 740));
 		mainGame.pack();
 			
 		mainGame.setResizable(false);
 		mainGame.setVisible(true);
+		
 		mainGame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
+		
+	
+
 	private void rollActionPerformed(){
 		
 		

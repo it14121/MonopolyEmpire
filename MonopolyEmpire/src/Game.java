@@ -16,6 +16,10 @@ public class Game {
 		brand = new Brand(); //Reading Brands
 		card = new Card(); //Reading Cards
 		utility = new Utility(); //Initializing Utilities
+		
+		for(int i = 0; i<4; i++){ //Initializing Players
+			new Player(i);
+		}
 	}
 	
 	public void playerActOnPosition(Player player) {

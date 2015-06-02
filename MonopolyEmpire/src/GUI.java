@@ -16,6 +16,8 @@ public class GUI {
 	 
 	 int pagePointer = 0; //Initialize on first page
 	 final JPanel instructionsPanel = new JPanel();
+	 
+	
 	
 	public void createGUI() {
 		

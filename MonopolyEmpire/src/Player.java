@@ -9,12 +9,14 @@ public class Player {
 	private int position, previousPosition;
 	private ArrayList<Card> cardsInHand;
 	private boolean inJail;
+	private final static int startingMoney = 100;
+	private final static int startingPosition = 0;
 	
-	public void Player(int aCode, int someMoney, int aPosition) {
+	public Player(int aCode) {
 		code = aCode;
-		money = someMoney;
+		money = startingMoney;
 		myScyscraper = new Skyscraper(0);
-		position = aPosition;
+		position = startingPosition;
 		cardsInHand = new ArrayList<Card>();
 		inJail = false;
 	}
