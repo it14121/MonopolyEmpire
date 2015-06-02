@@ -17,8 +17,8 @@ public class Dice {
 	}
 	
 	public int rollTheDice(Player player, ArrayList<Player> players) {
-		 dice1 = (int)(Math.random()) % 6 + 1;
-		 dice2 = (int)(Math.random()) % 6 + 1;
+		 dice1 = new Random().nextInt(5) + 1;
+		 dice2 = new Random().nextInt(5) + 1;
 		 sneakySwapping = false;
 		 isDouble = false;
 		 
