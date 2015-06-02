@@ -11,6 +11,11 @@ public class Dice {
 	private boolean sneakySwapping;
 	private boolean isDouble;
 	
+	public Dice() {
+		sneakySwapping = false;
+		isDouble = false;
+	}
+	
 	public int rollTheDice(Player player, ArrayList<Player> players) {
 		 dice1 = (int)(Math.random()) % 6 + 1;
 		 dice2 = (int)(Math.random()) % 6 + 1;
@@ -52,7 +57,15 @@ public class Dice {
 		 if( dice1 == dice2) {
 			 isDouble = true;
 		 }
-		 return 0;
+		 return dice1 + dice2;
+	}
+	
+	public boolean isSneakySwapping() {
+		return sneakySwapping;
+	}
+	
+	public boolean isDouble() {
+		return isDouble;
 	}
 
 }
