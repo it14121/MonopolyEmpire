@@ -36,7 +36,21 @@ public class Dice {
 					 input = JOptionPane.showInputDialog("Write the player's code that\n "
 						 		+ "you want to roll a sneaky swap.");
 				 }
+				 int in = Integer.parseInt(input);
+				 Player otherPlayer = null;
+				 for(int i = 0; i<=players.size(); i++) {
+					 if(players.get(i).getCode() == in)
+						 otherPlayer =  players.get(i);
+				 }
+				 Brutility brutilityOfPlayer =  player.getMyScyscraper().getTheTopBrutility();
+				 Brutility brutilityOfOtherPlayer = otherPlayer.getMyScyscraper().getTheTopBrutility();
+				 otherPlayer.getMyScyscraper().addBrutility(brutilityOfPlayer);
+				 player.getMyScyscraper().addBrutility(brutilityOfOtherPlayer);
 			 }
+		 }
+		 
+		 if( dice1 == dice2) {
+			 isDouble = true;
 		 }
 		 return 0;
 	}

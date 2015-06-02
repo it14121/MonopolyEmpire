@@ -28,4 +28,10 @@ public class Skyscraper {
 	public int getHeight() {
 		return height;
 	}
+	
+	public Brutility getTheTopBrutility() {
+		Brutility br = ownership.get(ownership.size())	;
+		ownership.remove(ownership.size());
+		return br;		
+	}
 }
