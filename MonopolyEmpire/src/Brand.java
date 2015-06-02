@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Brand extends Brutility {
 	
-	private ArrayList<Brand> brands;
+	private static ArrayList<Brand> brands;
 	private String color;
 	private Player owner;
 	
