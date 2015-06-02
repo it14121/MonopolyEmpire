@@ -41,7 +41,11 @@ public class Player {
 	}
 	
 	public void addPosition(int pos) {
-		position +=pos;
+		if((position + pos)>35) {
+			int n = position % 35;
+			position = n;
+		} else
+			position +=pos;
 	}
 
 	public int getCode() {
