@@ -22,7 +22,8 @@ public class Card extends Space {
 	private String content;
 	private ImageIcon icon;
 	
-	public Card(){
+	public Card(String aName, int aPos){
+		super(aName, aPos);
 		chance = new ArrayList<String>();
 		empire = new ArrayList<String>();
 		chance = readCards("≈Õ‘œÀ«.txt");
@@ -76,7 +77,7 @@ public class Card extends Space {
     		lines = empire;
     	Random r = new Random();
 		String randomString = lines.get(r.nextInt(lines.size()));
-		Card randomCard = this.takeACard(type, randomString);
+		Card randomCard = this.takeACard(type, randomString, 6);
 		return randomCard;
     }
     

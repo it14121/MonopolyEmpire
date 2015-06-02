@@ -100,7 +100,7 @@ public class Game {
 							JOptionPane.YES_NO_OPTION);
 					if(optionPane == JOptionPane.YES_OPTION){
 						player.decreaseMoney(150);
-						player.getMyScyscraper().addBrutility(new Utility());
+						player.getMyScyscraper().addBrutility(new Utility("Utility", 2));
 						Utility.decreaseElectric();
 					}
 				}
@@ -113,7 +113,7 @@ public class Game {
 							JOptionPane.YES_NO_OPTION);
 					if(optionPane == JOptionPane.YES_OPTION){
 						player.decreaseMoney(150);
-						player.getMyScyscraper().addBrutility(new Utility());
+						player.getMyScyscraper().addBrutility(new Utility("Utility", 2));
 						Utility.decreaseWater();
 					}
 				}
