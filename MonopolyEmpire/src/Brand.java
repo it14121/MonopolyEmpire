@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Brand extends Brutility {
 	
-	private static ArrayList<Brand> brands;
+	private ArrayList<Brand> brands;
 	private String color;
 	private Player owner;
 	
@@ -22,6 +22,10 @@ public class Brand extends Brutility {
 		buyCost = aBuyCost;
 		owner = null;
 		return this;
+	}
+	
+	public  ArrayList<Brand> getBrands() {
+		return brands;
 	}
 	
 	public ArrayList<Brand> readBrands() {
