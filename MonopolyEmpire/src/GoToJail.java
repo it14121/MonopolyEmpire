@@ -4,6 +4,11 @@ import javax.swing.JOptionPane;
 
 public class GoToJail extends Space {
 	
+	public GoToJail(String aName, int aPos) {
+		name = aName;
+		position = aPos;
+	}
+	
 	public void sendToJail(Player p){
 		if (p.getPosition() == 27){
 			ImageIcon jail = new ImageIcon("jail.jpg");

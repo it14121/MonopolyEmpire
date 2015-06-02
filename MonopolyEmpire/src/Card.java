@@ -29,7 +29,8 @@ public class Card extends Space {
 		empire = readCards("ΑΥΤΟΚΡΑΤΟΡΙΑ.txt");
 	}
 	
-	public Card takeACard(int typeOfCard, String theContent) {
+	public Card takeACard(int typeOfCard, String theContent, int aPos) {
+		position = aPos;
 		type = typeOfCard;
 		if(typeOfCard == 1 )
 			name = "chance";
@@ -80,7 +81,7 @@ public class Card extends Space {
     }
     
     public void holdCard(Player p){
-    	if(name.contains("Κράτησε αυτήν την κάρτα")) {
+    	if(content.contains("Κράτησε αυτήν την κάρτα")) {
     		JDialog.setDefaultLookAndFeelDecorated(true);
     	    int response = JOptionPane.showConfirmDialog(null, 
     	    		"Do you want to continue?", 

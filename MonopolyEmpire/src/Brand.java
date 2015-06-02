@@ -6,11 +6,12 @@ import java.util.ArrayList;
 
 public class Brand extends Brutility {
 	
-	private static ArrayList<Brand> brands;
+	private ArrayList<Brand> brands;
 	private String color;
 	private Player owner;
 	
 	public Brand() {
+		name = "Brand";
 		brands = new ArrayList<Brand>();
 		brands = readBrands();
 	}
@@ -22,6 +23,10 @@ public class Brand extends Brutility {
 		buyCost = aBuyCost;
 		owner = null;
 		return this;
+	}
+	
+	public  ArrayList<Brand> getBrands() {
+		return brands;
 	}
 	
 	public ArrayList<Brand> readBrands() {
@@ -84,8 +89,10 @@ public class Brand extends Brutility {
 	}
 	
 	public void setOwner(Player p) {
-		if((p.getMoney()>= this.buyCost) )/// ???
+		if((p.getMoney()>= this.buyCost) ) { /// ???
 			owner = p;
+			p.decreaseMoney(this.buyCost);
+		}
 		else
 			System.out.println("Sorry, but player " + p.getCode() + " cannot buy this brand!");
 	}

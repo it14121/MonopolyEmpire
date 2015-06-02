@@ -6,19 +6,64 @@ import javax.swing.JOptionPane;
 public class Game {
 	
 	private ArrayList<Player> players;
+	private ArrayList<Space> spaces;
+	private Player activePlayer;
+	private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
 	private Go go;
 	private Brand brand;
 	private Card card;
-	private Utility utility;
+	private Dice dice;
 	
 	public Game() {
-		go = new Go(); //Initializing Go
+		
 		brand = new Brand(); //Reading Brands
 		card = new Card(); //Reading Cards
-		utility = new Utility(); //Initializing Utilities
+		dice = new Dice(); //Create a dice
+
+		players = new ArrayList<Player>();
+        for(int i = 0; i < 4; i++){ //Initializing Players
+                players.add(new Player(i));
+        }
+        setActivePlayer(activePlayerCode); //Set Player 0 as starting player
+
 		
-		for(int i = 0; i<4; i++){ //Initializing Players
-			new Player(i);
+		for(int i = 0; i<=35; i++) {
+			if(i == 0) {//Go
+				go = new Go(); //Initializing Go
+				spaces.add(go);
+			} else if(i == 1 || i == 3 || i == 5 || i == 7 || 
+					i == 8 || i == 10 || i == 11 || i == 13 ||
+					i ==14 || i == 16 || i == 17 || i == 19 ||
+					i == 20 || i == 22 || i == 23 || i == 25 ||
+					i == 26 || i == 28 || i == 29 || i == 31 ||
+					i == 33 || i == 35) {//Brand
+				if(i == 1) {
+					ArrayList<Brand> brands = brand.getBrands();
+					for(int j = 0; j<=brands.size(); j++) {
+						spaces.add(brand.returnBrandWithPosition(j));
+					}
+				}
+			} else if(i == 12 || i == 30) {//Utility 
+				if(i == 12)
+					spaces.add(new Utility("ElectricUtility", 12));
+				else
+					spaces.add(new Utility("WaterWorksUtility", 30));			
+			} else if(i == 2 || i == 34) {//TowerTax
+				if(i == 2)
+					spaces.add(new TowerTax("RivalTowerTax", 2));
+				else
+					spaces.add(new TowerTax("TowerTax", 34));
+			} else if(i == 4 || i == 25) {//Empire
+				
+			} else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
+				
+			} else if(i == 9) {//JustVisiting
+				spaces.add(new JustVisiting("JustVisiting", 9));
+			} else if(i == 18) {//FreeParking
+				spaces.add(new FreeParking("FreeParking", 18));
+			} else if(i == 27) {//GoToJail
+				spaces.add(new GoToJail("GoToJail", 18));
+			}
 		}
 	}
 	
@@ -94,5 +139,12 @@ public class Game {
 		player.setPreviousPosition(position);
 	}
 	
+	public void setActivePlayer(int activePlayerCode){
+        activePlayer = players.get(activePlayerCode);
+    }
+	
+	public Player getActivePlayer(){
+        return activePlayer;
+    }
 
 }

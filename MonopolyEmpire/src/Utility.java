@@ -1,12 +1,12 @@
 
 public class Utility extends Brutility {
 	
-	private static int countElectric;
-	private static int countWater;
+	private static int countElectric = 4;
+	private static int countWater = 4;
 	
-	public Utility() {
-		countElectric = 4;
-		countWater = 4;
+	public Utility(String aName, int aPos) {
+		name = aName;
+		position = aPos;
 	}
 	
 	public static void decreaseElectric() {
