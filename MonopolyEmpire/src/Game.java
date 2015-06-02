@@ -80,7 +80,7 @@ public class Game {
 				position == 26 || position == 28 || position == 29 || position == 31 ||
 				position == 33 || position == 35) {//Brand
 			Brand brand = Brand.returnBrandWithPosition(position);
-			if(brand.hawOwner()) {
+			if(brand.hasOwner()) {
 				if(player.hasMoney(brand.getOwner().getMoney())) {
 					player.decreaseMoney(brand.getOwner().getMoney());
 				}

@@ -81,7 +81,7 @@ public class Brand extends Brutility {
 		return null;
 	}
 	
-	public boolean hawOwner() {
+	public boolean hasOwner() {
 		if(owner == null)
 			return false;
 		else
