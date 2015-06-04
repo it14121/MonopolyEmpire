@@ -27,7 +27,7 @@ public class Game {
         }
         setActivePlayer(activePlayerCode); //Set Player 0 as starting player
 
-		
+		int j = 0; //Needed for the brands
 		for(int i = 0; i<=35; i++) {
 			if(i == 0) {//Go
 				go = new Go(); //Initializing Go
@@ -38,11 +38,12 @@ public class Game {
 					i == 20 || i == 22 || i == 23 || i == 25 ||
 					i == 26 || i == 28 || i == 29 || i == 31 ||
 					i == 33 || i == 35) {//Brand
+				ArrayList<Brand> brands = null; 
 				if(i == 1) {
-					ArrayList<Brand> brands = brand.getBrands(); //???
+					brands= brand.getBrands(); //???
 				}
-				
-				
+				spaces.add(brands.get(j));
+				j++;
 			} else if(i == 12 || i == 30) {//Utility 
 				if(i == 12)
 					spaces.add(new Utility("ElectricUtility", 12));
@@ -56,7 +57,7 @@ public class Game {
 			} else if(i == 4 || i == 25) {//Empire
 				spaces.add(new Card("Empire", i));
 			} else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
-				
+				spaces.add(new Card("Chance", i));
 			} else if(i == 9) {//JustVisiting
 				spaces.add(new JustVisiting("JustVisiting", 9));
 			} else if(i == 18) {//FreeParking

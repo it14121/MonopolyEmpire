@@ -14,4 +14,7 @@ public abstract class  Space {
 	public Space returnTheSpaceOnPosition(int aPos, ArrayList<Space> spaces) {
 		return spaces.get(aPos);
 	}
+	
+	public void actOnSpace(Player player, ArrayList<Player> players) {
+	}
 }
