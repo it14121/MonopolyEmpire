@@ -89,6 +89,8 @@ public class gameGUI extends JFrame implements MouseListener{
                                 rollActionPerformed();
                         }
                         });
+                
+                
                
                 exit.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
@@ -140,20 +142,24 @@ public class gameGUI extends JFrame implements MouseListener{
                
                 activePlayer.setPreviousPosition(previousPosition);
                 activePlayer.setPosition(newPosition);
-               
-               
-               
+                            
                 int posDifference = newPosition - previousPosition;
                
-                int posDifferencePerc = -1;
+                System.out.println("\n\n--- NEW ENTRY ---");
+                System.out.println("Previous Position: " + previousPosition);
+                System.out.println("New Position: " + newPosition);
+                System.out.println("Position Difference: " + posDifference);
+                
+                int posDifferencePerc = (newPosition-1) / 9 - (previousPosition-1) / 9;
                 if (posDifference > 0){
-                        posDifferencePerc = (posDifference -1 ) % 9;
+                        
+                        System.out.println("Position Difference Percentage: " + posDifferencePerc);
                         if(posDifferencePerc == 0){ //Η ευθεία δεν έχει αλλάξει
                                 if (newPosition == 0){ // παίκτης γύρισε πίσω στην αφετηρία. Το newPosition γίνεται 0 από 35
                                         moveOnSameLine(3, posDifference); // κι αυτό χαλάει το posDifferencePerc (-1 αντί για 3)
                                 }
                                 else{
-                                        int line = (newPosition - 1) % 9;                              
+                                        int line = (newPosition - 1) / 9;                              
                                         moveOnSameLine(line, posDifference);
                                 }
                                
@@ -161,23 +167,36 @@ public class gameGUI extends JFrame implements MouseListener{
                         else if (posDifferencePerc == 1) {
                                 if (newPosition < 10) newPosition = 35;
                                
-                                int line = (newPosition - 1) % 9;
+                                int line = (newPosition - 1) / 9;
                                 int distanceOnNewLine = newPosition - ((line) * 9);
                                 int distanceOnOldLine = ((line) * 9) - previousPosition;
                                 moveOnDifferentLine(line, distanceOnNewLine, distanceOnOldLine);
                         }
                         else if (posDifferencePerc == 2){
-                                int line = (newPosition - 1) % 9;
+                                int line = (newPosition - 1) / 9;
                                
-                                int prevDist = previousPosition - (previousPosition%9)*9;
-                                int newDist = newPosition - (newPosition%9-1)*9;
+                                int prevDist = previousPosition - (previousPosition / 9)*9;
+                                int newDist = newPosition - (newPosition / 9-1)*9;
                                 int coordDistance = prevDist + newDist;
                                
                                 moveAcrossBoard(line, coordDistance);
                                
                         }
                 }
+                else {
+                	if (newPosition < 10) {
+                		playerPos.get(activePlayer.getCode()).resetX(newPosition);
+                		playerPos.get(activePlayer.getCode()).resetY(0);
+                	
+                	}
+                	else{
+                		playerPos.get(activePlayer.getCode()).resetX(9);
+                		playerPos.get(activePlayer.getCode()).resetY(newPosition-9);
+                	}
+                }
                
+                System.out.println("Players X Coordinate: " + playerPos.get(activePlayer.getCode()).getX());
+                System.out.println("Players Y Coordinate: " + playerPos.get(activePlayer.getCode()).getY());
                 repaint();
         }
         private void moveOnSameLine(int line, int posDifference){
@@ -237,6 +256,8 @@ public class gameGUI extends JFrame implements MouseListener{
                 else System.out.println("ERROR 2");
         }
        
+        
+        
         private void rollActionPerformed(){
                
                
@@ -259,7 +280,9 @@ public class gameGUI extends JFrame implements MouseListener{
                 //playerPos.get(activePlayer).setX();
                
          int roll = (int)(Math.random()*6) + (int)(Math.random()*6); // dice roll
-               
+         
+         while (roll == 0) roll = (int)(Math.random()*6) + (int)(Math.random()*6); // dice roll
+              
                 movePlayer(roll);
             }
  
@@ -307,6 +330,13 @@ public class gameGUI extends JFrame implements MouseListener{
                         posX1 = posX1 - times * 58;
                 }
                
+                public void resetX(int times){
+                	posX1 = posX - times * 58;
+                }
+                
+                public void resetY(int times){
+                	posY1 = posY - times * 58;
+                }
                 public void setY(int times){
                         posY1 = posY1 - times * 58;
                 }
@@ -320,6 +350,8 @@ public class gameGUI extends JFrame implements MouseListener{
                 aPlayerPos.add(new Coordinates(posX, posY + 20));
                 aPlayerPos.add(new Coordinates(posX + 20, posY + 20));
                
+                System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
+                
                 return aPlayerPos;
         }
  
