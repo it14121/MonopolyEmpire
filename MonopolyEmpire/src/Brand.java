@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class Brand extends Brutility {
 	
 	private static ArrayList<Brand> brands;
+	private String brandName;
 	private String color;
 	private Player owner;
 	private int isTheFirstBrand = 0; 
 	
 	public Brand(String aName, int aPos) {
 		super(aName, aPos);
-		name = "Brand";
 		if(isTheFirstBrand == 0) {
 			isTheFirstBrand = 1;
 			brands = new ArrayList<Brand>();
@@ -21,9 +21,10 @@ public class Brand extends Brutility {
 		}
 	}
 	
-	public Brand createABrand(String aColor, String aName, int  aPosition, int aBuyCost) {
+	public Brand createABrand(String aColor, String aBrandName, int  aPosition, int aBuyCost) {
 		color = aColor;
-		name = aName;
+		name = "Brand";
+		brandName = aBrandName;
 		position = aPosition;
 		buyCost = aBuyCost;
 		owner = null;

@@ -18,27 +18,26 @@ public class Card extends Space {
 	
 	private static ArrayList<String> chance ;
 	private static ArrayList<String> empire;
-	private int type;
 	private String content;
 	private ImageIcon icon;
+	private int isTheFirstCard = 0;
 	
 	public Card(String aName, int aPos){
 		super(aName, aPos);
-		chance = new ArrayList<String>();
-		empire = new ArrayList<String>();
-		chance = readCards("емтокг.txt");
-		empire = readCards("аутойяатояиа.txt");
+		if(isTheFirstCard == 0) {
+			isTheFirstCard = 1;
+			chance = new ArrayList<String>();
+			empire = new ArrayList<String>();
+			chance = readCards("емтокг.txt");
+			empire = readCards("аутойяатояиа.txt");
+		}
 	}
 	
-	public Card takeACard(int typeOfCard, String theContent, int aPos) {
+	public Card takeACard(String aName, int aPos, String theContent) {
+		Card card = new Card(aName, aPos);
 		position = aPos;
-		type = typeOfCard;
-		if(typeOfCard == 1 )
-			name = "chance";
-		else
-			name = "empire";
 		content = theContent;
-		icon = new ImageIcon(typeOfCard + ".jpg");
+		icon = new ImageIcon(name + ".jpg");
 		return this;
 	}
  
@@ -69,15 +68,15 @@ public class Card extends Space {
     }
     
     
-    public Card getRandomCard(int type) {
+    public Card getRandomCard(String nameOfCard) {
     	ArrayList<String> lines;
-    	if(type == 1)
+    	if(nameOfCard.equals("Chance"))
     		lines = chance;
     	else
     		lines = empire;
     	Random r = new Random();
 		String randomString = lines.get(r.nextInt(lines.size()));
-		Card randomCard = this.takeACard(type, randomString, 6);
+		Card randomCard = this.takeACard(nameOfCard, 6,randomString);
 		return randomCard;
     }
     

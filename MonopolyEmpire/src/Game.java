@@ -39,11 +39,10 @@ public class Game {
 					i == 26 || i == 28 || i == 29 || i == 31 ||
 					i == 33 || i == 35) {//Brand
 				if(i == 1) {
-					ArrayList<Brand> brands = brand.getBrands();
-					for(int j = 0; j<=brands.size(); j++) {
-						spaces.add(brand.returnBrandWithPosition(j));
-					}
+					ArrayList<Brand> brands = brand.getBrands(); //???
 				}
+				
+				
 			} else if(i == 12 || i == 30) {//Utility 
 				if(i == 12)
 					spaces.add(new Utility("ElectricUtility", 12));
@@ -55,7 +54,7 @@ public class Game {
 				else
 					spaces.add(new TowerTax("TowerTax", 34));
 			} else if(i == 4 || i == 25) {//Empire
-				
+				spaces.add(new Card("Empire", i));
 			} else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
 				
 			} else if(i == 9) {//JustVisiting
