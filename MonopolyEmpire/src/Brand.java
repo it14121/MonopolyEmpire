@@ -9,12 +9,16 @@ public class Brand extends Brutility {
 	private static ArrayList<Brand> brands;
 	private String color;
 	private Player owner;
+	private int isTheFirstBrand = 0; 
 	
 	public Brand(String aName, int aPos) {
 		super(aName, aPos);
 		name = "Brand";
-		brands = new ArrayList<Brand>();
-		brands = readBrands();
+		if(isTheFirstBrand == 0) {
+			isTheFirstBrand = 1;
+			brands = new ArrayList<Brand>();
+			brands = readBrands();
+		}
 	}
 	
 	public Brand createABrand(String aColor, String aName, int  aPosition, int aBuyCost) {
