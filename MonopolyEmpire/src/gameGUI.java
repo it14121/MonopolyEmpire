@@ -26,33 +26,32 @@ public class gameGUI extends JFrame implements MouseListener{
          *
          */
         private static final long serialVersionUID = 1L;
-        private JFrame mainGame;
+       // private JFrame mainGame;
        
         private  int posX = 600;
         private  int posY = 635;
        
-       
-        private Player activePlayer;
-        private ArrayList<Coordinates> playerPos;
+        //private int tempI = 0;
+        private static Player activePlayer;
+        private static ArrayList<Coordinates> playerPos;
+        private static ArrayList<Coordinates> positions;
        
         public gameGUI() {
                
                 Game game = new Game();
-               
-               
-               
+                        
                 playerPos = initializePlayerPos();
-               
+                positions = initializePositions();
                 createGameGUI();
                
                 activePlayer = game.getActivePlayer();
-                System.out.println(activePlayer.getPosition());
+                
                
         }
        
         private void createGameGUI(){
                
-                mainGame = new JFrame();
+                //mainGame = new JFrame();
                 JPanel boardPanel = new JPanel();
                 JPanel buttonPanel = new JPanel();
                 ImageIcon dices = new ImageIcon("dices.png");
@@ -111,7 +110,6 @@ public class gameGUI extends JFrame implements MouseListener{
                        
                 this.setResizable(false);
                 this.setVisible(true);
-                //paint(getGraphics());  //Creates the dots
                
                 this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
@@ -134,127 +132,131 @@ public class gameGUI extends JFrame implements MouseListener{
                 g.setColor(Color.BLUE);
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
-        public void movePlayer(int roll){
-               
-               
-                int previousPosition = activePlayer.getPosition();
-                int newPosition = (previousPosition + roll) % 35;
-               
-                activePlayer.setPreviousPosition(previousPosition);
-                activePlayer.setPosition(newPosition);
-                            
-                int posDifference = newPosition - previousPosition;
-               
-                System.out.println("\n\n--- NEW ENTRY ---");
-                System.out.println("Previous Position: " + previousPosition);
-                System.out.println("New Position: " + newPosition);
-                System.out.println("Position Difference: " + posDifference);
-                
-                int posDifferencePerc = (newPosition-1) / 9 - (previousPosition-1) / 9;
-                if (posDifference > 0){
-                        
-                        System.out.println("Position Difference Percentage: " + posDifferencePerc);
-                        if(posDifferencePerc == 0){ //Η ευθεία δεν έχει αλλάξει
-                                if (newPosition == 0){ // παίκτης γύρισε πίσω στην αφετηρία. Το newPosition γίνεται 0 από 35
-                                        moveOnSameLine(3, posDifference); // κι αυτό χαλάει το posDifferencePerc (-1 αντί για 3)
-                                }
-                                else{
-                                        int line = (newPosition - 1) / 9;                              
-                                        moveOnSameLine(line, posDifference);
-                                }
-                               
-                        }
-                        else if (posDifferencePerc == 1) {
-                                if (newPosition < 10) newPosition = 35;
-                               
-                                int line = (newPosition - 1) / 9;
-                                int distanceOnNewLine = newPosition - ((line) * 9);
-                                int distanceOnOldLine = ((line) * 9) - previousPosition;
-                                moveOnDifferentLine(line, distanceOnNewLine, distanceOnOldLine);
-                        }
-                        else if (posDifferencePerc == 2){
-                                int line = (newPosition - 1) / 9;
-                               
-                                int prevDist = previousPosition - (previousPosition / 9)*9;
-                                int newDist = newPosition - (newPosition / 9-1)*9;
-                                int coordDistance = prevDist + newDist;
-                               
-                                moveAcrossBoard(line, coordDistance);
-                               
-                        }
-                }
-                else {
-                	if (newPosition < 10) {
-                		playerPos.get(activePlayer.getCode()).resetX(newPosition);
-                		playerPos.get(activePlayer.getCode()).resetY(0);
-                	
-                	}
-                	else{
-                		playerPos.get(activePlayer.getCode()).resetX(9);
-                		playerPos.get(activePlayer.getCode()).resetY(newPosition-9);
-                	}
-                }
-               
-                System.out.println("Players X Coordinate: " + playerPos.get(activePlayer.getCode()).getX());
-                System.out.println("Players Y Coordinate: " + playerPos.get(activePlayer.getCode()).getY());
-                repaint();
+        
+        public void movePlayer(){
+        	playerPos.get(activePlayer.getCode()).setCoord(positions.get(activePlayer.getPosition()));
         }
-        private void moveOnSameLine(int line, int posDifference){
-                if (line == 0 ){
-                        playerPos.get(activePlayer.getCode()).setX(posDifference);
-                }
-                else if(line == 1){
-                        playerPos.get(activePlayer.getCode()).setY(posDifference);
-                }
-                else if(line == 2){
-                        playerPos.get(activePlayer.getCode()).setX(-posDifference);
-                }
-                else if(line == 3){
-                        playerPos.get(activePlayer.getCode()).setY(-posDifference);
-                }
-                else System.out.println("ERROR 1 ");
-               
-        }
-        private void moveAcrossBoard(int line, int coordDistance){
-                if (line == 0 ){
-                        playerPos.get(activePlayer.getCode()).setY(9);
-                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
-                }
-                else if(line == 1){
-                        playerPos.get(activePlayer.getCode()).setX(9);
-                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
-                }
-                else if(line == 2){
-                        playerPos.get(activePlayer.getCode()).setY(-9);
-                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
-                }
-                else if(line == 3){
-                        playerPos.get(activePlayer.getCode()).setX(-9);
-                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
-                }
-                else System.out.println("ERROR 1 ");
-        }
-       
-        private void moveOnDifferentLine(int line, int distanceOnNewLine, int distanceOnOldLine){
-               
-                if (line == 0 ){
-                        playerPos.get(activePlayer.getCode()).setX(distanceOnNewLine);
-                        playerPos.get(activePlayer.getCode()).setY(-(36+distanceOnOldLine));
-                }
-                else if(line == 1){            
-                        playerPos.get(activePlayer.getCode()).setY(distanceOnNewLine);
-                        playerPos.get(activePlayer.getCode()).setX(distanceOnOldLine);
-                }
-                else if(line == 2){
-                        playerPos.get(activePlayer.getCode()).setX(-distanceOnNewLine);
-                        playerPos.get(activePlayer.getCode()).setY(distanceOnOldLine);
-                }
-                else if(line == 3){
-                        playerPos.get(activePlayer.getCode()).setY(-distanceOnNewLine);
-                        playerPos.get(activePlayer.getCode()).setX(-distanceOnOldLine);
-                }
-                else System.out.println("ERROR 2");
-        }
+//        public void movePlayer(int roll){
+//               
+//               
+//                int previousPosition = activePlayer.getPosition();
+//                int newPosition = (previousPosition + roll) % 35;
+//               
+//                activePlayer.setPreviousPosition(previousPosition);
+//                activePlayer.setPosition(newPosition);
+//                            
+//                int posDifference = newPosition - previousPosition;
+//               
+//                System.out.println("\n\n--- NEW ENTRY ---");
+//                System.out.println("Previous Position: " + previousPosition);
+//                System.out.println("New Position: " + newPosition);
+//                System.out.println("Position Difference: " + posDifference);
+//                
+//                int posDifferencePerc = (newPosition-1) / 9 - (previousPosition-1) / 9;
+//                if (posDifference > 0){
+//                        
+//                        System.out.println("Position Difference Percentage: " + posDifferencePerc);
+//                        if(posDifferencePerc == 0){ //Η ευθεία δεν έχει αλλάξει
+//                                if (newPosition == 0){ // παίκτης γύρισε πίσω στην αφετηρία. Το newPosition γίνεται 0 από 35
+//                                        moveOnSameLine(3, posDifference); // κι αυτό χαλάει το posDifferencePerc (-1 αντί για 3)
+//                                }
+//                                else{
+//                                        int line = (newPosition - 1) / 9;                              
+//                                        moveOnSameLine(line, posDifference);
+//                                }
+//                               
+//                        }
+//                        else if (posDifferencePerc == 1) {
+//                                if (newPosition < 10) newPosition = 35;
+//                               
+//                                int line = (newPosition - 1) / 9;
+//                                int distanceOnNewLine = newPosition - ((line) * 9);
+//                                int distanceOnOldLine = ((line) * 9) - previousPosition;
+//                                moveOnDifferentLine(line, distanceOnNewLine, distanceOnOldLine);
+//                        }
+//                        else if (posDifferencePerc == 2){
+//                                int line = (newPosition - 1) / 9;
+//                               
+//                                int prevDist = previousPosition - (previousPosition / 9)*9;
+//                                int newDist = newPosition - (newPosition / 9-1)*9;
+//                                int coordDistance = prevDist + newDist;
+//                               
+//                                moveAcrossBoard(line, coordDistance);
+//                               
+//                        }
+//                }
+//                else {
+//                	if (newPosition < 10) {
+//                		playerPos.get(activePlayer.getCode()).resetX(newPosition);
+//                		playerPos.get(activePlayer.getCode()).resetY(0);
+//                	
+//                	}
+//                	else{
+//                		playerPos.get(activePlayer.getCode()).resetX(9);
+//                		playerPos.get(activePlayer.getCode()).resetY(newPosition-9);
+//                	}
+//                }
+//               
+//                System.out.println("Players X Coordinate: " + playerPos.get(activePlayer.getCode()).getX());
+//                System.out.println("Players Y Coordinate: " + playerPos.get(activePlayer.getCode()).getY());
+//                repaint();
+//        }
+//        private void moveOnSameLine(int line, int posDifference){
+//                if (line == 0 ){
+//                        playerPos.get(activePlayer.getCode()).setX(posDifference);
+//                }
+//                else if(line == 1){
+//                        playerPos.get(activePlayer.getCode()).setY(posDifference);
+//                }
+//                else if(line == 2){
+//                        playerPos.get(activePlayer.getCode()).setX(-posDifference);
+//                }
+//                else if(line == 3){
+//                        playerPos.get(activePlayer.getCode()).setY(-posDifference);
+//                }
+//                else System.out.println("ERROR 1 ");
+//               
+//        }
+//        private void moveAcrossBoard(int line, int coordDistance){
+//                if (line == 0 ){
+//                        playerPos.get(activePlayer.getCode()).setY(9);
+//                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
+//                }
+//                else if(line == 1){
+//                        playerPos.get(activePlayer.getCode()).setX(9);
+//                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
+//                }
+//                else if(line == 2){
+//                        playerPos.get(activePlayer.getCode()).setY(-9);
+//                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
+//                }
+//                else if(line == 3){
+//                        playerPos.get(activePlayer.getCode()).setX(-9);
+//                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
+//                }
+//                else System.out.println("ERROR 1 ");
+//        }
+//       
+//        private void moveOnDifferentLine(int line, int distanceOnNewLine, int distanceOnOldLine){
+//               
+//                if (line == 0 ){
+//                        playerPos.get(activePlayer.getCode()).setX(distanceOnNewLine);
+//                        playerPos.get(activePlayer.getCode()).setY(-(36+distanceOnOldLine));
+//                }
+//                else if(line == 1){            
+//                        playerPos.get(activePlayer.getCode()).setY(distanceOnNewLine);
+//                        playerPos.get(activePlayer.getCode()).setX(distanceOnOldLine);
+//                }
+//                else if(line == 2){
+//                        playerPos.get(activePlayer.getCode()).setX(-distanceOnNewLine);
+//                        playerPos.get(activePlayer.getCode()).setY(distanceOnOldLine);
+//                }
+//                else if(line == 3){
+//                        playerPos.get(activePlayer.getCode()).setY(-distanceOnNewLine);
+//                        playerPos.get(activePlayer.getCode()).setX(-distanceOnOldLine);
+//                }
+//                else System.out.println("ERROR 2");
+//        }
        
         
         
@@ -276,14 +278,10 @@ public class gameGUI extends JFrame implements MouseListener{
        
         //For testing purposes only (all mouse functions)
         public void mouseClicked(MouseEvent e) {
-               //System.out.println( e.getLocationOnScreen()) ;
-                //playerPos.get(activePlayer).setX();
-               
-         int roll = (int)(Math.random()*6) + (int)(Math.random()*6); // dice roll
+
+         movePlayer();
+         repaint();
          
-         while (roll == 0) roll = (int)(Math.random()*6) + (int)(Math.random()*6); // dice roll
-              
-                movePlayer(roll);
             }
  
         @Override
@@ -326,19 +324,26 @@ public class gameGUI extends JFrame implements MouseListener{
                         return posY1;
                 }
                
-                public void setX(int times){
-                        posX1 = posX1 - times * 58;
-                }
-               
-                public void resetX(int times){
-                	posX1 = posX - times * 58;
-                }
+//                public void setX(int times){
+//                        posX1 = posX1 - times * 58;
+//                }
+//               
+//               
+//                public void setY(int times){
+//                        posY1 = posY1 - times * 58;
+//                }
+//                
+//                public void resetX(int times){
+//                	posX1 = posX - times * 58;
+//                }
+//                
+//                public void resetY(int times){
+//                	posY1 = posY - times * 58;
+//                }
                 
-                public void resetY(int times){
-                	posY1 = posY - times * 58;
-                }
-                public void setY(int times){
-                        posY1 = posY1 - times * 58;
+                public void setCoord(Coordinates temp){
+                	posX1 = temp.posX1;
+                	posY1 = temp.posY1;
                 }
         }
        
@@ -350,9 +355,44 @@ public class gameGUI extends JFrame implements MouseListener{
                 aPlayerPos.add(new Coordinates(posX, posY + 20));
                 aPlayerPos.add(new Coordinates(posX + 20, posY + 20));
                
-                System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
+                //System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
                 
                 return aPlayerPos;
         }
+        
+        private ArrayList<Coordinates> initializePositions(){
+        	
+        	ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>(35);
+        	int posTENx = posX - 9 * 58; //Position for left side of the board
+        	int posTENy = posY - 9 * 58; //Position for top side of the board
+        	
+//        	for(int i = 0; i<9; i++){
+//        		int tempPos = i * 58;
+//        		aPositions.add(i, new Coordinates(posX - tempPos, posY));
+//        		aPositions.add(i+9, new Coordinates(posTEN, posY - tempPos));
+//        		aPositions.add(i+2*9, new Coordinates(posTEN + tempPos,posTEN));
+//        		aPositions.add(i+3*9, new Coordinates(posX, posTEN + tempPos));
+//        	}
+        	int tempPos;
+        	for(int i = 0; i < 9; i++){
+        		tempPos = i * 58;
+        		aPositions.add(new Coordinates(posX - tempPos, posY));
+        	}
+        	for(int i = 0; i < 9; i++){
+        		tempPos = i * 58;
+        		aPositions.add(new Coordinates(posTENx, posY - tempPos));
+        	}
+        	for(int i = 0; i < 9; i++){
+        		tempPos = i * 58;
+        		aPositions.add(new Coordinates(posTENx + tempPos,posTENy));
+        	}
+        	for(int i = 0; i < 9; i++){
+        		tempPos = i * 58;
+        		aPositions.add(new Coordinates(posX, posTENy + tempPos));
+        	}
+        	return aPositions;
+        }
+        
+        
  
 }
