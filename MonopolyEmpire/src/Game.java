@@ -19,6 +19,7 @@ public class Game {
 		brand = new Brand(null, activePlayerCode); //Reading Brands
 		card = new Card(null, activePlayerCode); //Reading Cards
 		dice = new Dice(); //Create a dice
+		spaces = new ArrayList<Space>(); //Initialize spaces
 
 		players = new ArrayList<Player>();
         for(int i = 0; i < 4; i++){ //Initializing Players
