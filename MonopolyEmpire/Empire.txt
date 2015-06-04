@@ -1,7 +1,7 @@
 1, 1
-(Keep this card secret./nUse it whenever you want.)/nAlter your top billboard with /none of your enemy's top billboard! 
+(Keep this card secret./nUse it whenever you want.)/nAlter your top billboard with /none of your opponent's top billboard! 
 1, 2 Just say no! 
-(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an enemy's action.
+(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an opponent's action.
 1, 3
 (Keep this card secret./nUse it whenever you want.)/nHostile takeover!/n Take the topmost billboard /n of an enemy's skyscraper and /n add it to your skyscraper.
 1, 4 
@@ -17,11 +17,11 @@
 1, 9
 (Keep this card secret./nUse it whenever you want.)/nCrash of the stock market!/nTake the billboards at the top/n of all other players' skyscrapers/n and return them to the board.
 1, 10
-(Keep this card secret./nUse it whenever you want.)/nGo off the deal!/nWhen another player is getting /nready to buy a brand name, play /nthis card and buy it yourself.
+(Keep this card secret./nUse it whenever you want.)/nGo off the deal!/nWhen another player is getting /n ready to buy a brand name, play /n this card and buy it yourself.
 1, 2 Just say no! 
-(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an enemy's action.
+(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an opponent's action.
 1, 2 Just say no! 
-(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an enemy's action.
+(Keep this card secret./nUse it whenever you want.)/nUse this card to stop an opponent's action.
 2, 11
 (Keep this card secret./nUse it in your turn.)/nGet rent when you find yourself /n in the position of the trade name of /n another player. The owner has to pay you/n the value of his own skyscraper.
 1, 12  

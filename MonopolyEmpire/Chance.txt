@@ -1,42 +1,28 @@
-1. Μπόνους ηλιακής ενέργειας!
-(Παίξε αυτήν την κάρτα αμέσως)
-Πάρε μία δωρεάν διαφημιστική πινακίδα της Εταιρείας Ηλεκτρισμού. Πρόσθεσέ την στον ουρανοξύστη σου. Εάν δεν υπάρχουν διαθέσιμες μην κάνεις τίποτα. 
-2. Πρόστιμο για κρυφές συναλλαγές! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Πλήρωσε στην Τράπεζα 200κ.
-3. Βραδιά Καζίνου! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Διάλεξε αντίπαλο. Ρίξτε και οι δύο τα ζάρια. Ο παίκτης με την υψηλότερη ζαριά παίρνει 200κ από την Τράπεζα.
-4. Βγες από τη Φυλακή! 
-(Κράτησε αυτήν την κάρτα μέχρι να σου χρειαστεί)
-Με αυτή την κάρτα μπορείς να βγεις από την φυλακή.
-5. Κέρδισες το βραβείο <<Επιχείρηση της Χρονιάς>>! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Πάρε 400κ από την Τράπεζα.
-6. Παρουσιάζεις το νέο σου website! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Οι πωλήσεις εκτοξεύονται! Πάρε 300κ από την Τράπεζα.
-7. Πήγαινε στη φυλακή για απάτη! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Δεν παίρνεις μετρητά περνώντας από την ΑΦΕΤΗΡΙΑ.
-8. Είναι τα πρώτα γενέθλια της αυτοκρατορίας σου!
-(Παίξε αυτήν την κάρτα αμέσως)
-Όλοι οι παίκτες σου δίνουν 50κ.
-9. Τα κέρδη εκτοξεύονται! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Πήγαινε στην αφετηρία για να πάρεις την αξία του ουρανοξύστη σου σε μετρητά.
-10. Μπόνους ύδρευσης! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Πάρε μια δωρεάν διαφημιστική πινακίδα της Εταιρείας Ύδρευσης και πρόσθεσέ την στον ουρανοξύστη σου. Εάν δεν υπάρχουν διαθέσιμες μην κάνεις τίποτα.
-11. Πήγαινε στη φυλακή! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Δεν παίρνεις μετρητά περνώντας από την ΑΦΕΤΗΡΙA.
-12. Βραδιά Καζίνου!
-(Παίξε αυτήν την κάρτα αμέσως)
-Διάλεξε αντίπαλο. Ρίξτε και οι δύο τα ζάρια. Ο παίκτης με την υψηλότερη ζαριά παίρνει 200κ από την Τράπεζα.
-13. Βιάσου! 
-(Παίξε αυτήν την κάρτα αμέσως για να παίξεις άλλον έναν γύρο)
-Προχώρησε μπροστά έως και πέντε θέσεις με την ιδιωτική σου λιμουζίνα.
-14. Επιτυχημένη διαφημιστική εκστρατεία! 
-(Παίξε αυτήν την κάρτα αμέσως)
-Πάρε 100κ από την Τράπεζα.
+3, 1
+(Play this card immediately)/nSolar Bonus!/n Get one free billboard of Electricity/n Company. Add it to your skyscraper./n If there are no do nothing.
+3, 2
+(Play this card immediately)/nFine for hidden transactions!/n Pay 200K to the Bank.
+3, 3
+(Play this card immediately)/nCasino night!/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+1, 4 
+(Keep this card secret./nUse it whenever you want.)/nGet out of Jail free! 
+3, 5
+(Play this card immediately)/nYou won the prize "Enterprise of the Year"!/n Get 400K from the Bank.
+3, 6
+(Play this card immediately)/nLaunch your new website!/nSales ejected!/n Get 300K from the Bank.
+3, 7
+(Play this card immediately)/nGo to Jail for fraud!/nDo not get cash passing/n from the starting point.
+3, 8
+(Play this card immediately)/nIt is the first birthday of your empire!/n All the other players give you 50K.
+3, 9 
+(Play this card immediately)/nEarnings ejected!/n Go to the starting point /n to get the value of your /n skyscraper in cash.
+3, 10 
+(Play this card immediately)/nWater bonus!/n Get a free billboard Company for /n Water and add it to your skyscraper./n If there are no do nothing.
+3, 11
+(Play this card immediately)/nGo to Jail!/n Do not get cash passing /n from the starting point.
+3, 3
+(Play this card immediately)/nCasino night!/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+3, 12 
+(Play this card immediately)/nHurry up!/nProceed forward up to five places /n with your private limousine.
+3, 13
+(Play this card immediately)/nSuccessful advertising campaign!/n Get 100K from the Bank.
