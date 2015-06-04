@@ -20,7 +20,7 @@ public class Card extends Space {
 	private static ArrayList<String> empire;
 	private String content;
 	private ImageIcon icon;
-	private int isTheFirstCard = 0;
+	private static int isTheFirstCard = 0;
 	
 	public Card(String aName, int aPos){
 		super(aName, aPos);
