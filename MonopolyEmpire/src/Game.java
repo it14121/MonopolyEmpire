@@ -13,7 +13,8 @@ public class Game {
         private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
         private Go go;
         private Brand brand;
-        private Card card;
+        private Empire empire;
+        private Chance chance;
         private Dice dice;
        
         public static final int DICE_YES = -1;
@@ -25,7 +26,8 @@ public class Game {
         public Game() {
                
                 //brand = new Brand(null); //Reading Brands
-                card = new Card(null); //Reading Cards
+                empire = new Empire(null); //Reading Cards
+                chance = new Chance(null);
                 dice = new Dice(); //Create a dice
                 spaces = new ArrayList<Space>(); //Initialize spaces
  
