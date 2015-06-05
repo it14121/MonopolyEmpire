@@ -1,28 +1,42 @@
 3, 1
-(Play this card immediately)/nSolar Bonus!/n Get one free billboard of Electricity/n Company. Add it to your skyscraper./n If there are no do nothing.
+Solar Bonus!
+(Play this card immediately)/n Get one free billboard of Electricity/n Company. Add it to your skyscraper./n If there are no do nothing.
 3, 2
-(Play this card immediately)/nFine for hidden transactions!/n Pay 200K to the Bank.
+Fine for hidden transactions!
+(Play this card immediately)/n Pay 200K to the Bank.
 3, 3
-(Play this card immediately)/nCasino night!/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+Casino night!
+(Play this card immediately)/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
 1, 4 
-(Keep this card secret./nUse it whenever you want.)/nGet out of Jail free! 
+Get out of Jail free!
+(Keep this card secret./nUse it whenever you want.)/nYou are free./n Get out of Jail.
 3, 5
+Enterprise of the Year
 (Play this card immediately)/nYou won the prize "Enterprise of the Year"!/n Get 400K from the Bank.
 3, 6
-(Play this card immediately)/nLaunch your new website!/nSales ejected!/n Get 300K from the Bank.
+Launch your new website!
+(Play this card immediately)/nSales ejected!/n Get 300K from the Bank.
 3, 7
-(Play this card immediately)/nGo to Jail for fraud!/nDo not get cash passing/n from the starting point.
+Go to Jail for fraud!
+(Play this card immediately)/nDo not get cash passing/n from the starting point.
 3, 8
+First birthday!
 (Play this card immediately)/nIt is the first birthday of your empire!/n All the other players give you 50K.
 3, 9 
-(Play this card immediately)/nEarnings ejected!/n Go to the starting point /n to get the value of your /n skyscraper in cash.
+Earnings ejected!
+(Play this card immediately)/n Go to the starting point /n to get the value of your /n skyscraper in cash.
 3, 10 
-(Play this card immediately)/nWater bonus!/n Get a free billboard Company for /n Water and add it to your skyscraper./n If there are no do nothing.
+Water bonus!
+(Play this card immediately)/n Get a free billboard Company for /n Water and add it to your skyscraper./n If there are no do nothing.
 3, 11
-(Play this card immediately)/nGo to Jail!/n Do not get cash passing /n from the starting point.
+Go to Jail!
+(Play this card immediately)/n Do not get cash passing /n from the starting point.
 3, 3
-(Play this card immediately)/nCasino night!/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+Casino night!
+(Play this card immediately)/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
 3, 12 
-(Play this card immediately)/nHurry up!/nProceed forward up to five places /n with your private limousine.
+Hurry up!
+(Play this card immediately)/nProceed forward up to five places /n with your private limousine.
 3, 13
-(Play this card immediately)/nSuccessful advertising campaign!/n Get 100K from the Bank.
+Successful advertising campaign!
+(Play this card immediately)/n Get 100K from the Bank.
