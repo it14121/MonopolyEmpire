@@ -25,3 +25,6 @@
 /gameGUI$2.class
 /gameGUI$Coordinates.class
 /gameGUI.class
+/Card$ActListener.class
+/Game$GameFeedbackListener.class
+/gameGUI$3.class

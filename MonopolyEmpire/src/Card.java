@@ -28,8 +28,8 @@ public class Card extends Space {
 			isTheFirstCard = 1;
 			chance = new ArrayList<String>();
 			empire = new ArrayList<String>();
-			chance = readCards("емтокг.txt");
-			empire = readCards("аутойяатояиа.txt");
+			chance = readCards("Chance.txt");
+			empire = readCards("Empire.txt");
 		}
 	}
 	
@@ -92,6 +92,25 @@ public class Card extends Space {
     	    	p.addCardInHand(this);
     	    } 
     	}
+    }
+    
+    
+    public void act(ActListener actListener){
+    	if(actListener.prompt()){
+    		
+    	}else{
+    		
+    	}
+    	
+    	actListener.ask(1);
+    }
+    public interface ActListener{
+    	public boolean prompt();
+    	
+    	public int ask(int code);
+    		
+    	
+    	
     }
     
 }

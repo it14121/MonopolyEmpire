@@ -1,6 +1,8 @@
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+//import Card.ActListener;
+
 
 public class JustVisiting extends Space {
 	
@@ -17,4 +19,6 @@ public class JustVisiting extends Space {
 		frame.setVisible(true);
 		frame.pack();
 	}
+	
+	
 }

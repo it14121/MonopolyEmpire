@@ -12,15 +12,19 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
  
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+
  
  
-public class gameGUI extends JFrame implements MouseListener{
+public class gameGUI extends JFrame {
        
         /**
          *
@@ -39,12 +43,32 @@ public class gameGUI extends JFrame implements MouseListener{
         public gameGUI() {
                
                 Game game = new Game();
-                        
+                game.setGameFeedbackListener(new Game.GameFeedbackListener() {
+					
+					@Override
+					public void onPlayerMoved(int playerCode, int playerPosition) {
+						// TODO Auto-generated method stub
+						playerMoved(playerCode, playerPosition);
+					}
+					
+					@Override
+					public void moveOnJustVisiting() {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void moveOnBrand() {
+						// TODO Auto-generated method stub
+						
+					}
+				});        
                 playerPos = initializePlayerPos();
                 positions = initializePositions();
                 createGameGUI();
                
-                activePlayer = game.getActivePlayer();
+                //activePlayer = game.getActivePlayer();
+              
                 
                
         }
@@ -98,8 +122,11 @@ public class gameGUI extends JFrame implements MouseListener{
                         });
                
        
-                addMouseListener(this);  //For testing purposes only
-               
+                
+                
+                //Game.ActListener
+                
+                
                 this.add(boardPanel, BorderLayout.CENTER);
                 this.add(buttonPanel, BorderLayout.LINE_END);          
                 this.add(backgroundPanel, BorderLayout.CENTER);
@@ -133,9 +160,7 @@ public class gameGUI extends JFrame implements MouseListener{
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
         
-        public void movePlayer(){
-        	playerPos.get(activePlayer.getCode()).setCoord(positions.get(activePlayer.getPosition()));
-        }
+       
 //        public void movePlayer(int roll){
 //               
 //               
@@ -276,37 +301,7 @@ public class gameGUI extends JFrame implements MouseListener{
                 this.addWindowListener(listener);
         }
        
-        //For testing purposes only (all mouse functions)
-        public void mouseClicked(MouseEvent e) {
-
-         movePlayer();
-         repaint();
-         
-            }
- 
-        @Override
-        public void mouseEntered(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-               
-        }
- 
-        @Override
-        public void mouseExited(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-               
-        }
- 
-        @Override
-        public void mousePressed(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-               
-        }
- 
-        @Override
-        public void mouseReleased(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-               
-        }
+       
        
         private class Coordinates{
                 private int posX1;
@@ -393,6 +388,10 @@ public class gameGUI extends JFrame implements MouseListener{
         	return aPositions;
         }
         
-        
+        public void playerMoved(int playerCode, int playerPosition) {
+			// TODO Auto-generated method stub
+        	playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
+        	repaint();
+		}
  
 }

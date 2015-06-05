@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
+//import Card.ActListener;
+
 public class Game {
 	
 	private ArrayList<Player> players;
@@ -72,6 +74,11 @@ public class Game {
 		int position = player.getPosition();
 		int previousPosition = player.getPreviousPosition();
 		
+		
+		if (spaces.get(0) instanceof Brand){
+			boolean yesorno;
+			
+		}
 		if(position == 0) {//Go
 			go.passGo(player);
 		} else if(position == 1 || position == 3 || position == 5 || position == 7 || 
@@ -138,6 +145,11 @@ public class Game {
 		if( (previousPosition<=35 && previousPosition>= 25) && (position>=1 && position<=12) )
 			go.passGo(player);
 		player.setPreviousPosition(position);
+		
+		
+		
+		
+		
 	}
 	
 	public void setActivePlayer(int activePlayerCode){
@@ -148,4 +160,25 @@ public class Game {
         return activePlayer;
     }
 
+	
+	public void setGameFeedbackListener(GameFeedbackListener listener){
+		gameFeedbackListener = listener;
+	}
+	
+	GameFeedbackListener gameFeedbackListener;
+	
+	public void onPlayerMoved(){
+		gameFeedbackListener.onPlayerMoved(activePlayer.getCode(), activePlayer.getPosition());
+    }
+    public interface GameFeedbackListener{
+    	public void onPlayerMoved(int playerCode, int playerPosition);
+    	
+    	public void moveOnJustVisiting();
+    	
+    	public void moveOnBrand();
+    	
+    		
+    	
+    	
+    }
 }
