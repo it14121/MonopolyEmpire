@@ -16,26 +16,30 @@ import javax.swing.JOptionPane;
  
 public class Card extends Space {
        
-        private static ArrayList<String> chance;
-        private static ArrayList<String> empire;
+        private static ArrayList<String> cards;
+        private String title;
         private String content;
         private ImageIcon icon;
         private static int isTheFirstCard = 0;
+        private int code, typeOfCard;
        
         public Card(String aName){
                 super(aName);
                 if(isTheFirstCard == 0) {
                         isTheFirstCard = 1;
-                        chance = new ArrayList<String>();
-                        empire = new ArrayList<String>();
-                        chance = readCards("Chance.txt");
-                        empire = readCards("Empire.txt");
+                        cards = new ArrayList<String>();
+                        cards = readCards(name + ".txt");
                 }
         }
        
         public Card takeACard(String aName, String theContent) {
                 Card card = new Card(aName);
-//              position = aPos;
+                typeOfCard = Integer.parseInt(theContent.substring(0, theContent.indexOf(",")));
+                theContent = theContent.substring(theContent.indexOf(","), theContent.length());
+                code = Integer.parseInt(theContent.substring(0, theContent.indexOf("/n")));
+                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
+                title = theContent.substring(0, theContent.indexOf("/n"));
+                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
                 content = theContent;
                 icon = new ImageIcon(name + ".jpg");
                 return this;
@@ -69,15 +73,12 @@ public class Card extends Space {
    
    
     public Card getRandomCard(String nameOfCard) {
-        ArrayList<String> lines;
-        if(nameOfCard.equals("Chance"))
-                lines = chance;
-        else
-                lines = empire;
+        ArrayList<String> lines = new ArrayList<String>();
+        lines = cards;
         Random r = new Random();
-                String randomString = lines.get(r.nextInt(lines.size()));
-                Card randomCard = this.takeACard(nameOfCard, randomString);
-                return randomCard;
+        String randomString = lines.get(r.nextInt(lines.size()));
+        Card randomCard = this.takeACard(nameOfCard, randomString);
+        return randomCard;
     }
    
     public void holdCard(Player p){
