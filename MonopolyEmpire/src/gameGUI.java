@@ -52,11 +52,11 @@ public class gameGUI extends JFrame {
        
         public gameGUI() {
                
-                playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
+        	playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
             positions = initializeSpaceGUIpositions();
             createGameGUI();
                
-                Game game = new Game();
+               Game game = new Game();
                game.setGameFeedbackListener(new Game.GameFeedbackListener() {
                                        
                                         @Override

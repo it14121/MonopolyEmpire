@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  
 public class Card extends Space {
        
-        private static ArrayList<String> chance ;
+        private static ArrayList<String> chance;
         private static ArrayList<String> empire;
         private String content;
         private ImageIcon icon;
@@ -95,22 +95,22 @@ public class Card extends Space {
     }
    
    
-    public void act(ActListener actListener){
-        if(actListener.prompt()){
-               
-        }else{
-               
-        }
-       
-        actListener.ask(1);
-    }
-    public interface ActListener{
-        public boolean prompt();
-       
-        public int ask(int code);
-               
-       
-       
-    }
+//    public void act(ActListener actListener){
+//        if(actListener.prompt()){
+//               
+//        }else{
+//               
+//        }
+//       
+//        actListener.ask(1);
+//    }
+//    public interface ActListener{
+//        public boolean prompt();
+//       
+//        public int ask(int code);
+//               
+//       
+//       
+//    }
    
 }

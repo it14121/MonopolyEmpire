@@ -1,27 +1,32 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
  
  
 public class Skyscraper {
        
-        private int height;
-        private ArrayList<Brutility> ownership;
+        private int height = 0;
+        private LinkedList<Brutility> ownership;
+        
+        private static final int MAX_HEIGHT = 800;
        
-        public Skyscraper(int aHeight) {
-                height = aHeight;
+        public Skyscraper() {
+        	ownership = new LinkedList<Brutility>();
+           
         }
        
-        public boolean isFull() {
-                if(height == 800)
-                        return true;
-                else
-                        return false;
+        private boolean isFull() {            
+                return height == MAX_HEIGHT;
+        }
+        
+        private boolean isEmpty(){
+        	return height == 0;
         }
        
-        public void addBrutility(Brutility b) {
-                if(this.isFull())
+        public void addBrutility(Brutility brutility) {
+                if(isFull())
                         System.out.println("Sorry, but your Skyscraper is full.");// ???
                 else {
-                       
+                       ownership.add(brutility);
                 }
         }
          
@@ -29,9 +34,27 @@ public class Skyscraper {
                 return height;
         }
        
-        public Brutility getTheTopBrutility() {
-                Brutility br = ownership.get(ownership.size())  ;
-                ownership.remove(ownership.size());
-                return br;             
+        
+        private Brutility popBrutility() {
+              
+                if(isEmpty()){
+                	System.out.println("The skyscraper is empty.");
+                	return null;
+                }
+                
+                else {
+                	return ownership.pop();
+                }
         }
+        
+        public void diceRollSneakyExchange(Skyscraper otherSkyscraper){
+        	Brutility tempBrutility = popBrutility();
+        	addBrutility(otherSkyscraper.popBrutility());
+        	otherSkyscraper.addBrutility(tempBrutility);
+        	
+        }
+        
+        
+        
+        
 }

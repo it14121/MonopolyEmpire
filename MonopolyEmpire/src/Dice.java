@@ -97,21 +97,4 @@ public class Dice extends Component  {
                 return isDouble;
         }
  
-//       public void act(ActListener actListener){
-//              if(actListener.prompt()){
-//                     
-//              }else{
-//                     
-//              }
-//             
-//              actListener.ask(1);
-//          }
-//          public interface ActListener{
-//              public boolean prompt();
-//             
-//              public int ask(int code);
-//                     
-//             
-//             
-//          }
 }

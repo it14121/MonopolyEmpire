@@ -5,18 +5,18 @@ public class Player {
        
         private int code;
         private int money;     
-        private Skyscraper myScyscraper;
+        private Skyscraper skyscraper;
         private int position, previousPosition;
         private ArrayList<Card> cardsInHand;
         private boolean inJail;
-        private final static int startingMoney = 100;
-        private final static int startingPosition = 0;
+        private final static int STARTING_MONEY = 100;
+        private final static int STARTING_POSITION = 0;
        
         public Player(int aCode) {
                 code = aCode;
-                money = startingMoney;
-                myScyscraper = new Skyscraper(0);
-                position = startingPosition;
+                money = STARTING_MONEY;
+                skyscraper = new Skyscraper();
+                position = STARTING_POSITION;
                 cardsInHand = new ArrayList<Card>();
                 inJail = false;
         }
@@ -44,12 +44,11 @@ public class Player {
                         return true;
         }
        
-        public void addPosition(int pos) {
-                if((position + pos)>35) {
-                        int n = position % 35;
-                        position = n;
-                } else
-                        position +=pos;
+        public void addPosition(int roll) {
+
+                position = position + roll;
+                if (position > 35) position = position % 36;
+                
         }
  
         public int getCode() {
@@ -67,21 +66,16 @@ public class Player {
         public int getMoney() {
                 return money;
         }
+   
  
-        public void setCode(int code) {
-                this.code = code;
+        public void movePlayer(int roll){
+        	previousPosition = position;
+        	addPosition(roll); 
+        }
+        
+        public Skyscraper getSkyscraper() {
+                return skyscraper;
         }
        
-        public void setPosition(int position) {
-                this.position = position;
-        }
- 
-        public void setPreviousPosition(int position) {
-                previousPosition = position;
-        }
- 
-        public Skyscraper getMyScyscraper() {
-                return myScyscraper;
-        }
-       
+        
 }

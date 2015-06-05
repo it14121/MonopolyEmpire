@@ -6,7 +6,7 @@ public class Go extends Space {
         }
        
         public static void passGo(Player player) {
-                player.addMoney(player.getMyScyscraper().getHeight());
+                player.addMoney(player.getSkyscraper().getHeight());
         }
  
 }
