@@ -1,3 +1,5 @@
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -6,10 +8,11 @@ import javax.swing.*;
 //import Card.ActListener;
 
 
-public class Dice {
+public class Dice extends Component  {
 	
 	private int dice1;
 	private int dice2;
+	
 	private boolean sneakySwapping;
 	private boolean isDouble;
 	
@@ -17,11 +20,14 @@ public class Dice {
 	public Dice() {
 //		sneakySwapping = false;
 //		isDouble = false;
+		//-- Preferred size is set, but layout may change it.
+        setPreferredSize(new Dimension(60,60));
 	}
 	
 	public int rollTheDice() {
 		 dice1 = new Random().nextInt(5) + 1;
 		 dice2 = new Random().nextInt(5) + 1;
+		 
 		 sneakySwapping = false;
 		 isDouble = false;
 		 
@@ -65,6 +71,16 @@ public class Dice {
 		 return dice1 + dice2;
 	}
 	
+	
+
+	public int getDice1() {
+		return dice1;
+	}
+
+	public int getDice2() {
+		return dice2;
+	}
+
 	public boolean isSneakySwapping() {
 		return sneakySwapping;
 	}

@@ -3,7 +3,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -12,6 +14,9 @@ import java.util.ArrayList;
  
 
 
+
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,11 +42,18 @@ public class gameGUI extends JFrame {
         //private static Player activePlayer;
         private static ArrayList<Coordinates> playerPos;
         private static ArrayList<Coordinates> positions;
+        
+        private Dice leftDice = new Dice();
+        private Dice rightDice = new Dice();
+        private int faceValue;
+        private int faceLeftValue;
+        private int faceRightValue;
+        private static final int SPOT_DIAM = 9;  // Diameter of spots
        
         public gameGUI() {
                
                 Game game = new Game();
-                game.setGameFeedbackListener(new Game.GameFeedbackListener() {
+               game.setGameFeedbackListener(new Game.GameFeedbackListener() {
 					
 					@Override
 					public void onPlayerMoved(int playerCode, int playerPosition) {
@@ -78,7 +90,7 @@ public class gameGUI extends JFrame {
 				
 					
 				
-				});        
+				});      
                 playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
                 positions = initializeSpaceGUIpositions();
                 createGameGUI();
@@ -94,8 +106,8 @@ public class gameGUI extends JFrame {
                 //mainGame = new JFrame();
                 JPanel boardPanel = new JPanel();
                 JPanel buttonPanel = new JPanel();
-                ImageIcon dices = new ImageIcon("dices.png");
-                JButton roll = new JButton(dices);
+                //ImageIcon dices = new ImageIcon("dices.png");
+                JPanel roll = new JPanel();
                 JButton exit = new JButton("Exit Game");
                 JButton newGameButton = new JButton("New Game");
                 JPanel backgroundPanel = new JPanel();
@@ -107,8 +119,14 @@ public class gameGUI extends JFrame {
                 boardPanel.add(new JLabel(board));
                 boardPanel.setBounds(0, 0, 700, 700);
                        
-
-                       
+                JButton rollButton = new JButton("New Roll");
+                rollButton.setFont(new Font("Sansserif", Font.PLAIN, 24));
+                roll.setLayout(new BorderLayout(5, 5));
+                roll.add(rollButton, BorderLayout.NORTH);
+                roll.add(leftDice , BorderLayout.WEST);
+                roll.add(rightDice, BorderLayout.EAST);
+                
+                roll.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));       
                    
                 exit.setBackground(Color.LIGHT_GRAY);
                 exit.setFont(new Font("Arial", Font.BOLD, 16));
@@ -121,7 +139,7 @@ public class gameGUI extends JFrame {
                        
                        
                        
-                roll.addActionListener(new ActionListener() {
+                rollButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                                 rollActionPerformed();
                         }
@@ -170,6 +188,101 @@ public class gameGUI extends JFrame {
                
                 g.setColor(Color.BLUE);
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
+        }
+        
+        public void setLeftValue() {
+            faceLeftValue = leftDice.getDice1();
+            repaint();    // Value has changed, must repaint
+        }
+        
+        public void setRightValue() {
+            faceRightValue = rightDice.getDice1();
+            repaint();    // Value has changed, must repaint
+        }
+        
+        public void paintComponent(Graphics g) {
+            int w = getWidth();  // Get height and width
+            int h = getHeight();
+            
+            //... Change to Graphic2D for smoother spots.
+            Graphics2D g2 = (Graphics2D)g;  // See note below
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            
+            //... Paint background
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, w, h);
+            g2.setColor(Color.WHITE);
+            
+            g2.drawRect(0, 0, w-1, h-1);  // Draw border
+            
+            
+            
+            switch (faceLeftValue) {
+                case 1:
+                    drawSpot(g2, w/2, h/2);
+                    break;
+                case 3:
+                    drawSpot(g2, w/2, h/2);
+                    // Fall thru to next case
+                case 2:
+                    drawSpot(g2, w/4, h/4);
+                    drawSpot(g2, 3*w/4, 3*h/4);
+                    break;
+                case 5:
+                    drawSpot(g2, w/2, h/2);
+                    // Fall thru to next case
+                case 4:
+                    drawSpot(g2, w/4, h/4);
+                    drawSpot(g2, 3*w/4, 3*h/4);
+                    drawSpot(g2, 3*w/4, h/4);
+                    drawSpot(g2, w/4, 3*h/4);
+                    break;
+                case 6:
+                    drawSpot(g2, w/4, h/4);
+                    drawSpot(g2, 3*w/4, 3*h/4);
+                    drawSpot(g2, 3*w/4, h/4);
+                    drawSpot(g2, w/4, 3*h/4);
+                    drawSpot(g2, w/4, h/2);
+                    drawSpot(g2, 3*w/4, h/2);
+                    break;
+            }
+            
+            switch (faceRightValue) {
+            case 1:
+                drawSpot(g2, w/2, h/2);
+                break;
+            case 3:
+                drawSpot(g2, w/2, h/2);
+                // Fall thru to next case
+            case 2:
+                drawSpot(g2, w/4, h/4);
+                drawSpot(g2, 3*w/4, 3*h/4);
+                break;
+            case 5:
+                drawSpot(g2, w/2, h/2);
+                // Fall thru to next case
+            case 4:
+                drawSpot(g2, w/4, h/4);
+                drawSpot(g2, 3*w/4, 3*h/4);
+                drawSpot(g2, 3*w/4, h/4);
+                drawSpot(g2, w/4, 3*h/4);
+                break;
+            case 6:
+                drawSpot(g2, w/4, h/4);
+                drawSpot(g2, 3*w/4, 3*h/4);
+                drawSpot(g2, 3*w/4, h/4);
+                drawSpot(g2, w/4, 3*h/4);
+                drawSpot(g2, w/4, h/2);
+                drawSpot(g2, 3*w/4, h/2);
+                break;
+        }
+        }
+        
+        private void drawSpot(Graphics2D g2, int x, int y) {
+            g2.fillOval(x-SPOT_DIAM/2, y-SPOT_DIAM/2, SPOT_DIAM, SPOT_DIAM);
+
         }
                 
         

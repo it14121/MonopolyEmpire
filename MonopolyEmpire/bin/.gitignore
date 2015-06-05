@@ -2,6 +2,7 @@
 /Brutility.class
 /Card$ActListener.class
 /Card.class
+/Dice$ActListener.class
 /Dice.class
 /FreeParking.class
 /GUI$1.class
@@ -28,4 +29,3 @@
 /gameGUI$3.class
 /gameGUI$Coordinates.class
 /gameGUI.class
-/Dice$ActListener.class
