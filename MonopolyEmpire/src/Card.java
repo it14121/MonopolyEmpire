@@ -22,8 +22,8 @@ public class Card extends Space {
 	private ImageIcon icon;
 	private static int isTheFirstCard = 0;
 	
-	public Card(String aName, int aPos){
-		super(aName, aPos);
+	public Card(String aName){
+		super(aName);
 		if(isTheFirstCard == 0) {
 			isTheFirstCard = 1;
 			chance = new ArrayList<String>();
@@ -33,9 +33,9 @@ public class Card extends Space {
 		}
 	}
 	
-	public Card takeACard(String aName, int aPos, String theContent) {
-		Card card = new Card(aName, aPos);
-		position = aPos;
+	public Card takeACard(String aName, String theContent) {
+		Card card = new Card(aName);
+//		position = aPos;
 		content = theContent;
 		icon = new ImageIcon(name + ".jpg");
 		return this;
@@ -76,7 +76,7 @@ public class Card extends Space {
     		lines = empire;
     	Random r = new Random();
 		String randomString = lines.get(r.nextInt(lines.size()));
-		Card randomCard = this.takeACard(nameOfCard, 6,randomString);
+		Card randomCard = this.takeACard(nameOfCard, randomString);
 		return randomCard;
     }
     

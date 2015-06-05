@@ -1,5 +1,6 @@
 /Brand.class
 /Brutility.class
+/Card$ActListener.class
 /Card.class
 /Dice.class
 /FreeParking.class
@@ -11,6 +12,7 @@
 /GUI$6.class
 /GUI$7.class
 /GUI.class
+/Game$GameFeedbackListener.class
 /Game.class
 /Go.class
 /GoToJail.class
@@ -23,8 +25,7 @@
 /Utility.class
 /gameGUI$1.class
 /gameGUI$2.class
+/gameGUI$3.class
 /gameGUI$Coordinates.class
 /gameGUI.class
-/Card$ActListener.class
-/Game$GameFeedbackListener.class
-/gameGUI$3.class
+/Dice$ActListener.class

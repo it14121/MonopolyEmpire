@@ -16,10 +16,14 @@ public class Game {
 	private Card card;
 	private Dice dice;
 	
+	public static final int DICE_YES = -1;
+	public static final int DICE_NO = -2;
+	public static final int IS_SNEAKY = -1;
+	
 	public Game() {
 		
-		brand = new Brand(null, activePlayerCode); //Reading Brands
-		card = new Card(null, activePlayerCode); //Reading Cards
+		//brand = new Brand(null); //Reading Brands
+		card = new Card(null); //Reading Cards
 		dice = new Dice(); //Create a dice
 		spaces = new ArrayList<Space>(); //Initialize spaces
 
@@ -48,24 +52,24 @@ public class Game {
 				j++;
 			} else if(i == 12 || i == 30) {//Utility 
 				if(i == 12)
-					spaces.add(new Utility("ElectricUtility", 12));
+					spaces.add(new Utility("ElectricUtility"));
 				else
-					spaces.add(new Utility("WaterWorksUtility", 30));			
+					spaces.add(new Utility("WaterWorksUtility"));			
 			} else if(i == 2 || i == 34) {//TowerTax
 				if(i == 2)
-					spaces.add(new TowerTax("RivalTowerTax", 2));
+					spaces.add(new TowerTax("RivalTowerTax"));
 				else
-					spaces.add(new TowerTax("TowerTax", 34));
+					spaces.add(new TowerTax("TowerTax"));
 			} else if(i == 4 || i == 25) {//Empire
-				spaces.add(new Card("Empire", i));
+				spaces.add(new Card("Empire"));
 			} else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
-				spaces.add(new Card("Chance", i));
+				spaces.add(new Card("Chance"));
 			} else if(i == 9) {//JustVisiting
-				spaces.add(new JustVisiting("JustVisiting", 9));
+				spaces.add(new JustVisiting("JustVisiting"));
 			} else if(i == 18) {//FreeParking
-				spaces.add(new FreeParking("FreeParking", 18));
+				spaces.add(new FreeParking("FreeParking"));
 			} else if(i == 27) {//GoToJail
-				spaces.add(new GoToJail("GoToJail", 18));
+				spaces.add(new GoToJail("GoToJail"));
 			}
 		}
 	}
@@ -108,7 +112,7 @@ public class Game {
 							JOptionPane.YES_NO_OPTION);
 					if(optionPane == JOptionPane.YES_OPTION){
 						player.decreaseMoney(150);
-						player.getMyScyscraper().addBrutility(new Utility("Utility", 2));
+						player.getMyScyscraper().addBrutility(new Utility("Utility"));
 						Utility.decreaseElectric();
 					}
 				}
@@ -121,7 +125,7 @@ public class Game {
 							JOptionPane.YES_NO_OPTION);
 					if(optionPane == JOptionPane.YES_OPTION){
 						player.decreaseMoney(150);
-						player.getMyScyscraper().addBrutility(new Utility("Utility", 2));
+						player.getMyScyscraper().addBrutility(new Utility("Utility"));
 						Utility.decreaseWater();
 					}
 				}
@@ -160,6 +164,39 @@ public class Game {
         return activePlayer;
     }
 
+	private void play(){
+		
+		while(winConditions()){
+			if(activePlayer.isInJail()){
+				
+			}
+			else{
+				int roll = dice.rollTheDice();
+				
+				if(dice.isSneakySwapping()){
+					if(gameFeedbackListener.onDiceRolled(IS_SNEAKY) == Game.DICE_YES){
+						playerCode = diceRolledSneakyIsYES(activePlayer.getCode());
+						
+						
+					}
+					
+				}
+			}
+			
+			
+		}
+		
+		
+	}
+	
+	private int diceRolledSneakyIsYES(int activePlayerCode){
+		int playerCode = -1;
+		d
+	}
+	
+	private boolean winConditions(){ //Need to implement Win Conditions
+		return true;
+	}
 	
 	public void setGameFeedbackListener(GameFeedbackListener listener){
 		gameFeedbackListener = listener;
@@ -170,12 +207,17 @@ public class Game {
 	public void onPlayerMoved(){
 		gameFeedbackListener.onPlayerMoved(activePlayer.getCode(), activePlayer.getPosition());
     }
+	
+	
+	
     public interface GameFeedbackListener{
     	public void onPlayerMoved(int playerCode, int playerPosition);
     	
     	public void moveOnJustVisiting();
     	
-    	public void moveOnBrand();
+    	public void onMovedToBrand();
+    	
+    	public int onDiceRolled(int code);
     	
     		
     	

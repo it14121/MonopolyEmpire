@@ -11,8 +11,8 @@ public class Brand extends Brutility {
 	private String color;
 	private Player owner;
 	
-	public Brand(String aName, int aPos) {
-		super(aName, aPos);
+	public Brand(String aName) {
+		super(aName);
 		if(isTheFirst == 0) {
 			isTheFirst = 1;
 			brands = new ArrayList<Brand>();

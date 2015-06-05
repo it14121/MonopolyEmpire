@@ -5,8 +5,8 @@ public class Utility extends Brutility {
 	private static int countWater;
 	private String utilityName;
 	
-	public Utility(String aName, int aPos) {
-		super(aName, aPos);
+	public Utility(String aName) {
+		super(aName);
 		buyCost = 150;
 		if(isTheFirst == 0) {
 			isTheFirst = 1;  

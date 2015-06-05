@@ -21,6 +21,10 @@ public class Player {
 		inJail = false;
 	}
 	
+	public boolean isInJail() {
+		return inJail;
+	}
+
 	public void addCardInHand(Card card) {
 		cardsInHand.add(card);
 	}

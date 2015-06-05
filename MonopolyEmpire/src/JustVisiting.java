@@ -6,10 +6,10 @@ import javax.swing.JOptionPane;
 
 public class JustVisiting extends Space {
 	
-	public JustVisiting(String aName, int aPos) {
-		super(aName, aPos);
+	public JustVisiting(String aName) {
+		super(aName);
 		name = aName;
-		position = aPos;
+		
 	}
 	
 	public void onJustVisiting() {

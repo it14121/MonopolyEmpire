@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
 
 public class TowerTax extends Space {
 
-	public TowerTax(String aName, int aPos) {
-		super(aName, aPos);
+	public TowerTax(String aName) {
+		super(aName);
 	}
 	
 	public void actOnSpace(Player player, ArrayList<Player> players) {

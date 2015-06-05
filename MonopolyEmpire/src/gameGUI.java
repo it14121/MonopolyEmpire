@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -32,11 +30,11 @@ public class gameGUI extends JFrame {
         private static final long serialVersionUID = 1L;
        // private JFrame mainGame;
        
-        private  int posX = 600;
-        private  int posY = 635;
+        private static final int posX = 600;
+        private static final int posY = 635;
        
         //private int tempI = 0;
-        private static Player activePlayer;
+        //private static Player activePlayer;
         private static ArrayList<Coordinates> playerPos;
         private static ArrayList<Coordinates> positions;
        
@@ -56,15 +54,33 @@ public class gameGUI extends JFrame {
 						// TODO Auto-generated method stub
 						
 					}
-					
+
 					@Override
-					public void moveOnBrand() {
+					public void onMovedToBrand() {
 						// TODO Auto-generated method stub
+						movedOnBrand();
+					}
+
+					@Override
+					public int onDiceRolled(int code) {
+						// TODO Auto-generated method stub
+						// Code 1 for isSeanky = true
+						
+						if(code == Game.IS_SNEAKY) diceRolledSneaky();
+						
 						
 					}
+
+					
+
+					
+
+				
+					
+				
 				});        
-                playerPos = initializePlayerPos();
-                positions = initializePositions();
+                playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
+                positions = initializeSpaceGUIpositions();
                 createGameGUI();
                
                 //activePlayer = game.getActivePlayer();
@@ -91,9 +107,7 @@ public class gameGUI extends JFrame {
                 boardPanel.add(new JLabel(board));
                 boardPanel.setBounds(0, 0, 700, 700);
                        
-                       
-                //roll.setBackground(Color.RED);
-                //roll.setFont(new Font("Arial", Font.BOLD, 16));
+
                        
                    
                 exit.setBackground(Color.LIGHT_GRAY);
@@ -123,8 +137,6 @@ public class gameGUI extends JFrame {
                
        
                 
-                
-                //Game.ActListener
                 
                 
                 this.add(boardPanel, BorderLayout.CENTER);
@@ -159,131 +171,7 @@ public class gameGUI extends JFrame {
                 g.setColor(Color.BLUE);
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
-        
-       
-//        public void movePlayer(int roll){
-//               
-//               
-//                int previousPosition = activePlayer.getPosition();
-//                int newPosition = (previousPosition + roll) % 35;
-//               
-//                activePlayer.setPreviousPosition(previousPosition);
-//                activePlayer.setPosition(newPosition);
-//                            
-//                int posDifference = newPosition - previousPosition;
-//               
-//                System.out.println("\n\n--- NEW ENTRY ---");
-//                System.out.println("Previous Position: " + previousPosition);
-//                System.out.println("New Position: " + newPosition);
-//                System.out.println("Position Difference: " + posDifference);
-//                
-//                int posDifferencePerc = (newPosition-1) / 9 - (previousPosition-1) / 9;
-//                if (posDifference > 0){
-//                        
-//                        System.out.println("Position Difference Percentage: " + posDifferencePerc);
-//                        if(posDifferencePerc == 0){ //Η ευθεία δεν έχει αλλάξει
-//                                if (newPosition == 0){ // παίκτης γύρισε πίσω στην αφετηρία. Το newPosition γίνεται 0 από 35
-//                                        moveOnSameLine(3, posDifference); // κι αυτό χαλάει το posDifferencePerc (-1 αντί για 3)
-//                                }
-//                                else{
-//                                        int line = (newPosition - 1) / 9;                              
-//                                        moveOnSameLine(line, posDifference);
-//                                }
-//                               
-//                        }
-//                        else if (posDifferencePerc == 1) {
-//                                if (newPosition < 10) newPosition = 35;
-//                               
-//                                int line = (newPosition - 1) / 9;
-//                                int distanceOnNewLine = newPosition - ((line) * 9);
-//                                int distanceOnOldLine = ((line) * 9) - previousPosition;
-//                                moveOnDifferentLine(line, distanceOnNewLine, distanceOnOldLine);
-//                        }
-//                        else if (posDifferencePerc == 2){
-//                                int line = (newPosition - 1) / 9;
-//                               
-//                                int prevDist = previousPosition - (previousPosition / 9)*9;
-//                                int newDist = newPosition - (newPosition / 9-1)*9;
-//                                int coordDistance = prevDist + newDist;
-//                               
-//                                moveAcrossBoard(line, coordDistance);
-//                               
-//                        }
-//                }
-//                else {
-//                	if (newPosition < 10) {
-//                		playerPos.get(activePlayer.getCode()).resetX(newPosition);
-//                		playerPos.get(activePlayer.getCode()).resetY(0);
-//                	
-//                	}
-//                	else{
-//                		playerPos.get(activePlayer.getCode()).resetX(9);
-//                		playerPos.get(activePlayer.getCode()).resetY(newPosition-9);
-//                	}
-//                }
-//               
-//                System.out.println("Players X Coordinate: " + playerPos.get(activePlayer.getCode()).getX());
-//                System.out.println("Players Y Coordinate: " + playerPos.get(activePlayer.getCode()).getY());
-//                repaint();
-//        }
-//        private void moveOnSameLine(int line, int posDifference){
-//                if (line == 0 ){
-//                        playerPos.get(activePlayer.getCode()).setX(posDifference);
-//                }
-//                else if(line == 1){
-//                        playerPos.get(activePlayer.getCode()).setY(posDifference);
-//                }
-//                else if(line == 2){
-//                        playerPos.get(activePlayer.getCode()).setX(-posDifference);
-//                }
-//                else if(line == 3){
-//                        playerPos.get(activePlayer.getCode()).setY(-posDifference);
-//                }
-//                else System.out.println("ERROR 1 ");
-//               
-//        }
-//        private void moveAcrossBoard(int line, int coordDistance){
-//                if (line == 0 ){
-//                        playerPos.get(activePlayer.getCode()).setY(9);
-//                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
-//                }
-//                else if(line == 1){
-//                        playerPos.get(activePlayer.getCode()).setX(9);
-//                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
-//                }
-//                else if(line == 2){
-//                        playerPos.get(activePlayer.getCode()).setY(-9);
-//                        playerPos.get(activePlayer.getCode()).setX(coordDistance);
-//                }
-//                else if(line == 3){
-//                        playerPos.get(activePlayer.getCode()).setX(-9);
-//                        playerPos.get(activePlayer.getCode()).setY(coordDistance);
-//                }
-//                else System.out.println("ERROR 1 ");
-//        }
-//       
-//        private void moveOnDifferentLine(int line, int distanceOnNewLine, int distanceOnOldLine){
-//               
-//                if (line == 0 ){
-//                        playerPos.get(activePlayer.getCode()).setX(distanceOnNewLine);
-//                        playerPos.get(activePlayer.getCode()).setY(-(36+distanceOnOldLine));
-//                }
-//                else if(line == 1){            
-//                        playerPos.get(activePlayer.getCode()).setY(distanceOnNewLine);
-//                        playerPos.get(activePlayer.getCode()).setX(distanceOnOldLine);
-//                }
-//                else if(line == 2){
-//                        playerPos.get(activePlayer.getCode()).setX(-distanceOnNewLine);
-//                        playerPos.get(activePlayer.getCode()).setY(distanceOnOldLine);
-//                }
-//                else if(line == 3){
-//                        playerPos.get(activePlayer.getCode()).setY(-distanceOnNewLine);
-//                        playerPos.get(activePlayer.getCode()).setX(-distanceOnOldLine);
-//                }
-//                else System.out.println("ERROR 2");
-//        }
-       
-        
+                
         
         private void rollActionPerformed(){
                
@@ -342,7 +230,7 @@ public class gameGUI extends JFrame {
                 }
         }
        
-        private ArrayList<Coordinates> initializePlayerPos(){
+        private ArrayList<Coordinates> initializePlayerPos(){ //Creates the players on position 0.
                
                 ArrayList<Coordinates> aPlayerPos = new ArrayList<Coordinates>();
                 aPlayerPos.add(new Coordinates(posX, posY));
@@ -355,9 +243,9 @@ public class gameGUI extends JFrame {
                 return aPlayerPos;
         }
         
-        private ArrayList<Coordinates> initializePositions(){
+        private ArrayList<Coordinates> initializeSpaceGUIpositions(){ //Creates a list with the Coordinates for each Space 
         	
-        	ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>(35);
+        	ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>();
         	int posTENx = posX - 9 * 58; //Position for left side of the board
         	int posTENy = posY - 9 * 58; //Position for top side of the board
         	
@@ -388,10 +276,39 @@ public class gameGUI extends JFrame {
         	return aPositions;
         }
         
-        public void playerMoved(int playerCode, int playerPosition) {
+        public void playerMoved(int playerCode, int playerPosition) { //Moves the player's dot to his new position
 			// TODO Auto-generated method stub
         	playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
         	repaint();
 		}
+        
+        private int diceRolledSneaky(){
+        
+        	int optionPane = JOptionPane.showConfirmDialog(null, 
+					 "Do you want to roll a sneaky swap?", 
+					 "Message", 
+					 JOptionPane.QUESTION_MESSAGE, 
+					 JOptionPane.YES_NO_OPTION);
+			 if(optionPane == JOptionPane.YES_OPTION){
+				 return Game.DICE_YES;
+			 }
+			 else{
+				 return Game.DICE_NO;
+			 }
+			 
+			 
+        }
+        
+        
+        private int diceRolledSneakyIsYES(){
+        	return Integer.parseInt(JOptionPane.showInputDialog(null, "Choose a player to swap with other than yourself", "Message", JOptionPane.PLAIN_MESSAGE));
+        	JOptionPane.
+         
+        	
+        }
+        
+        public void movedOnBrand(){
+        	
+        }
  
 }

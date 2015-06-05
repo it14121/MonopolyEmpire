@@ -7,8 +7,8 @@ public abstract class Brutility extends Space {
 	protected int buyCost;
 	protected static int isTheFirst = 0;
 	
-	public Brutility(String aName, int aPos) {
-		super(aName, aPos);
+	public Brutility(String aName) {
+		super(aName);
 	}
 
 }

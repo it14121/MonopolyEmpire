@@ -2,7 +2,7 @@
 public class Go extends Space {
 	
 	public Go() {
-		super("Go", 0);
+		super("Go");
 	}
 	
 	public static void passGo(Player player) {
