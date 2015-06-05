@@ -12,10 +12,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
  
-
-
-
-
+ 
+ 
+ 
+ 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-
+ 
+ 
  
  
 public class gameGUI extends JFrame {
@@ -42,7 +42,7 @@ public class gameGUI extends JFrame {
         //private static Player activePlayer;
         private static ArrayList<Coordinates> playerPos;
         private static ArrayList<Coordinates> positions;
-        
+       
         private Dice leftDice = new Dice();
         private Dice rightDice = new Dice();
         private int faceValue;
@@ -52,52 +52,79 @@ public class gameGUI extends JFrame {
        
         public gameGUI() {
                
+                playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
+            positions = initializeSpaceGUIpositions();
+            createGameGUI();
+               
                 Game game = new Game();
                game.setGameFeedbackListener(new Game.GameFeedbackListener() {
-					
-					@Override
-					public void onPlayerMoved(int playerCode, int playerPosition) {
-						// TODO Auto-generated method stub
-						playerMoved(playerCode, playerPosition);
-					}
-					
-					@Override
-					public void moveOnJustVisiting() {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onMovedToBrand() {
-						// TODO Auto-generated method stub
-						movedOnBrand();
-					}
-
-					@Override
-					public int onDiceRolled(int code) {
-						// TODO Auto-generated method stub
-						// Code 1 for isSeanky = true
-						
-						if(code == Game.IS_SNEAKY) diceRolledSneaky();
-						
-						
-					}
-
-					
-
-					
-
-				
-					
-				
-				});      
-                playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
-                positions = initializeSpaceGUIpositions();
-                createGameGUI();
+                                       
+                                        @Override
+                                        public void onPlayerMoved(int playerCode, int playerPosition) {
+                                                // TODO Auto-generated method stub
+                                                playerMoved(playerCode, playerPosition);
+                                               
+                                                try {
+                                                        this.wait(500);
+                                                } catch (InterruptedException e) {
+                                                        // TODO Auto-generated catch block
+                                                        e.printStackTrace();
+                                                }
+                                               
+                                               
+                                        }
+                                       
+                                                               
+ 
+                                        @Override
+                                        public void onMovedToBrand() {
+                                                // TODO Auto-generated method stub
+                                                movedOnBrand();
+                                        }
+ 
+                                        @Override
+                                        public int onDiceRolled(int code) {
+                                                // TODO Auto-generated method stub
+                                                // Code 1 for isSeanky = true
+                                               
+                                                if(code == Game.IS_SNEAKY) diceRolledSneaky();
+                                                if(code == Game.IS_SNEAKY_YES) diceRolledSneakyIsYES();
+                                               
+                                                return 0;
+                                               
+                                        }
+ 
+                                        @Override
+                                        public void onPlayerMovedToGO(int money) {
+                                                // TODO Auto-generated method stub
+                                                playerMovedToGO(money);
+                                       
+                                        }
+ 
+ 
+ 
+ 
+                                        @Override
+                                        public void onPlayerMovedToJustVisiting() {
+                                                // TODO Auto-generated method stub
+                                                playerMovedToJustVisitng();
+                                               
+                                        }
+ 
+               
+                                });        
+               
+ 
+                               
+                                       
+                               
+                       
+ 
+ 
                
                 //activePlayer = game.getActivePlayer();
-              
-                
+             
+               
                
         }
        
@@ -125,8 +152,8 @@ public class gameGUI extends JFrame {
                 roll.add(rollButton, BorderLayout.NORTH);
                 roll.add(leftDice , BorderLayout.WEST);
                 roll.add(rightDice, BorderLayout.EAST);
-                
-                roll.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));       
+               
+                roll.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));      
                    
                 exit.setBackground(Color.LIGHT_GRAY);
                 exit.setFont(new Font("Arial", Font.BOLD, 16));
@@ -137,15 +164,19 @@ public class gameGUI extends JFrame {
                 buttonPanel.add(roll);
                 buttonPanel.add(exit);
                        
+                   
                        
+ 
                        
+ 
+               
                 rollButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                                 rollActionPerformed();
                         }
                         });
-                
-                
+               
+               
                
                 exit.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
@@ -154,9 +185,9 @@ public class gameGUI extends JFrame {
                         });
                
        
-                
-                
-                
+               
+               
+               
                 this.add(boardPanel, BorderLayout.CENTER);
                 this.add(buttonPanel, BorderLayout.LINE_END);          
                 this.add(backgroundPanel, BorderLayout.CENTER);
@@ -189,36 +220,38 @@ public class gameGUI extends JFrame {
                 g.setColor(Color.BLUE);
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
-        
+ 
+     
+       
         public void setLeftValue() {
             faceLeftValue = leftDice.getDice1();
             repaint();    // Value has changed, must repaint
         }
-        
+       
         public void setRightValue() {
             faceRightValue = rightDice.getDice1();
             repaint();    // Value has changed, must repaint
         }
-        
+       
         public void paintComponent(Graphics g) {
             int w = getWidth();  // Get height and width
             int h = getHeight();
-            
+           
             //... Change to Graphic2D for smoother spots.
             Graphics2D g2 = (Graphics2D)g;  // See note below
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
-            
-            
+           
+           
             //... Paint background
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, w, h);
             g2.setColor(Color.WHITE);
-            
+           
             g2.drawRect(0, 0, w-1, h-1);  // Draw border
-            
-            
-            
+           
+           
+           
             switch (faceLeftValue) {
                 case 1:
                     drawSpot(g2, w/2, h/2);
@@ -248,7 +281,7 @@ public class gameGUI extends JFrame {
                     drawSpot(g2, 3*w/4, h/2);
                     break;
             }
-            
+           
             switch (faceRightValue) {
             case 1:
                 drawSpot(g2, w/2, h/2);
@@ -279,13 +312,16 @@ public class gameGUI extends JFrame {
                 break;
         }
         }
-        
+       
         private void drawSpot(Graphics2D g2, int x, int y) {
             g2.fillOval(x-SPOT_DIAM/2, y-SPOT_DIAM/2, SPOT_DIAM, SPOT_DIAM);
-
+ 
         }
-                
-        
+               
+ 
+       
+       
+                       
         private void rollActionPerformed(){
                
                
@@ -323,23 +359,23 @@ public class gameGUI extends JFrame {
 //                public void setX(int times){
 //                        posX1 = posX1 - times * 58;
 //                }
-//               
-//               
+//              
+//              
 //                public void setY(int times){
 //                        posY1 = posY1 - times * 58;
 //                }
 //                
 //                public void resetX(int times){
-//                	posX1 = posX - times * 58;
+//                      posX1 = posX - times * 58;
 //                }
 //                
 //                public void resetY(int times){
-//                	posY1 = posY - times * 58;
+//                      posY1 = posY - times * 58;
 //                }
-                
+               
                 public void setCoord(Coordinates temp){
-                	posX1 = temp.posX1;
-                	posY1 = temp.posY1;
+                        posX1 = temp.posX1;
+                        posY1 = temp.posY1;
                 }
         }
        
@@ -352,76 +388,82 @@ public class gameGUI extends JFrame {
                 aPlayerPos.add(new Coordinates(posX + 20, posY + 20));
                
                 //System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
-                
+               
                 return aPlayerPos;
         }
-        
-        private ArrayList<Coordinates> initializeSpaceGUIpositions(){ //Creates a list with the Coordinates for each Space 
-        	
-        	ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>();
-        	int posTENx = posX - 9 * 58; //Position for left side of the board
-        	int posTENy = posY - 9 * 58; //Position for top side of the board
-        	
-//        	for(int i = 0; i<9; i++){
-//        		int tempPos = i * 58;
-//        		aPositions.add(i, new Coordinates(posX - tempPos, posY));
-//        		aPositions.add(i+9, new Coordinates(posTEN, posY - tempPos));
-//        		aPositions.add(i+2*9, new Coordinates(posTEN + tempPos,posTEN));
-//        		aPositions.add(i+3*9, new Coordinates(posX, posTEN + tempPos));
-//        	}
-        	int tempPos;
-        	for(int i = 0; i < 9; i++){
-        		tempPos = i * 58;
-        		aPositions.add(new Coordinates(posX - tempPos, posY));
-        	}
-        	for(int i = 0; i < 9; i++){
-        		tempPos = i * 58;
-        		aPositions.add(new Coordinates(posTENx, posY - tempPos));
-        	}
-        	for(int i = 0; i < 9; i++){
-        		tempPos = i * 58;
-        		aPositions.add(new Coordinates(posTENx + tempPos,posTENy));
-        	}
-        	for(int i = 0; i < 9; i++){
-        		tempPos = i * 58;
-        		aPositions.add(new Coordinates(posX, posTENy + tempPos));
-        	}
-        	return aPositions;
+       
+        private ArrayList<Coordinates> initializeSpaceGUIpositions(){ //Creates a list with the Coordinates for each Space
+               
+                ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>();
+                int posTENx = posX - 9 * 58; //Position for left side of the board
+                int posTENy = posY - 9 * 58; //Position for top side of the board
+               
+//              for(int i = 0; i<9; i++){
+//                      int tempPos = i * 58;
+//                      aPositions.add(i, new Coordinates(posX - tempPos, posY));
+//                      aPositions.add(i+9, new Coordinates(posTEN, posY - tempPos));
+//                      aPositions.add(i+2*9, new Coordinates(posTEN + tempPos,posTEN));
+//                      aPositions.add(i+3*9, new Coordinates(posX, posTEN + tempPos));
+//              }
+                int tempPos;
+                for(int i = 0; i < 9; i++){
+                        tempPos = i * 58;
+                        aPositions.add(new Coordinates(posX - tempPos, posY));
+                }
+                for(int i = 0; i < 9; i++){
+                        tempPos = i * 58;
+                        aPositions.add(new Coordinates(posTENx, posY - tempPos));
+                }
+                for(int i = 0; i < 9; i++){
+                        tempPos = i * 58;
+                        aPositions.add(new Coordinates(posTENx + tempPos,posTENy));
+                }
+                for(int i = 0; i < 9; i++){
+                        tempPos = i * 58;
+                        aPositions.add(new Coordinates(posX, posTENy + tempPos));
+                }
+                return aPositions;
         }
-        
+       
         public void playerMoved(int playerCode, int playerPosition) { //Moves the player's dot to his new position
-			// TODO Auto-generated method stub
-        	playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
-        	repaint();
-		}
-        
+                        // TODO Auto-generated method stub
+                playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
+                repaint();
+                }
+       
+        public void playerMovedToGO(int money){        
+                JOptionPane.showMessageDialog(null, "You landed on GO.\nYou get "+money+"K!", "Message", JOptionPane.PLAIN_MESSAGE);            
+        }
+       
+        public void playerMovedToJustVisitng(){        
+                JOptionPane.showMessageDialog(null, "You are here just for visiting.\nYou do nothing at all.", "Message", JOptionPane.PLAIN_MESSAGE);          
+        }
+       
         private int diceRolledSneaky(){
-        
-        	int optionPane = JOptionPane.showConfirmDialog(null, 
-					 "Do you want to roll a sneaky swap?", 
-					 "Message", 
-					 JOptionPane.QUESTION_MESSAGE, 
-					 JOptionPane.YES_NO_OPTION);
-			 if(optionPane == JOptionPane.YES_OPTION){
-				 return Game.DICE_YES;
-			 }
-			 else{
-				 return Game.DICE_NO;
-			 }
-			 
-			 
+       
+                int optionPane = JOptionPane.showConfirmDialog(null,
+                                         "Do you want to roll a sneaky swap?",
+                                         "Message",
+                                         JOptionPane.QUESTION_MESSAGE,
+                                         JOptionPane.YES_NO_OPTION);
+                         if(optionPane == JOptionPane.YES_OPTION){
+                                 return Game.DICE_YES;
+                         }
+                         else{
+                                 return Game.DICE_NO;
+                         }
+                         
+                         
         }
-        
-        
+       
+       
         private int diceRolledSneakyIsYES(){
-        	return Integer.parseInt(JOptionPane.showInputDialog(null, "Choose a player to swap with other than yourself", "Message", JOptionPane.PLAIN_MESSAGE));
-        	JOptionPane.
-         
-        	
+                return Integer.parseInt(JOptionPane.showInputDialog(null, "Choose a player to swap with other than yourself", "Message", JOptionPane.PLAIN_MESSAGE));          
+                //returns an integer which is used as the code of the enemy player. If the input is not appropriate that is handled in the function who called this function
         }
-        
+       
         public void movedOnBrand(){
-        	
+               
         }
  
 }
