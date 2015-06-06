@@ -45,12 +45,7 @@ public class gameGUI extends JFrame {
         private static ArrayList<Coordinates> playerPos;
         private static ArrayList<Coordinates> positions;
        
-        private Dice leftDice = new Dice();
-        private Dice rightDice = new Dice();
-        private int faceValue;
-        private int faceLeftValue;
-        private int faceRightValue;
-        private static final int SPOT_DIAM = 9;  // Diameter of spots
+        private Dice dices = new Dice();
        
         public gameGUI() {
                
@@ -188,8 +183,6 @@ public class gameGUI extends JFrame {
                 //mainGame = new JFrame();
                 JPanel boardPanel = new JPanel();
                 JPanel buttonPanel = new JPanel();
-                //ImageIcon dices = new ImageIcon("dices.png");
-                JPanel roll = new JPanel();
                 JButton exit = new JButton("Exit Game");
                 JButton newGameButton = new JButton("New Game");
                 JPanel backgroundPanel = new JPanel();
@@ -201,14 +194,28 @@ public class gameGUI extends JFrame {
                 boardPanel.add(new JLabel(board));
                 boardPanel.setBounds(0, 0, 700, 700);
                        
-                JButton rollButton = new JButton("New Roll");
-                rollButton.setFont(new Font("Sansserif", Font.PLAIN, 24));
-                roll.setLayout(new BorderLayout(5, 5));
-                roll.add(rollButton, BorderLayout.NORTH);
-                roll.add(leftDice , BorderLayout.WEST);
-                roll.add(rightDice, BorderLayout.EAST);
+                JPanel roll = new JPanel(){
+                    @Override
+                    public void paintComponent(Graphics g){
+                        // The paint method draws a blue border and then
+                        // draws the two dice.
+                        Graphics2D g2 = (Graphics2D)g;  // See note below
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                                RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(Color.DARK_GRAY);
+                        g2.fillRect(0, 0, getWidth(), getHeight());
+                       
+                        drawDie(g2, dices.getDice1(), 20, 90);
+                        drawDie(g2, dices.getDice2(), 140, 90);
+                        repaint();
+                    }
+                };
                
-                roll.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));      
+                JButton rollButton = new JButton("Roll Dices");
+                rollButton.setFont(new Font("Sansserif", Font.PLAIN, 14));
+                rollButton.setPreferredSize(new Dimension(120, 40));
+                roll.add(rollButton, BorderLayout.NORTH);
+                roll.add(dices , BorderLayout.CENTER);      
                    
                 exit.setBackground(Color.LIGHT_GRAY);
                 exit.setFont(new Font("Arial", Font.BOLD, 16));
@@ -276,111 +283,39 @@ public class gameGUI extends JFrame {
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
  
-     
-       
-        public void setLeftValue() {
-            faceLeftValue = leftDice.getDice1();
-            repaint();    // Value has changed, must repaint
-        }
-       
-        public void setRightValue() {
-            faceRightValue = rightDice.getDice1();
-            repaint();    // Value has changed, must repaint
-        }
-       
-        public void paintComponent(Graphics g) {
-            int w = getWidth();  // Get height and width
-            int h = getHeight();
-           
-            //... Change to Graphic2D for smoother spots.
-            Graphics2D g2 = (Graphics2D)g;  // See note below
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-           
-           
-            //... Paint background
-            g2.setColor(Color.BLACK);
-            g2.fillRect(0, 0, w, h);
-            g2.setColor(Color.WHITE);
-           
-            g2.drawRect(0, 0, w-1, h-1);  // Draw border
-           
-           
-           
-            switch (faceLeftValue) {
-                case 1:
-                    drawSpot(g2, w/2, h/2);
-                    break;
-                case 3:
-                    drawSpot(g2, w/2, h/2);
-                    // Fall thru to next case
-                case 2:
-                    drawSpot(g2, w/4, h/4);
-                    drawSpot(g2, 3*w/4, 3*h/4);
-                    break;
-                case 5:
-                    drawSpot(g2, w/2, h/2);
-                    // Fall thru to next case
-                case 4:
-                    drawSpot(g2, w/4, h/4);
-                    drawSpot(g2, 3*w/4, 3*h/4);
-                    drawSpot(g2, 3*w/4, h/4);
-                    drawSpot(g2, w/4, 3*h/4);
-                    break;
-                case 6:
-                    drawSpot(g2, w/4, h/4);
-                    drawSpot(g2, 3*w/4, 3*h/4);
-                    drawSpot(g2, 3*w/4, h/4);
-                    drawSpot(g2, w/4, 3*h/4);
-                    drawSpot(g2, w/4, h/2);
-                    drawSpot(g2, 3*w/4, h/2);
-                    break;
-            }
-           
-            switch (faceRightValue) {
-            case 1:
-                drawSpot(g2, w/2, h/2);
-                break;
-            case 3:
-                drawSpot(g2, w/2, h/2);
-                // Fall thru to next case
-            case 2:
-                drawSpot(g2, w/4, h/4);
-                drawSpot(g2, 3*w/4, 3*h/4);
-                break;
-            case 5:
-                drawSpot(g2, w/2, h/2);
-                // Fall thru to next case
-            case 4:
-                drawSpot(g2, w/4, h/4);
-                drawSpot(g2, 3*w/4, 3*h/4);
-                drawSpot(g2, 3*w/4, h/4);
-                drawSpot(g2, w/4, 3*h/4);
-                break;
-            case 6:
-                drawSpot(g2, w/4, h/4);
-                drawSpot(g2, 3*w/4, 3*h/4);
-                drawSpot(g2, 3*w/4, h/4);
-                drawSpot(g2, w/4, 3*h/4);
-                drawSpot(g2, w/4, h/2);
-                drawSpot(g2, 3*w/4, h/2);
-                break;
-        }
-        }
-       
-        private void drawSpot(Graphics2D g2, int x, int y) {
-            g2.fillOval(x-SPOT_DIAM/2, y-SPOT_DIAM/2, SPOT_DIAM, SPOT_DIAM);
- 
-        }
-               
+        void drawDie(Graphics g, int val, int x, int y) {
+            // Draw a die with upper left corner at (x,y).  The die is
+            // 100 by 100 pixels in size.  The val parameter gives the
+            // value showing on the die (that is, the number of dots).
+                 Graphics2D g2 = (Graphics2D)g;  // See note below
+             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                     RenderingHints.VALUE_ANTIALIAS_ON);
+                 g2.setColor(Color.red);
+                 g2.fillRect(x, y, 100, 100);
+                 g2.setColor(Color.white);
+                 g2.drawRect(x, y, 99, 99);
+                 if (val > 1)  // upper left dot
+                         g2.fillOval(x+23, y+23, 10,10);
+                 if (val > 3)  // upper right dot
+                         g2.fillOval(x+63, y+23, 10,10);
+                 if (val == 6) // middle left dot
+                         g2.fillOval(x+23, y+43, 10,10);
+                 if (val % 2 == 1) // middle dot (for odd-numbered val's)
+                         g2.fillOval(x+43, y+43, 10,10);
+                 if (val == 6) // middle right dot
+                         g2.fillOval(x+63, y+43, 10, 10);
+                 if (val > 3)  // bottom left dot
+                         g2.fillOval(x+23, y+63, 10, 10);
+                 if (val > 1)  // bottom right dot
+                         g2.fillOval(x+63, y+63, 10, 10);
+         }
+        
  
        
        
                        
         private void rollActionPerformed(){
-               
-               
-               
+        	dices.rollTheDice();
         }
        
         private void exitActionPerformed(){

@@ -19,15 +19,14 @@ public class Dice extends Component  {
        
        
         public Dice() {
-//              sneakySwapping = false;
-//              isDouble = false;
-                //-- Preferred size is set, but layout may change it.
-        setPreferredSize(new Dimension(60,60));
+//          sneakySwapping = false;
+//          isDouble = false;
+        	setPreferredSize(new Dimension(160,100)); //-- Preferred size is set
         }
        
         public int rollTheDice() {
-                 dice1 = new Random().nextInt(5) + 1;
-                 dice2 = new Random().nextInt(5) + 1;
+                 dice1 = new Random().nextInt(6) + 1;
+                 dice2 = new Random().nextInt(6) + 1;
                  
                  
                  isSneaky = false;
@@ -82,11 +81,6 @@ public class Dice extends Component  {
         public int getDice2() {
                 return dice2;
         }
- 
-       
- 
- 
- 
  
  
         public boolean isSneaky() {
