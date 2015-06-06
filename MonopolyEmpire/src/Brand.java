@@ -112,7 +112,14 @@ public class Brand extends Brutility {
         public Player getOwner() {
                 return owner;
         }
+        
+        public String getName(){
+        	return name;
+        }
        
+        public int getCost(){
+        	return cost;
+        }
         public String getColor() {
                 return color.toString();
         }

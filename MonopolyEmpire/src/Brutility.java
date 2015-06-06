@@ -11,4 +11,7 @@ public abstract class Brutility extends Space {
                 super(aName);
         }
  
+        public String getName(){
+        	return name;
+        }
 }

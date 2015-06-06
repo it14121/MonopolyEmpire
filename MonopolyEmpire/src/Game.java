@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
  
 
@@ -234,7 +235,7 @@ public class Game {
  
         private void play(){
                
-                while(winConditions()){
+                while(! (winConditions())){
                         if(activePlayer.isInJail()){
                                
                         }
@@ -243,7 +244,7 @@ public class Game {
                                
                                 if(dice.isSneaky()){ //If the player rolls a sneaky exchange
                                         if(gameFeedbackListener.onSneakyDiceRolled() == Game.DICE_YES){ //He is asked if he wants to make the exchange
-                                                int playerCode = onChooseEnemyPlayer(activePlayer.getCode(), "Choose a player to swap with other than yourself"); //If he agrees, he is asked for the opponent player's code
+                                               int playerCode = onChooseEnemyPlayer(activePlayer.getCode(), "Choose a player to swap with other than yourself"); //If he agrees, he is asked for the opponent player's code
                                                activePlayer.getSkyscraper().diceRollSneakyExchange(players.get(playerCode).getSkyscraper()); //and the exchange takes place 
                                                
                                                Brutility tempBru = activePlayer.getSkyscraper().getBrutility();
@@ -291,6 +292,9 @@ public class Game {
         	else if(spacePosition instanceof Brand){
         		Brand brand = ((Brand) spacePosition);
         		
+        		boolean hasMoney = true;
+        		String skyscraperName = activePlayer.getSkyscraper().getBrutility().getName();
+        		
         		if (brand.hasOwner()){
         			Player otherPlayer = brand.getOwner();
         			if (activePlayer == otherPlayer){ //Brand belongs to other player
@@ -298,6 +302,7 @@ public class Game {
             				activePlayer.payPlayer(otherPlayer);
             			}
         				else{ // if player doesn't have enough money
+        					hasMoney = false;
         					if (activePlayer.getSkyscraper().isEmpty()){ // Player has no brutilities. He does nothing
         						
         					}
@@ -312,55 +317,50 @@ public class Game {
         						
         					}
         				}
+        				
+        				gameFeedbackListener.onPlayerMovedToBrandOwnedBySomeoneElse(brand.getName(), hasMoney, activePlayer.getMoney(), brand.getCost(), skyscraperName);
         			}
         			else { //Brand has no owner
-        			if (brand.canBuy(activePlayer.getMoney())){
-        					if (true) {//want to buy)
+        			
+        				int choice = gameFeedbackListener.onPlayerMovedToBrandNotOwned(brand.getName(), activePlayer.hasMoney(brand.getCost()), activePlayer.getMoney(), brand.getCost());
+        				if (brand.canBuy(activePlayer.getMoney())){
+        					if (choice == JOptionPane.YES_OPTION) {//want to buy)
         						brand.buyBrand(activePlayer);
         						
         					}
         					else { // Doesn't want to buy
-        						
+        						//No code needed
         					}
         				}       							      			
         				else { // Can't buy
-        					
+        					//No code needed
         				}
         			
         			
         			}
         			
         			
+        		} 
+        		else{// Brand belongs to you
+        			gameFeedbackListener.onPlayerMovedToBrandOwnedByHim(brand.getName());
         		}
         		
-        		
         			
         			
         			
         			
-        		}
+        	}
         	
         	
         	else if(spacePosition instanceof Utility){
         		
         		Utility utility = ((Utility) spacePosition);
         		
-        		if (utility.hasUtilities()){ //If there are Utilites left to buy
-        			if (true){ //if he can buy
-        				if (true){//if he wants buy
+        		int choice = gameFeedbackListener.onPlayerMovedToUtility(utility.getUtilityName(), utility.hasUtilities(), activePlayer.hasMoney(UTILITY_COST), activePlayer.getMoney());
+        		
+        		if(choice == JOptionPane.YES_OPTION){
             				utility.decreaseUtilities();
             				activePlayer.decreaseMoney(UTILITY_COST);
-            			}
-        				else { // You chose not to buy
-        					
-        				}
-        			}
-        			else { // You cannot buy
-        				
-        			}
-        			
-        		}
-        		else {//There are no utilites left to buy
         		}
             	
         	}
@@ -423,8 +423,8 @@ public class Game {
         }     
        
         private boolean winConditions(){ 
-        		return (players.size() == 1); // Idea: If a player bankrupts he should be removed from the player list. The player who is the last one left is the winner
-        									 // Implementation of win conditions can change if bankruptcy is handled differently
+        		return activePlayer.getSkyscraper().isFull(); // If the player's skyscraper height exceeds over maximum he 
+        									
         }
        
         public void setGameFeedbackListener(GameFeedbackListener listener){
@@ -447,10 +447,17 @@ public class Game {
         public void onPlayerMovedToJustVisiting();
         
         public void onPlayerMovedToGoToJail();
+        
+        public void onPlayerMovedToBrandOwnedByHim(String name);
+        
+        public void onPlayerMovedToBrandOwnedBySomeoneElse(String name, boolean hasMoney, int cost, int money, String skyscraperName);
+        
+        public int onPlayerMovedToBrandNotOwned(String name, boolean hasMoney, int money, int cost);
     
-       
+        public int onPlayerMovedToUtility(String utilityName, boolean hasUtilitiesLeft, boolean hasMoney, int money);
+        
         public int onChooseEnemyPlayer(String message);
-        public void onMovedToBrand();
+        
        
         public int onSneakyDiceRolled();
        

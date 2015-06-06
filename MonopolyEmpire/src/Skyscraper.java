@@ -14,7 +14,7 @@ public class Skyscraper {
            
         }
        
-        private boolean isFull() {            
+        public boolean isFull() {            
                 return height > MAX_HEIGHT;
         }
         

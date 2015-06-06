@@ -54,7 +54,7 @@ public class gameGUI extends JFrame {
        
         public gameGUI() {
                
-        	playerPos = initializePlayerPos();             //Will probably have to make it so that the methods run if we remove players from the list (if one loses)
+        	playerPos = initializePlayerPos();             
             positions = initializeSpaceGUIpositions();
             createGameGUI();
                
@@ -78,11 +78,7 @@ public class gameGUI extends JFrame {
                                        
                                                                
  
-                                        @Override
-                                        public void onMovedToBrand() {
-                                                // TODO Auto-generated method stub
-                                                movedOnBrand();
-                                        }
+                                      
  
                                         @Override
                                         public int onSneakyDiceRolled() {
@@ -128,6 +124,46 @@ public class gameGUI extends JFrame {
 										public int onChooseEnemyPlayer(String message) {
 											// TODO Auto-generated method stub
 											return chooseEnemyPlayer(message);
+										}
+
+
+
+										@Override
+										public int onPlayerMovedToUtility(String utilityName, boolean hasUtilitiesLeft, boolean hasMoney, int money) {
+											// TODO Auto-generated method stub
+											
+											return playerMovedToUtility(utilityName, hasUtilitiesLeft, hasMoney, money);
+										}
+
+
+
+										@Override
+										public void onPlayerMovedToBrandOwnedByHim(String name) {
+											// TODO Auto-generated method stub
+											playerMovedToBrandOwnedByHim(name);
+										}
+
+
+
+
+
+										@Override
+										public int onPlayerMovedToBrandNotOwned(String name, boolean hasMoney, int money, int cost) {
+											// TODO Auto-generated method stub
+											return playerMovedToBrandONotOwned(name, hasMoney, money, cost);
+										}
+
+
+
+
+
+										@Override
+										public void onPlayerMovedToBrandOwnedBySomeoneElse(
+												String name, boolean hasMoney,
+												int cost, int money,
+												String skyscraperName) {
+											// TODO Auto-generated method stub
+											playedMovedToBrandOwnedBySomeoneElse(name, hasMoney, cost, money, skyscraperName);
 										}
  
                
@@ -444,22 +480,37 @@ public class gameGUI extends JFrame {
                 return aPositions;
         }
        
-        public void playerMoved(int playerCode, int playerPosition) { //Moves the player's dot to his new position
+        private void playerMoved(int playerCode, int playerPosition) { //Moves the player's dot to his new position
                         // TODO Auto-generated method stub
                 playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
                 repaint();
                 }
        
-        public void playerMovedToGO(int money){        
+        private void playerMovedToGO(int money){        
                 JOptionPane.showMessageDialog(null, "You landed on GO.\nYou get "+money+"K!", "Message", JOptionPane.PLAIN_MESSAGE);            
         }
        
-        public void playerMovedToJustVisitng(){        
+        private void playerMovedToJustVisitng(){        
                 JOptionPane.showMessageDialog(null, "You are here just for visiting.\nYou do nothing at all.", "Message", JOptionPane.PLAIN_MESSAGE);          
         }
         
-        public void playerMovedToGoToJail(){
+        private void playerMovedToGoToJail(){
         	 JOptionPane.showMessageDialog(null, "Oh no, you have landed yourself in jail!\n", "Message", JOptionPane.PLAIN_MESSAGE);        
+        }
+       
+        private int playerMovedToUtility(String utilityName, boolean hasUtilitiesLeft, boolean hasMoney, int money){
+        	int yesorno = 0;
+        	if(!(hasUtilitiesLeft)){ // There are no utilities left
+        		JOptionPane.showMessageDialog(null, "You landed on "+utilityName+".\nThere are no utilities left.\nYou do nothing.", "Message", JOptionPane.PLAIN_MESSAGE);
+        	}
+        	else if(!(hasMoney)){ 
+        		JOptionPane.showMessageDialog(null, "You landed on "+utilityName+".\nTYou have no money to buy a utility.\nYou do nothing.", "Message", JOptionPane.PLAIN_MESSAGE);
+        	}
+        	else {
+        		
+        		yesorno = JOptionPane.showConfirmDialog(null, "You landed on "+utilityName+".\nYou have "+money+"K and a utility costs 150K\n Do you want to buy?", "Message", JOptionPane.YES_NO_OPTION);
+        	}
+        	return yesorno;
         }
        
         private int diceRolledSneaky(){
@@ -485,8 +536,31 @@ public class gameGUI extends JFrame {
                 //returns an integer which is used as the code of the enemy player. If the input is not appropriate that is handled in the function who called this function
         }
        
-        public void movedOnBrand(){
-               
+        private void playerMovedToBrandOwnedByHim(String name){
+        	JOptionPane.showMessageDialog(null, "You landed on "+name+".\nIt's owned by you.\nYou do nothing.", "Message", JOptionPane.PLAIN_MESSAGE);        
+        }
+        
+        private int playerMovedToBrandONotOwned(String name, boolean hasMoney, int money, int cost){
+        	int yesorno = 0;
+        	if (hasMoney){
+        		yesorno =  JOptionPane.showConfirmDialog(null, "You landed on "+name+".\nIt costs "+cost+"K and you have "+money+"K.\n Do you want to buy it?", "Message", JOptionPane.YES_NO_OPTION);
+        	}
+        	else {
+        		 JOptionPane.showMessageDialog(null, "You landed on "+name+".\nYou do not have enough money to buy it.\nYou do nothing.", "Message", JOptionPane.YES_NO_OPTION);
+        	}
+        	return yesorno;
+        }
+        
+        private void playedMovedToBrandOwnedBySomeoneElse(String name, boolean hasMoney, int cost, int money, String skyscraperName){
+        	if (hasMoney){
+        		JOptionPane.showMessageDialog(null, "You landed on "+name+".\nIt's owned by someone else.\nYou pay them "+cost+"and are left with "+money+"K.", "Message", JOptionPane.PLAIN_MESSAGE);      
+        	}
+        	else if (skyscraperName != null){
+        		JOptionPane.showMessageDialog(null, "You landed on "+name+".\nIt's owned by someone else.\nYou do not have enough money to pay.\nYou give them "+skyscraperName, "Message", JOptionPane.PLAIN_MESSAGE);      
+        	}
+        	else {
+        		 JOptionPane.showMessageDialog(null, "You landed on "+name+".\nYou do not have enough money to pay and your skyscraper is empty.\nYou get to go for free, things are already hard for you!", "Message", JOptionPane.PLAIN_MESSAGE);
+        	}
         }
  
 }
