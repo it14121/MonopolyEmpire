@@ -14,64 +14,22 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
  
  
-public class Card extends Space {
+public abstract class Card extends Space {
        
-        private static ArrayList<String> cards;
-        private String title;
-        private String content;
-        private ImageIcon icon;
-        private static int isTheFirstCard = 0;
-        private int code, typeOfCard;
+	    protected String title;
+        protected String content;
+        protected ImageIcon icon;
+        protected int code, typeOfCard;
        
-        public Card(String aName){
+        public Card(String aName, int aTypeOfCard, int aCode, String aTitle, String aContent){
                 super(aName);
-                if(isTheFirstCard == 0) {
-                        isTheFirstCard = 1;
-                        cards = new ArrayList<String>();
-                        cards = readCards(name + ".txt");
-                }
-        }
-       
-        public Card takeACard(String aName, String theContent) {
-                Card card = new Card(aName);
-                typeOfCard = Integer.parseInt(theContent.substring(0, theContent.indexOf(",")));
-                theContent = theContent.substring(theContent.indexOf(","), theContent.length());
-                code = Integer.parseInt(theContent.substring(0, theContent.indexOf("/n")));
-                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
-                title = theContent.substring(0, theContent.indexOf("/n"));
-                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
-                content = theContent;
-                icon = new ImageIcon(name + ".jpg");
-                return this;
+                typeOfCard = aTypeOfCard;
+                code = aCode;
+                title = aTitle;
+                content = aContent;
         }
  
-    private ArrayList<String> readCards(String name){
-        ArrayList<String> lines = new ArrayList<String>();
-        try{
-                        FileReader fileIn = new FileReader(name);
-                        BufferedReader in = new BufferedReader(fileIn);
-                        String currentLine;
-                       
-                        while((currentLine = in.readLine()) != null){
-                                String line1 = currentLine;
-                                String line2 = in.readLine();
-                                String line3 = in.readLine();
-                                lines.add(line1 + System.lineSeparator() + line2
-                                                + System.lineSeparator() +line3 + System.lineSeparator() );
-                        }
-                       
-                        in.close();
-                }
-                catch(FileNotFoundException e) {
-                        e.printStackTrace();
-                }
-                catch(IOException e) {
-                        e.printStackTrace();
-                }      
-        return lines;
-    }
-   
-   
+    
     public Card getRandomCard(String nameOfCard) {
         ArrayList<String> lines = new ArrayList<String>();
         lines = cards;

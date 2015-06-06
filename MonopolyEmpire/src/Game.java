@@ -1,4 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
  
 
  
@@ -12,8 +18,8 @@ public class Game {
         //private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
         private Go go;
         private Brand brand;
-        private Empire empire;
-        private Chance chance;
+        private ArrayList<Empire> empires;
+        private ArrayList<Chance> chances;
         private Dice dice;
        
         public static final int DICE_YES = -1;
@@ -37,8 +43,8 @@ public class Game {
         public Game() {
                
                 //brand = new Brand(null); //Reading Brands
-                empire = new Empire(null); //Reading Cards
-                chance = new Chance(null);
+                empires = readCards("Empire"); //Reading Cards
+                chances = readCards("Chance"); //Reading Cards
                 dice = new Dice(); //Create a dice
                 spaces = new ArrayList<Space>(); //Initialize spaces
  
@@ -76,9 +82,9 @@ public class Game {
                                 else
                                         spaces.add(new TowerTax("TowerTax"));
                         } else if(i == 4 || i == 25) {//Empire
-                                spaces.add(new Card("Empire"));
+                                // ? spaces.add(new Card("Empire"));
                         } else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
-                                spaces.add(new Card("Chance"));
+                                // ? spaces.add(new Card("Chance"));
                         } else if(i == JUST_VISITING) {//JustVisiting
                                 spaces.add(new JustVisiting("JustVisiting"));
                         } else if(i == FREE_PARKING) {//FreeParking
@@ -88,6 +94,56 @@ public class Game {
                         }
                 }
         }
+        
+        private ArrayList<Card> readCards(String name){
+            ArrayList<String> lines = new ArrayList<String>();
+            ArrayList<Card> cards = new ArrayList<Card>();
+            
+            try{
+                            FileReader fileIn = new FileReader(name);
+                            BufferedReader in = new BufferedReader(fileIn);
+                            String currentLine;
+                           
+                            while((currentLine = in.readLine()) != null){
+                                    String line1 = currentLine;
+                                    String line2 = in.readLine();
+                                    String line3 = in.readLine();
+                                    lines.add(line1 + System.lineSeparator() + line2
+                                                    + System.lineSeparator() +line3 + System.lineSeparator() );
+                            }
+                           
+                            in.close();
+                    }
+                    catch(FileNotFoundException e) {
+                            e.printStackTrace();
+                    }
+                    catch(IOException e) {
+                            e.printStackTrace();
+                    }
+            
+            int typeOfCard, code;
+            String content, title, theContent;
+            for(int i = 0; i<=lines.size(); i++){
+            	theContent = lines.get(i);
+            	typeOfCard = Integer.parseInt(theContent.substring(0, theContent.indexOf(",")));
+                theContent = theContent.substring(theContent.indexOf(","), theContent.length());
+                code = Integer.parseInt(theContent.substring(0, theContent.indexOf("/n")));
+                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
+                title = theContent.substring(0, theContent.indexOf("/n"));
+                theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
+                content = theContent;
+
+                if(name.equals("Empire")) 
+                	cards.add(new Empire(name, typeOfCard, code, title, content));
+                else
+                	cards.add(new Chance(name, typeOfCard, code, title, content));
+            }
+            	
+			return cards;
+            
+        }
+       
+       
        
 //        public void playerActOnPosition(Player player) {
 //                int position = player.getPosition();

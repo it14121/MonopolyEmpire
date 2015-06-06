@@ -1,7 +1,9 @@
 /Brand.class
 /Brutility.class
 /Card.class
+/Chance.class
 /Dice.class
+/Empire.class
 /FreeParking.class
 /GUI$1.class
 /GUI$2.class
@@ -27,5 +29,3 @@
 /gameGUI$3.class
 /gameGUI$Coordinates.class
 /gameGUI.class
-/Empire.class
-/Chance.class
