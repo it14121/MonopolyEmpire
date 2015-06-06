@@ -27,6 +27,9 @@ public class TowerTax extends Space {
 			 Player otherPlayer = null;
 		}
 		
+	
+		
 	}
 
+	
 }

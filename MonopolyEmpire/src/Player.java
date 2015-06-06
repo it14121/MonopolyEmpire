@@ -8,7 +8,7 @@ public class Player {
         private Skyscraper skyscraper;
         private int position, previousPosition;
         private ArrayList<Card> cardsInHand;
-        private boolean inJail;
+        private int inJail; //inJail keeps if you are not in jail (0) or if you are how many rounds you've been in (1-3)
         private final static int STARTING_MONEY = 100;
         private final static int STARTING_POSITION = 0;
        
@@ -18,11 +18,19 @@ public class Player {
                 skyscraper = new Skyscraper();
                 position = STARTING_POSITION;
                 cardsInHand = new ArrayList<Card>();
-                inJail = false;
+                inJail = 0; // -0 is set for false
         }
-       
+        
+        public void increaseInJail(){
+        	inJail ++;
+        }
+        
+        public void setFreeFromJail(){
+        	inJail = 0;
+        }
+        
         public boolean isInJail() {
-                return inJail;
+                return (inJail > 0);
         }
  
         public void addCardInHand(Card card) {
@@ -38,10 +46,7 @@ public class Player {
         }
        
         public boolean hasMoney(int m) {
-                if(m > money)
-                        return false;
-                else
-                        return true;
+                return (money - m >= 0);
         }
        
         public void addPosition(int roll) {
@@ -49,6 +54,16 @@ public class Player {
                 position = position + roll;
                 if (position > 35) position = position % 36;
                 
+        }
+        
+        public boolean canPay(Player player){
+        	return (getMoney() >= player.getSkyscraper().getHeight());
+        }
+        
+        public void payPlayer(Player player){
+        	int money = player.getSkyscraper().getHeight();
+        	decreaseMoney(money);
+        	player.addMoney(money);
         }
  
         public int getCode() {
@@ -62,6 +77,15 @@ public class Player {
         public int getPosition() {
                 return position;
         }
+        
+        public void setPosition(int aPosition){
+        	setPreviousPosition();
+        	position = aPosition;
+        }
+        
+        private void setPreviousPosition(){
+        	previousPosition = position;
+        }
  
         public int getMoney() {
                 return money;
@@ -69,7 +93,7 @@ public class Player {
    
  
         public void movePlayer(int roll){
-        	previousPosition = position;
+        	setPreviousPosition();
         	addPosition(roll); 
         }
         

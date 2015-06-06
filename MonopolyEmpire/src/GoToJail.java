@@ -4,19 +4,23 @@ import javax.swing.JOptionPane;
 
 public class GoToJail extends Space {
 	
-	public GoToJail(String aName) {
-		super(aName);
+	public GoToJail() {
+		super("Go To Jail");
 	}
 	
-	public void sendToJail(Player p){
-		if (p.getPosition() == 27){
+	public static void sendToJail(Player player){
+	
+			
+			
 			ImageIcon jail = new ImageIcon("jail.jpg");
 			JOptionPane.showMessageDialog(
 	                null,
 	                null,
 	                "Go to Jail", JOptionPane.INFORMATION_MESSAGE,
 	                jail);
-		}
+		
+		
+		
 			
 	}
 

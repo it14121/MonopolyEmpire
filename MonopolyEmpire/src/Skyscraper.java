@@ -15,46 +15,44 @@ public class Skyscraper {
         }
        
         private boolean isFull() {            
-                return height == MAX_HEIGHT;
+                return height > MAX_HEIGHT;
         }
         
-        private boolean isEmpty(){
+        public boolean isEmpty(){
         	return height == 0;
         }
        
         public void addBrutility(Brutility brutility) {
-                if(isFull())
-                        System.out.println("Sorry, but your Skyscraper is full.");// ???
-                else {
+                
                        ownership.add(brutility);
-                }
+                
         }
          
         public int getHeight() {
                 return height;
         }
        
-        
-        private Brutility popBrutility() {
-              
-                if(isEmpty()){
-                	System.out.println("The skyscraper is empty.");
-                	return null;
-                }
+        public Brutility getBrutility(){
+        	return ownership.peek();
+        }
+        public Brutility popBrutility() {
+                            
+                	return ownership.pop();               
                 
-                else {
-                	return ownership.pop();
-                }
         }
         
         public void diceRollSneakyExchange(Skyscraper otherSkyscraper){
+        	
         	Brutility tempBrutility = popBrutility();
+        	
+        	
         	addBrutility(otherSkyscraper.popBrutility());
         	otherSkyscraper.addBrutility(tempBrutility);
+        	
         	
         }
         
         
-        
+      
         
 }

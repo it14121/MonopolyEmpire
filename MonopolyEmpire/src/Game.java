@@ -1,7 +1,6 @@
 import java.util.ArrayList;
  
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
+
  
 //import Card.ActListener;
  
@@ -10,7 +9,7 @@ public class Game {
         private ArrayList<Player> players;
         private ArrayList<Space> spaces;
         private Player activePlayer;
-        private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
+        //private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
         private Go go;
         private Brand brand;
         private Empire empire;
@@ -22,6 +21,18 @@ public class Game {
         
         public static final int IS_SNEAKY = -1;
         public static final int IS_SNEAKY_YES = -2;
+        
+        private static final int RIVAL_TOWER_TAX = 2;
+        private static final int JUST_VISITING = 9;
+        private static final int ELECTRIC_UTILITY = 12;
+        private static final int FREE_PARKING = 18;
+        private static final int GO_TO_JAIL = 27;
+        private static final int WATER_UTILITY = 30;
+        private static final int TOWER_TAX = 34;
+        
+        private static final int FREE_PARKING_COST = 100;
+        private static final int UTILITY_COST = 150;
+        
        
         public Game() {
                
@@ -60,7 +71,7 @@ public class Game {
                                 else
                                         spaces.add(new Utility("WaterWorksUtility"));                  
                         } else if(i == 2 || i == 34) {//TowerTax
-                                if(i == 2)
+                                if(i == RIVAL_TOWER_TAX)
                                         spaces.add(new TowerTax("RivalTowerTax"));
                                 else
                                         spaces.add(new TowerTax("TowerTax"));
@@ -68,12 +79,12 @@ public class Game {
                                 spaces.add(new Card("Empire"));
                         } else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
                                 spaces.add(new Card("Chance"));
-                        } else if(i == 9) {//JustVisiting
+                        } else if(i == JUST_VISITING) {//JustVisiting
                                 spaces.add(new JustVisiting("JustVisiting"));
-                        } else if(i == 18) {//FreeParking
+                        } else if(i == FREE_PARKING) {//FreeParking
                                 spaces.add(new FreeParking("FreeParking"));
-                        } else if(i == 27) {//GoToJail
-                                spaces.add(new GoToJail("GoToJail"));
+                        } else if(i == GO_TO_JAIL) {//GoToJail
+                                spaces.add(new GoToJail());
                         }
                 }
         }
@@ -178,17 +189,35 @@ public class Game {
                                 int roll = dice.rollTheDice();
                                
                                 if(dice.isSneaky()){ //If the player rolls a sneaky exchange
-                                        if(gameFeedbackListener.onDiceRolled(IS_SNEAKY) == Game.DICE_YES){ //He is asked if he wants to make the exchange
-                                                int playerCode = diceRolledSneakyIsYES(activePlayer.getCode()); //If he agrees, he is asked for the opponent player's code
-                                               activePlayer.getSkyscraper().diceRollSneakyExchange(players.get(playerCode).getSkyscraper()); //and the exchange takes place
+                                        if(gameFeedbackListener.onSneakyDiceRolled() == Game.DICE_YES){ //He is asked if he wants to make the exchange
+                                                int playerCode = onChooseEnemyPlayer(activePlayer.getCode(), "Choose a player to swap with other than yourself"); //If he agrees, he is asked for the opponent player's code
+                                               activePlayer.getSkyscraper().diceRollSneakyExchange(players.get(playerCode).getSkyscraper()); //and the exchange takes place 
                                                
+                                               Brutility tempBru = activePlayer.getSkyscraper().getBrutility();
+                                               
+                                               if (tempBru instanceof Brand){
+                                            	   ((Brand) tempBru).setOwner(players.get(playerCode));
+                                               }
+                                               
+                                               tempBru = players.get(playerCode).getSkyscraper().getBrutility();
+                                               
+                                               if (tempBru instanceof Brand){
+                                            	   ((Brand) tempBru).setOwner(activePlayer);
+                                               }
                                         }
                                         else{ //Player has refused to use the sneaky exchange
                                         	activePlayer.movePlayer(roll);
                                         	onPlayerMoved();
+                                        	actOnPosition();
                                         }
+                                        
                                
                                        
+                                }
+                                else{ //The player didn't roll a sneaky exchange
+                                	activePlayer.movePlayer(roll);
+                                	onPlayerMoved();
+                                	actOnPosition();
                                 }
                         }
                        
@@ -198,16 +227,151 @@ public class Game {
                
         }
        
-        private int diceRolledSneakyIsYES(int activePlayerCode){
-                int playerCode;
-                do{
-                	playerCode = gameFeedbackListener.onDiceRolled(Game.IS_SNEAKY_YES);
-                }while(playerCode == activePlayer.getCode() && (playerCode == 0 ||playerCode == 1 || playerCode == 2 || playerCode == 3 ));
-                return playerCode;
+        private void actOnPosition(){
+        	int position = activePlayer.getPosition();
+        	Space spacePosition = spaces.get(activePlayer.getPosition());
+        	
+        	if (spacePosition instanceof Go){
+        		Go.passGo(activePlayer);
+        		gameFeedbackListener.onPlayerMovedToGO(activePlayer.getMoney());
+        	}
+        	else if(spacePosition instanceof Brand){
+        		Brand brand = ((Brand) spacePosition);
+        		
+        		if (brand.hasOwner()){
+        			Player otherPlayer = brand.getOwner();
+        			if (activePlayer == otherPlayer){ //Brand belongs to other player
+        				if (activePlayer.canPay(otherPlayer)){ //Player has enough money to pay
+            				activePlayer.payPlayer(otherPlayer);
+            			}
+        				else{ // if player doesn't have enough money
+        					if (activePlayer.getSkyscraper().isEmpty()){ // Player has no brutilities. He does nothing
+        						
+        					}
+        					else { //player has a brutility in his skyscraper
+        						otherPlayer.getSkyscraper().addBrutility(activePlayer.getSkyscraper().popBrutility()); //Transfer topmost Brutility to the other player
+        						
+        						Brutility tempBru = otherPlayer.getSkyscraper().getBrutility();
+                                
+                                if (tempBru instanceof Brand){
+                             	   ((Brand) tempBru).setOwner(players.get(otherPlayer.getCode()));
+                                }
+        						
+        					}
+        				}
+        			}
+        			else { //Brand has no owner
+        			if (brand.canBuy(activePlayer.getMoney())){
+        					if (true) {//want to buy)
+        						brand.buyBrand(activePlayer);
+        						
+        					}
+        					else { // Doesn't want to buy
+        						
+        					}
+        				}       							      			
+        				else { // Can't buy
+        					
+        				}
+        			
+        			
+        			}
+        			
+        			
+        		}
+        		
+        		
+        			
+        			
+        			
+        			
+        		}
+        	
+        	
+        	else if(spacePosition instanceof Utility){
+        		
+        		Utility utility = ((Utility) spacePosition);
+        		
+        		if (utility.hasUtilities()){ //If there are Utilites left to buy
+        			if (true){ //if he can buy
+        				if (true){//if he wants buy
+            				utility.decreaseUtilities();
+            				activePlayer.decreaseMoney(UTILITY_COST);
+            			}
+        				else { // You chose not to buy
+        					
+        				}
+        			}
+        			else { // You cannot buy
+        				
+        			}
+        			
+        		}
+        		else {//There are no utilites left to buy
+        		}
+            	
+        	}
+        	else if(spacePosition instanceof Card){
+            	
+        	}
+        	else if(spacePosition instanceof TowerTax){
+        		int playerCode;
+        		if (position == RIVAL_TOWER_TAX){
+        			playerCode = gameFeedbackListener.onChooseEnemyPlayer("You landed on Rival Tower Tax. Remove an enemy's top Brutility");
+        		}
+        		else {
+        			playerCode = activePlayer.getCode();
+        		}
+        	
+            	Brutility tempBru = players.get(playerCode).getSkyscraper().popBrutility();
+            	if (tempBru instanceof Brand){
+            		((Brand) tempBru).setOwner(null);
+            	}
+            	else{ //Brutility is a Utility
+            		
+            		((Utility) spaces.get(position)).increaseUtilities();
+            	}
+        	}
+        	else if(spacePosition instanceof JustVisiting){
+        		gameFeedbackListener.onPlayerMovedToJustVisiting();
+            	
+        	}
+        	else if(spacePosition instanceof GoToJail){
+        		
+        		activePlayer.setPosition(GO_TO_JAIL);
+        		gameFeedbackListener.onPlayerMovedToGoToJail();
+            	
+        	}
+        	else if(spacePosition instanceof FreeParking){
+        		boolean canUseFreeParking = activePlayer.hasMoney(Game.FREE_PARKING_COST);
+        		if (canUseFreeParking){
+        			if (true){//want to move anywhere
+           			 position = 0; //Get position from user
+           			 activePlayer.decreaseMoney(Game.FREE_PARKING_COST);
+           			 activePlayer.setPosition(position);
+           			 actOnPosition();
+        			}	
+        			
+        		}
+        		else {
+        			//Prompt that you landed but don't have enough money
+        		}
+            	
+        	}
+        	
         }
+        
+        private int onChooseEnemyPlayer(int activePlayerCode, String message){
+        	int playerCode;
+            do{
+            	playerCode = gameFeedbackListener.onChooseEnemyPlayer(message);
+            }while(playerCode == activePlayer.getCode() && (playerCode == 0 ||playerCode == 1 || playerCode == 2 || playerCode == 3 ));
+            return playerCode;
+        }     
        
-        private boolean winConditions(){ //Need to implement Win Conditions
-                return true;
+        private boolean winConditions(){ 
+        		return (players.size() == 1); // Idea: If a player bankrupts he should be removed from the player list. The player who is the last one left is the winner
+        									 // Implementation of win conditions can change if bankruptcy is handled differently
         }
        
         public void setGameFeedbackListener(GameFeedbackListener listener){
@@ -228,11 +392,14 @@ public class Game {
         public void onPlayerMovedToGO(int money);
         
         public void onPlayerMovedToJustVisiting();
+        
+        public void onPlayerMovedToGoToJail();
     
        
+        public int onChooseEnemyPlayer(String message);
         public void onMovedToBrand();
        
-        public int onDiceRolled(int code);
+        public int onSneakyDiceRolled();
        
                
        

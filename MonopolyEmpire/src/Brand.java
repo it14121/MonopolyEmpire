@@ -10,6 +10,7 @@ public class Brand extends Brutility {
         private String brandName;
         private String color;
         private Player owner;
+        private int cost;
        
         public Brand(String aName) {
                 super(aName);
@@ -87,19 +88,22 @@ public class Brand extends Brutility {
         }
        
         public boolean hasOwner() {
-                if(owner == null)
-                        return false;
-                else
-                        return true;
+//                if(owner == null)
+//                        return false;
+//                else
+//                        return true;
+        	
+        	return owner != null;
         }
        
-        public void setOwner(Player p) {
-                if((p.getMoney()>= this.buyCost) ) { /// ???
-                        owner = p;
-                        p.decreaseMoney(this.buyCost);
-                }
-                else
-                        System.out.println("Sorry, but player " + p.getCode() + " cannot buy this brand!");
+       
+        
+        public void setOwner(Player player){
+        	owner = player;
+        }
+        public void buyBrand(Player player) {              
+                        setOwner(player);
+                        player.decreaseMoney(cost);              
         }
        
         public int getPosition() {
@@ -113,6 +117,11 @@ public class Brand extends Brutility {
                 return color.toString();
         }
        
-       
+     
+        public boolean canBuy(int money){
+        	return (money - cost >= 0);
+        }
+        
+        
        
 }

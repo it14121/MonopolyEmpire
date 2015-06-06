@@ -16,6 +16,8 @@ import java.util.ArrayList;
  
  
  
+
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,8 +37,8 @@ public class gameGUI extends JFrame {
         private static final long serialVersionUID = 1L;
        // private JFrame mainGame;
        
-        private static final int posX = 600;
-        private static final int posY = 635;
+        private static final int POS_X = 600;
+        private static final int POS_Y = 635;
        
         //private int tempI = 0;
         //private static Player activePlayer;
@@ -83,14 +85,14 @@ public class gameGUI extends JFrame {
                                         }
  
                                         @Override
-                                        public int onDiceRolled(int code) {
+                                        public int onSneakyDiceRolled() {
                                                 // TODO Auto-generated method stub
                                                 // Code 1 for isSeanky = true
                                                
-                                                if(code == Game.IS_SNEAKY) diceRolledSneaky();
-                                                if(code == Game.IS_SNEAKY_YES) diceRolledSneakyIsYES();
+                                                return diceRolledSneaky();
+//                                                if(code == Game.IS_SNEAKY_YES) chooseEnemyPlayer("Choose a player to swap with other than yourself");
                                                
-                                                return 0;
+                                               
                                                
                                         }
  
@@ -110,6 +112,23 @@ public class gameGUI extends JFrame {
                                                 playerMovedToJustVisitng();
                                                
                                         }
+
+
+
+										@Override
+										public void onPlayerMovedToGoToJail() {
+											// TODO Auto-generated method stub
+											playerMovedToGoToJail();
+											
+										}
+
+
+
+										@Override
+										public int onChooseEnemyPlayer(String message) {
+											// TODO Auto-generated method stub
+											return chooseEnemyPlayer(message);
+										}
  
                
                                 });        
@@ -382,10 +401,10 @@ public class gameGUI extends JFrame {
         private ArrayList<Coordinates> initializePlayerPos(){ //Creates the players on position 0.
                
                 ArrayList<Coordinates> aPlayerPos = new ArrayList<Coordinates>();
-                aPlayerPos.add(new Coordinates(posX, posY));
-                aPlayerPos.add(new Coordinates(posX + 20, posY));
-                aPlayerPos.add(new Coordinates(posX, posY + 20));
-                aPlayerPos.add(new Coordinates(posX + 20, posY + 20));
+                aPlayerPos.add(new Coordinates(POS_X, POS_Y));
+                aPlayerPos.add(new Coordinates(POS_X + 20, POS_Y));
+                aPlayerPos.add(new Coordinates(POS_X, POS_Y + 20));
+                aPlayerPos.add(new Coordinates(POS_X + 20, POS_Y + 20));
                
                 //System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
                
@@ -395,8 +414,8 @@ public class gameGUI extends JFrame {
         private ArrayList<Coordinates> initializeSpaceGUIpositions(){ //Creates a list with the Coordinates for each Space
                
                 ArrayList<Coordinates> aPositions = new ArrayList<Coordinates>();
-                int posTENx = posX - 9 * 58; //Position for left side of the board
-                int posTENy = posY - 9 * 58; //Position for top side of the board
+                int posTENx = POS_X - 9 * 58; //Position for left side of the board
+                int posTENy = POS_Y - 9 * 58; //Position for top side of the board
                
 //              for(int i = 0; i<9; i++){
 //                      int tempPos = i * 58;
@@ -408,11 +427,11 @@ public class gameGUI extends JFrame {
                 int tempPos;
                 for(int i = 0; i < 9; i++){
                         tempPos = i * 58;
-                        aPositions.add(new Coordinates(posX - tempPos, posY));
+                        aPositions.add(new Coordinates(POS_X - tempPos, POS_Y));
                 }
                 for(int i = 0; i < 9; i++){
                         tempPos = i * 58;
-                        aPositions.add(new Coordinates(posTENx, posY - tempPos));
+                        aPositions.add(new Coordinates(posTENx, POS_Y - tempPos));
                 }
                 for(int i = 0; i < 9; i++){
                         tempPos = i * 58;
@@ -420,7 +439,7 @@ public class gameGUI extends JFrame {
                 }
                 for(int i = 0; i < 9; i++){
                         tempPos = i * 58;
-                        aPositions.add(new Coordinates(posX, posTENy + tempPos));
+                        aPositions.add(new Coordinates(POS_X, posTENy + tempPos));
                 }
                 return aPositions;
         }
@@ -437,6 +456,10 @@ public class gameGUI extends JFrame {
        
         public void playerMovedToJustVisitng(){        
                 JOptionPane.showMessageDialog(null, "You are here just for visiting.\nYou do nothing at all.", "Message", JOptionPane.PLAIN_MESSAGE);          
+        }
+        
+        public void playerMovedToGoToJail(){
+        	 JOptionPane.showMessageDialog(null, "Oh no, you have landed yourself in jail!\n", "Message", JOptionPane.PLAIN_MESSAGE);        
         }
        
         private int diceRolledSneaky(){
@@ -457,8 +480,8 @@ public class gameGUI extends JFrame {
         }
        
        
-        private int diceRolledSneakyIsYES(){
-                return Integer.parseInt(JOptionPane.showInputDialog(null, "Choose a player to swap with other than yourself", "Message", JOptionPane.PLAIN_MESSAGE));          
+        private int chooseEnemyPlayer(String message){
+                return Integer.parseInt(JOptionPane.showInputDialog(null, message, JOptionPane.PLAIN_MESSAGE));          
                 //returns an integer which is used as the code of the enemy player. If the input is not appropriate that is handled in the function who called this function
         }
        
