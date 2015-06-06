@@ -43,8 +43,8 @@ public class Game {
         public Game() {
                
                 //brand = new Brand(null); //Reading Brands
-                empires = readCards("Empire"); //Reading Cards
-                chances = readCards("Chance"); //Reading Cards
+                this.readCards("Empire"); //Reading Cards
+                this.readCards("Chance"); //Reading Cards
                 dice = new Dice(); //Create a dice
                 spaces = new ArrayList<Space>(); //Initialize spaces
  
@@ -95,7 +95,7 @@ public class Game {
                 }
         }
         
-        private ArrayList<Card> readCards(String name){
+        private void readCards(String name){
             ArrayList<String> lines = new ArrayList<String>();
             ArrayList<Card> cards = new ArrayList<Card>();
             
@@ -134,13 +134,10 @@ public class Game {
                 content = theContent;
 
                 if(name.equals("Empire")) 
-                	cards.add(new Empire(name, typeOfCard, code, title, content));
+                	empires.add(new Empire(name, typeOfCard, code, title, content));
                 else
-                	cards.add(new Chance(name, typeOfCard, code, title, content));
+                	chances.add(new Chance(name, typeOfCard, code, title, content));
             }
-            	
-			return cards;
-            
         }
        
        

@@ -29,18 +29,9 @@ public abstract class Card extends Space {
                 content = aContent;
         }
  
-    
-    public Card getRandomCard(String nameOfCard) {
-        ArrayList<String> lines = new ArrayList<String>();
-        lines = cards;
-        Random r = new Random();
-        String randomString = lines.get(r.nextInt(lines.size()));
-        Card randomCard = this.takeACard(nameOfCard, randomString);
-        return randomCard;
-    }
-   
-    public void holdCard(Player p){
-        if(content.contains("Κράτησε αυτήν την κάρτα")) {
+ 
+        public void holdCard(Player p){
+        	if(content.contains("Keep this card")) {
                 JDialog.setDefaultLookAndFeelDecorated(true);
             int response = JOptionPane.showConfirmDialog(null,
                         "Do you want to continue?",
