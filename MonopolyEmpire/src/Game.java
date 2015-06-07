@@ -397,7 +397,7 @@ public class Game {
         			
         			
         			}
-        			
+        			System.out.println(activePlayer.getMoney());
         			
         		} 
         		else{// Brand belongs to you
@@ -462,7 +462,7 @@ public class Game {
             	}
             	else{ //Brutility is a Utility
             		
-            		((Utility) spaces.get(position)).increaseUtilities();
+            		((Utility) tempBru).increaseUtilities();
             	}
         	}
         	else if(spacePosition instanceof JustVisiting){
@@ -528,7 +528,7 @@ public class Game {
         	int playerCode;
             do{
             	playerCode = gameFeedbackListener.onChooseEnemyPlayer(message);
-            }while(playerCode == activePlayer.getCode() && (playerCode == 0 ||playerCode == 1 || playerCode == 2 || playerCode == 3 ));
+            }while(playerCode == activePlayer.getCode() || (playerCode < 0 || playerCode > 3));
             return playerCode;
         }     
        
@@ -548,8 +548,7 @@ public class Game {
         GameFeedbackListener gameFeedbackListener;
        
         public void onPlayerMoved(){
-        	System.out.println(activePlayer.getCode());
-        	System.out.println(activePlayer.getPosition());
+        	
                 gameFeedbackListener.onPlayerMoved(activePlayer.getCode(), activePlayer.getPosition());
     }
        

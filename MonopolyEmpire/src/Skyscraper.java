@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
  
  
 public class Skyscraper {
@@ -35,8 +36,13 @@ public class Skyscraper {
         	return ownership.peek();
         }
         public Brutility popBrutility() {
-                            
-                	return ownership.pop();               
+                   try{         
+                	return ownership.pop();      
+                   }
+                   catch (NoSuchElementException popBrutility){
+                	   System.out.println("There is no Brutility to ");
+                   }
+                   return null;
                 
         }
         
