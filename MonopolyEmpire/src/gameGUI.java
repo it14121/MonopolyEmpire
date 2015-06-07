@@ -11,14 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
- 
- 
- 
- 
- 
-
-
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,13 +53,13 @@ public class gameGUI extends JFrame {
                                                 // TODO Auto-generated method stub
                                                 playerMoved(playerCode, playerPosition);
                                                
-                                                try {
-                                                        this.wait(500);
-                                                } catch (InterruptedException e) {
-                                                        // TODO Auto-generated catch block
-                                                        e.printStackTrace();
-                                                }
-                                               
+//                                                try {
+//                                                        this.wait(500);
+//                                                } catch (InterruptedException e) {
+//                                                        // TODO Auto-generated catch block
+//                                                        e.printStackTrace();
+//                                                }
+                                           
                                                
                                         }
                                        
@@ -160,12 +152,24 @@ public class gameGUI extends JFrame {
 											// TODO Auto-generated method stub
 											playedMovedToBrandOwnedBySomeoneElse(name, hasMoney, cost, money, skyscraperName);
 										}
+
+
+
+
+
+										@Override
+										public int onPlayerMovedToFreeParking(boolean canUseFreeParking) {
+											// TODO Auto-generated method stub
+											
+											return playedMovedToFreeParking(canUseFreeParking);
+											
+										}
  
                
                                 });        
                
  
-                               
+                               game.play();
                                        
                                
                        
@@ -195,7 +199,12 @@ public class gameGUI extends JFrame {
                 boardPanel.setBounds(0, 0, 700, 700);
                        
                 JPanel roll = new JPanel(){
-                    @Override
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void paintComponent(Graphics g){
                         // The paint method draws a blue border and then
                         // draws the two dice.
@@ -417,7 +426,7 @@ public class gameGUI extends JFrame {
        
         private void playerMoved(int playerCode, int playerPosition) { //Moves the player's dot to his new position
                         // TODO Auto-generated method stub
-                playerPos.get(playerPosition).setCoord(positions.get(playerPosition));
+                playerPos.get(playerCode).setCoord(positions.get(playerPosition));
                 repaint();
                 }
        
@@ -427,6 +436,19 @@ public class gameGUI extends JFrame {
        
         private void playerMovedToJustVisitng(){        
                 JOptionPane.showMessageDialog(null, "You are here just for visiting.\nYou do nothing at all.", "Message", JOptionPane.PLAIN_MESSAGE);          
+        }
+        
+        private int playedMovedToFreeParking(boolean canUseFreeParking){
+        	int code = -1; //-1 if the player can't travel anywhere or if he chooses not to. 0-35 for the position he chose.
+        	if (canUseFreeParking){
+        		int yesorno = JOptionPane.showConfirmDialog(null, "You landed on Free Parking. You can pay "+Game.FREE_PARKING_COST+"K\nto move anywhere on the map.\nIs there somewhere you would like to go?", "Message", JOptionPane.YES_NO_OPTION);
+        		if (yesorno == JOptionPane.YES_OPTION){
+        			do{
+        				code = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose where you want to go.", JOptionPane.PLAIN_MESSAGE));
+        			}while(code < 0 || code > 35 || code == Game.FREE_PARKING);
+        		}
+        	}
+        	return code;
         }
         
         private void playerMovedToGoToJail(){
@@ -443,7 +465,7 @@ public class gameGUI extends JFrame {
         	}
         	else {
         		
-        		yesorno = JOptionPane.showConfirmDialog(null, "You landed on "+utilityName+".\nYou have "+money+"K and a utility costs 150K\n Do you want to buy?", "Message", JOptionPane.YES_NO_OPTION);
+        		yesorno = JOptionPane.showConfirmDialog(null, "You landed on "+utilityName+".\nYou have "+money+"K and a utility costs "+Game.UTILITY_COST+"K\n Do you want to buy?", "Message", JOptionPane.YES_NO_OPTION);
         	}
         	return yesorno;
         }
@@ -453,8 +475,8 @@ public class gameGUI extends JFrame {
                 int optionPane = JOptionPane.showConfirmDialog(null,
                                          "Do you want to roll a sneaky swap?",
                                          "Message",
-                                         JOptionPane.QUESTION_MESSAGE,
-                                         JOptionPane.YES_NO_OPTION);
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.QUESTION_MESSAGE);
                          if(optionPane == JOptionPane.YES_OPTION){
                                  return Game.DICE_YES;
                          }
@@ -481,7 +503,7 @@ public class gameGUI extends JFrame {
         		yesorno =  JOptionPane.showConfirmDialog(null, "You landed on "+name+".\nIt costs "+cost+"K and you have "+money+"K.\n Do you want to buy it?", "Message", JOptionPane.YES_NO_OPTION);
         	}
         	else {
-        		 JOptionPane.showMessageDialog(null, "You landed on "+name+".\nYou do not have enough money to buy it.\nYou do nothing.", "Message", JOptionPane.YES_NO_OPTION);
+        		 JOptionPane.showMessageDialog(null, "You landed on "+name+".\nYou do not have enough money to buy it.\nYou do nothing.", "Message", JOptionPane.PLAIN_MESSAGE);
         	}
         	return yesorno;
         }

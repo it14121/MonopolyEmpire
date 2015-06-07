@@ -6,7 +6,8 @@ public class Player {
         private int code;
         private int money;     
         private Skyscraper skyscraper;
-        private int position, previousPosition;
+        //private int position, previousPosition;
+        private int position;
         private ArrayList<Card> cardsInHand;
         private int inJail; //inJail keeps if you are not in jail (0) or if you are how many rounds you've been in (1-3)
         private final static int STARTING_MONEY = 100;
@@ -26,7 +27,7 @@ public class Player {
         }
         
         public void setFreeFromJail(){
-        	inJail = 0;
+        	if (inJail == 3) inJail = 0;
         }
         
         public boolean isInJail() {
@@ -70,22 +71,22 @@ public class Player {
                 return code;
         }
        
-        public int getPreviousPosition() {
-                return previousPosition;
-        }
+//        public int getPreviousPosition() {
+//                return previousPosition;
+//        }
        
         public int getPosition() {
                 return position;
         }
         
         public void setPosition(int aPosition){
-        	setPreviousPosition();
+        	//setPreviousPosition();
         	position = aPosition;
         }
         
-        private void setPreviousPosition(){
-        	previousPosition = position;
-        }
+//        private void setPreviousPosition(){
+//        	previousPosition = position;
+//        }
  
         public int getMoney() {
                 return money;
@@ -93,7 +94,7 @@ public class Player {
    
  
         public void movePlayer(int roll){
-        	setPreviousPosition();
+        	//setPreviousPosition();
         	addPosition(roll); 
         }
         

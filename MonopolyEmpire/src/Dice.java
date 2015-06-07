@@ -1,16 +1,18 @@
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.Random;
- 
-import javax.swing.*;
+
  
 //import Card.ActListener;
  
  
 public class Dice extends Component  {
        
-        private int dice1;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		private int dice1;
         private int dice2;
        
        

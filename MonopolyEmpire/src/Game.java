@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -14,13 +15,18 @@ import javax.swing.ImageIcon;
 public class Game {
        
         private ArrayList<Player> players;
+        private int activePlayerCode ;
         private ArrayList<Space> spaces;
         private Player activePlayer;
-        //private int activePlayerCode = 0; //keeps Player's code of the activePlayer for easier access, Player 0 is always first
-        private Go go;
-        private Brand brand;
-        private ArrayList<Empire> empires;
-        private ArrayList<Chance> chances;
+        private ArrayList<Brand> brands;
+
+        private Go go;  
+        private Utility electricUtility;
+        private Utility waterUtility;
+      
+        private LinkedList<Card> chances;
+        private LinkedList<Card> empires;
+        private ArrayList<CardSpace> cards;
         private Dice dice;
        
         public static final int DICE_YES = -1;
@@ -32,76 +38,119 @@ public class Game {
         private static final int RIVAL_TOWER_TAX = 2;
         private static final int JUST_VISITING = 9;
         private static final int ELECTRIC_UTILITY = 12;
-        private static final int FREE_PARKING = 18;
+        public static final int FREE_PARKING = 18;
         private static final int GO_TO_JAIL = 27;
         private static final int WATER_UTILITY = 30;
         private static final int TOWER_TAX = 34;
         
-        private static final int FREE_PARKING_COST = 100;
-        private static final int UTILITY_COST = 150;
+        public static final int FREE_PARKING_COST = 100;
+        public static final int UTILITY_COST = 150;
         
-       
-        public Game() {
-               
-                //brand = new Brand(null); //Reading Brands
-                this.readCards("Empire"); //Reading Cards
-                this.readCards("Chance"); //Reading Cards
+
+
+  
+         public Game() {      
+        	 
+        	 	
+//        	 	chances = readCards("Chance");
+//        	 	empires = readCards("Empire");
+//                            
+//              cards.add(new CardSpace("Empire", chances));
+//              cards.add(new CardSpace("Chance", empires));
                 dice = new Dice(); //Create a dice
                 spaces = new ArrayList<Space>(); //Initialize spaces
+                
+                initializeBrands();
+                
+                electricUtility = new Utility("Electric Utility");
+                waterUtility = new Utility("Water Utility");
  
                 players = new ArrayList<Player>();
-        for(int i = 0; i < 4; i++){ //Initializing Players
-                players.add(new Player(i));
-        }
-        
- 
-                int j = 0; //Needed for the brands
-                for(int i = 0; i<=35; i++) {
-                        if(i == 0) {//Go
-                                go = new Go(); //Initializing Go
-                                spaces.add(go);
-                        } else if(i == 1 || i == 3 || i == 5 || i == 7 ||
-                                        i == 8 || i == 10 || i == 11 || i == 13 ||
-                                        i ==14 || i == 16 || i == 17 || i == 19 ||
-                                        i == 20 || i == 22 || i == 23 || i == 25 ||
-                                        i == 26 || i == 28 || i == 29 || i == 31 ||
-                                        i == 33 || i == 35) {//Brand
-                                ArrayList<Brand> brands = null;
-                                if(i == 1) {
-                                        brands= brand.getBrands(); //???
-                                }
-                                spaces.add(brands.get(j));
-                                j++;
-                        } else if(i == 12 || i == 30) {//Utility
-                                if(i == 12)
-                                        spaces.add(new Utility("ElectricUtility"));
-                                else
-                                        spaces.add(new Utility("WaterWorksUtility"));                  
-                        } else if(i == 2 || i == 34) {//TowerTax
-                                if(i == RIVAL_TOWER_TAX)
-                                        spaces.add(new TowerTax("RivalTowerTax"));
-                                else
-                                        spaces.add(new TowerTax("TowerTax"));
-                        } else if(i == 4 || i == 25) {//Empire
-                                // ? spaces.add(new Card("Empire"));
-                        } else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
-                                // ? spaces.add(new Card("Chance"));
-                        } else if(i == JUST_VISITING) {//JustVisiting
-                                spaces.add(new JustVisiting("JustVisiting"));
-                        } else if(i == FREE_PARKING) {//FreeParking
-                                spaces.add(new FreeParking("FreeParking"));
-                        } else if(i == GO_TO_JAIL) {//GoToJail
-                                spaces.add(new GoToJail());
-                        }
+                for(int i = 0; i < 4; i++){ //Initializing Players
+                	players.add(new Player(i));
                 }
+        
+                activePlayerCode = 0;
+                activePlayer = players.get(activePlayerCode);
+               
+                initializePositions();
+                
+                
+        }
+         
+        private void initializeBrands(){
+        	brands = new ArrayList<Brand>();
+        	
+        	brands.add(new Brand("1","Nerf",50,"BROWN"));
+        	brands.add(new Brand("3","Transformers",50,"BROWN"));
+        	brands.add(new Brand("5","Spotify",100,"CYAN"));
+        	brands.add(new Brand("7","BeatsAudio",100,"CYAN"));
+        	brands.add(new Brand("8","Fender",100,"CYAN"));
+        	brands.add(new Brand("10","JetBlue",150,"MAGENTA"));
+        	brands.add(new Brand("11","ElectronicArts",150,"MAGENTA"));
+        	brands.add(new Brand("13","Hashbro",150,"MAGENTA"));
+        	brands.add(new Brand("14","UnderArmour",200,"ORANGE"));
+        	brands.add(new Brand("16","Carnival",200,"ORANGE"));
+        	brands.add(new Brand("17","Yahoo",200,"ORANGE"));
+        	brands.add(new Brand("19","Paramount",250,"RED"));
+        	brands.add(new Brand("20","Chevrolet",250,"RED"));
+        	brands.add(new Brand("22","EBay",250,"RED"));
+        	brands.add(new Brand("23","XGames",300,"YELLOW"));
+        	brands.add(new Brand("25","Ducati",300,"YELLOW"));
+        	brands.add(new Brand("26","McDonald",300,"YELLOW"));
+        	brands.add(new Brand("28","Intel",350,"GREEN"));
+        	brands.add(new Brand("29","Xbox",350,"GREEN"));
+        	brands.add(new Brand("31","Nestle",350,"GREEN"));
+        	brands.add(new Brand("33","Samsung",400,"BLUE"));
+        	brands.add(new Brand("35","CocaCola",400,"BLUE"));
+
+        	
+        	
         }
         
-        private void readCards(String name){
+        private void initializePositions(){
+        	spaces.add(go = new Go());
+        	int brandIterator = 0;
+        	for(int i = 0; i<=35; i++) {
+               
+                 if(i == 1 || i == 3 || i == 5 || i == 7 ||
+                                i == 8 || i == 10 || i == 11 || i == 13 ||
+                                i ==14 || i == 16 || i == 17 || i == 19 ||
+                                i == 20 || i == 22 || i == 23 || i == 25 ||
+                                i == 26 || i == 28 || i == 29 || i == 31 ||
+                                i == 33 || i == 35) {//Brand
+                       
+                        spaces.add(brands.get(brandIterator));
+                        brandIterator++;
+                } else if(i == 12 || i == 30) {//Utility
+                        if(i == 12)
+                                spaces.add(new Utility("ElectricUtility"));
+                        else
+                                spaces.add(new Utility("WaterWorksUtility"));                  
+                } else if(i == 2 || i == 34) {//TowerTax
+                        if(i == RIVAL_TOWER_TAX)
+                                spaces.add(new TowerTax("RivalTowerTax"));
+                        else
+                                spaces.add(new TowerTax("TowerTax"));
+                } else if(i == 4 || i == 25) {//Empire
+                        spaces.add(new CardSpace("Empire"));
+                } else if(i == 6 || i == 15 || i == 21 || i == 32) {//Chance
+                	    spaces.add(new CardSpace("Chance"));
+                } else if(i == JUST_VISITING) {//JustVisiting
+                        spaces.add(new JustVisiting("JustVisiting"));
+                } else if(i == FREE_PARKING) {//FreeParking
+                        spaces.add(new FreeParking("FreeParking"));
+                } else if(i == GO_TO_JAIL) {//GoToJail
+                        spaces.add(new GoToJail());
+                }
+        	}
+        }
+        private LinkedList<Card> readCards(String name){ //returns a LinkedList of the cards Chance/Empire
             ArrayList<String> lines = new ArrayList<String>();
-            ArrayList<Card> cards = new ArrayList<Card>();
+            LinkedList<Card> cards = new LinkedList<Card>();
             
             try{
-                            FileReader fileIn = new FileReader(name);
+                            FileReader fileIn = new FileReader(name+".txt");
                             BufferedReader in = new BufferedReader(fileIn);
                             String currentLine;
                            
@@ -134,11 +183,16 @@ public class Game {
                 theContent = theContent.substring(theContent.indexOf("/n"), theContent.length());
                 content = theContent;
 
-                if(name.equals("Empire")) 
-                	empires.add(new Empire(name, typeOfCard, code, title, content));
-                else
-                	chances.add(new Chance(name, typeOfCard, code, title, content));
+//                if(name.equals("Empire")) 
+//                	empires.add(new Empire(name, typeOfCard, code, title, content));
+//                else
+//                	chances.add(new Chance(name, typeOfCard, code, title, content));
+                
+                cards.add(new Card(code, typeOfCard, title, content));
+                
+               
             }
+            return cards;
         }
        
        
@@ -227,17 +281,21 @@ public class Game {
        
         public void setActivePlayer(int activePlayerCode){
         activePlayer = players.get(activePlayerCode);
-    }
+        }
        
         public Player getActivePlayer(){
         return activePlayer;
-    }
+        }
  
-        private void play(){
+        public void play(){
                
-                while(! (winConditions())){
+        	do
+                {
+                	
                         if(activePlayer.isInJail()){
-                               
+                          System.out.println("You're in jail. Normally you'd be offered some options, but you're unlucky. You have to stay in for 3 rounds");
+                          activePlayer.increaseInJail();
+                          activePlayer.setFreeFromJail();                        
                         }
                         else{
                                 int roll = dice.rollTheDice();
@@ -276,8 +334,9 @@ public class Game {
                         }
                        
                        
-                }
-               
+                }while(! (winConditions()));
+              int  winner = activePlayerCode - 1;
+               System.out.print("Game Over. Player "+winner+" has won!");
                
         }
        
@@ -293,7 +352,7 @@ public class Game {
         		Brand brand = ((Brand) spacePosition);
         		
         		boolean hasMoney = true;
-        		String skyscraperName = activePlayer.getSkyscraper().getBrutility().getName();
+        		String skyscraperName = brand.getName();
         		
         		if (brand.hasOwner()){
         			Player otherPlayer = brand.getOwner();
@@ -361,10 +420,31 @@ public class Game {
         		if(choice == JOptionPane.YES_OPTION){
             				utility.decreaseUtilities();
             				activePlayer.decreaseMoney(UTILITY_COST);
+            				activePlayer.getSkyscraper().addBrutility(utility);
         		}
             	
         	}
-        	else if(spacePosition instanceof Card){
+        	else if(spacePosition instanceof CardSpace){
+//        		LinkedList<Card> cardList = ((CardSpace) spacePosition).getCards();
+//        		Card card =((CardSpace) spacePosition).getCard();
+//        			
+//        		if(card instanceof Chance){
+//        			Chance chance = ((Chance) card);
+//        			if(chance.canKeep()){
+//      				activePlayer.addCardInHand(card);
+//       				cardList.poll();
+//        			}
+//        			else {
+//        				
+//        			}
+//        			System.out.println("Chance cards are not implemented. Let's pretended you landed on Go instead :)");
+//       			Go.passGo(activePlayer);
+//        		}
+//        		else {
+//        			Empire empire = ((Empire) card);
+        			System.out.println("Cards are not implemented. Let's pretended you landed on Go instead :)");
+        			Go.passGo(activePlayer);
+//        		}
             	
         	}
         	else if(spacePosition instanceof TowerTax){
@@ -396,23 +476,53 @@ public class Game {
             	
         	}
         	else if(spacePosition instanceof FreeParking){
-        		boolean canUseFreeParking = activePlayer.hasMoney(Game.FREE_PARKING_COST);
-        		if (canUseFreeParking){
-        			if (true){//want to move anywhere
-           			 position = 0; //Get position from user
-           			 activePlayer.decreaseMoney(Game.FREE_PARKING_COST);
-           			 activePlayer.setPosition(position);
-           			 actOnPosition();
-        			}	
+        		
+        		//boolean canUseFreeParking = activePlayer.hasMoney(Game.FREE_PARKING_COST);
+        		int code = gameFeedbackListener.onPlayerMovedToFreeParking(activePlayer.hasMoney(Game.FREE_PARKING_COST));
+        		
+        		if (code != -1){// -1 is used if the player doesn't have money or if he doesn't want to move
+        			activePlayer.decreaseMoney(FREE_PARKING_COST);
+        			activePlayer.setPosition(code);
+        			onPlayerMoved();
+                	actOnPosition();
         			
-        		}
-        		else {
-        			//Prompt that you landed but don't have enough money
-        		}
-            	
+        		} 	           	
         	}
         	
         }
+        
+//        private void chanceGetElectricity(){
+//        
+//	        if(electricUtility.hasUtilities()){
+//	        	electricUtility.decreaseUtilities();
+//	        	activePlayer.getSkyscraper().addBrutility(electricUtility);
+//	        	
+//	        	System.out.println("You got an electric Utility");
+//	        }
+//	        else {
+//	        	System.out.println("There are no utilities left");
+//	        }
+//        }
+//        
+//        private void chancePayBank(){
+//        	if (activePlayer.hasMoney(200)){
+//        		activePlayer.decreaseMoney(200);
+//        		System.out.println("You pay the bank 200");
+//        	}
+//        	else {
+//        		System.out.println("You have no money to pay the bank. Normally you'd lose your top billboard if you had one, but we didn't implement that :) ");
+//        	}
+//        }
+//        
+//        private void chanceCasinoNight(){
+//        	System.out.println("Choose opponent. Both roll. The player with the highest roll gets 200K by the Bank.");
+//        	System.out.println("Oh no! The casino burnt down...You are lucky though and find 200k :)");
+//        	activePlayer.addMoney(200);
+//        	
+//        }
+        
+        
+        
         
         private int onChooseEnemyPlayer(int activePlayerCode, String message){
         	int playerCode;
@@ -423,7 +533,11 @@ public class Game {
         }     
        
         private boolean winConditions(){ 
-        		return activePlayer.getSkyscraper().isFull(); // If the player's skyscraper height exceeds over maximum he 
+        		boolean flag = activePlayer.getSkyscraper().isFull(); // If the player's skyscraper height exceeds over maximum height 
+        		activePlayerCode++;
+        		if (activePlayerCode == 4) activePlayerCode = 0;
+        		activePlayer = players.get(activePlayerCode);
+        		return flag;
         									
         }
        
@@ -434,6 +548,8 @@ public class Game {
         GameFeedbackListener gameFeedbackListener;
        
         public void onPlayerMoved(){
+        	System.out.println(activePlayer.getCode());
+        	System.out.println(activePlayer.getPosition());
                 gameFeedbackListener.onPlayerMoved(activePlayer.getCode(), activePlayer.getPosition());
     }
        
@@ -447,6 +563,8 @@ public class Game {
         public void onPlayerMovedToJustVisiting();
         
         public void onPlayerMovedToGoToJail();
+        
+        public int onPlayerMovedToFreeParking(boolean canUseFreeParking);
         
         public void onPlayerMovedToBrandOwnedByHim(String name);
         
