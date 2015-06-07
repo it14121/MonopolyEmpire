@@ -10,7 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -214,8 +219,8 @@ public class gameGUI extends JFrame {
                         g2.setColor(Color.DARK_GRAY);
                         g2.fillRect(0, 0, getWidth(), getHeight());
                        
-                        drawDie(g2, dices.getDice1(), 20, 90);
-                        drawDie(g2, dices.getDice2(), 140, 90);
+                        drawDie(g2, dices.getDice1(), 20, 90,1);
+                        drawDie(g2, dices.getDice2(), 140, 90,2);
                         repaint();
                     }
                 };
@@ -292,31 +297,53 @@ public class gameGUI extends JFrame {
                 g.fillOval(playerPos.get(3).getX() , playerPos.get(3).getY() , 20, 20);
         }
  
-        void drawDie(Graphics g, int val, int x, int y) {
-            // Draw a die with upper left corner at (x,y).  The die is
+        void drawDie(Graphics g, int val, int x, int y,int type) {
+        	  // Draw a dice with upper left corner at (x,y).  The die is
             // 100 by 100 pixels in size.  The val parameter gives the
             // value showing on the die (that is, the number of dots).
-                 Graphics2D g2 = (Graphics2D)g;  // See note below
-             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                Graphics2D g2 = (Graphics2D)g;  // See note below
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                      RenderingHints.VALUE_ANTIALIAS_ON);
-                 g2.setColor(Color.red);
-                 g2.fillRect(x, y, 100, 100);
-                 g2.setColor(Color.white);
-                 g2.drawRect(x, y, 99, 99);
-                 if (val > 1)  // upper left dot
-                         g2.fillOval(x+23, y+23, 10,10);
-                 if (val > 3)  // upper right dot
-                         g2.fillOval(x+63, y+23, 10,10);
-                 if (val == 6) // middle left dot
-                         g2.fillOval(x+23, y+43, 10,10);
-                 if (val % 2 == 1) // middle dot (for odd-numbered val's)
-                         g2.fillOval(x+43, y+43, 10,10);
-                 if (val == 6) // middle right dot
-                         g2.fillOval(x+63, y+43, 10, 10);
-                 if (val > 3)  // bottom left dot
-                         g2.fillOval(x+23, y+63, 10, 10);
-                 if (val > 1)  // bottom right dot
-                         g2.fillOval(x+63, y+63, 10, 10);
+            File file= new File("swap.jpg");
+            BufferedImage firstSwapImg = null;
+                        try {
+                                firstSwapImg = ImageIO.read(file);
+                        } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                        }
+            BufferedImage finalSwapImg = new BufferedImage(
+                       firstSwapImg.getWidth(), firstSwapImg.getHeight(),
+                      BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g1 = finalSwapImg.createGraphics();
+            g1.drawImage(firstSwapImg, 0, 0, null);
+            g1.dispose();
+            int backgroundClr=  finalSwapImg.getRGB(90,98);
+            int dotClr =  finalSwapImg.getRGB(94,77);
+            Color backgroundColor = new Color(backgroundClr);
+            Color dotColor = new Color(dotClr);
+            g2.setColor(backgroundColor);
+            g2.fillRect(x, y, 102, 102);
+            g2.setColor(dotColor);
+            g2.drawRect(x, y, 101, 101);
+            if (val > 1)  // upper left dot
+                g2.fillOval(x+23, y+23, 10,10);
+            if (val > 3)  // upper right dot
+                g2.fillOval(x+63, y+23, 10,10);
+            if (val == 6) // middle left dot
+                g2.fillOval(x+23, y+43, 10,10);
+            if (val % 2 == 1 && type == 2 || val % 2 == 1 && val != 1 && type == 1) // middle dot (for odd-numbered val's)
+                g2.fillOval(x+43, y+43, 10,10);
+            if (val == 6) // middle right dot
+                g2.fillOval(x+63, y+43, 10, 10);
+            if (val > 3)  // bottom left dot
+                g2.fillOval(x+23, y+63, 10, 10);
+            if (val > 1)  // bottom right dot
+                g2.fillOval(x+63, y+63, 10, 10);
+            if(val == 1 && type == 1){
+               g2.drawImage(finalSwapImg, 21, 91, this);
+               g2.finalize();
+            }
          }
         
  
