@@ -5,8 +5,11 @@ public class Go extends Space {
                 super("Go");
         }
        
-        public static void passGo(Player player) {
-                player.addMoney(player.getSkyscraper().getHeight());
+        public static int  passGo(Player player) {
+        		int money = player.getSkyscraper().getHeight();
+        		
+                player.addMoney(money);
+                return money;
         }
  
 }

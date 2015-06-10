@@ -7,7 +7,7 @@ public class Skyscraper {
         private int height = 0;
         private LinkedList<Brutility> ownership;
         
-        private static final int MAX_HEIGHT = 800;
+        private static final int MAX_HEIGHT = 5;
        
         public Skyscraper() {
         	ownership = new LinkedList<Brutility>();
@@ -15,7 +15,7 @@ public class Skyscraper {
         }
        
         public boolean isFull() {            
-                return height > MAX_HEIGHT;
+                return height >= MAX_HEIGHT;
         }
         
         public boolean isEmpty(){
@@ -23,19 +23,29 @@ public class Skyscraper {
         }
        
         public void addBrutility(Brutility brutility) {
-                
-                       ownership.add(brutility);
+        	increaseHeight();    		
+        	ownership.add(brutility);
                 
         }
-         
+        
+        public void increaseHeight(){
+        	height++;
+        }
+        
+        public void decreaseHeight(){
+        	height--;
+        }
+        
         public int getHeight() {
-                return height;
+        		if (height == 0) return 50;
+                return height * 50 * 2;
         }
        
         public Brutility getBrutility(){
         	return ownership.peek();
         }
         public Brutility popBrutility() {
+        			if (getBrutility() != null) decreaseHeight();
                    try{         
                 	return ownership.pop();      
                    }

@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
- 
 
- 
-//import Card.ActListener;
  
 public class Game {
        
@@ -24,9 +20,9 @@ public class Game {
         private Utility electricUtility;
         private Utility waterUtility;
       
-        private LinkedList<Card> chances;
-        private LinkedList<Card> empires;
-        private ArrayList<CardSpace> cards;
+//        private LinkedList<Card> chances;
+//        private LinkedList<Card> empires;
+//        private ArrayList<CardSpace> cards;
         private Dice dice;
        
         public static final int DICE_YES = -1;
@@ -124,9 +120,9 @@ public class Game {
                         brandIterator++;
                 } else if(i == 12 || i == 30) {//Utility
                         if(i == 12)
-                                spaces.add(new Utility("ElectricUtility"));
+                                spaces.add(new Utility("Electric Utility"));
                         else
-                                spaces.add(new Utility("WaterWorksUtility"));                  
+                                spaces.add(new Utility("WaterWorks Utility"));                  
                 } else if(i == 2 || i == 34) {//TowerTax
                         if(i == RIVAL_TOWER_TAX)
                                 spaces.add(new TowerTax("RivalTowerTax"));
@@ -197,87 +193,7 @@ public class Game {
        
        
        
-//        public void playerActOnPosition(Player player) {
-//                int position = player.getPosition();
-//                int previousPosition = player.getPreviousPosition();
-//               
-//               
-//                if (spaces.get(0) instanceof Brand){
-//                        boolean yesorno;
-//                       
-//                }
-//                if(position == 0) {//Go
-//                        go.passGo(player);
-//                } else if(position == 1 || position == 3 || position == 5 || position == 7 ||
-//                                position == 8 || position == 10 || position == 11 || position == 13 ||
-//                                position ==14 || position == 16 || position == 17 || position == 19 ||
-//                                position == 20 || position == 22 || position == 23 || position == 25 ||
-//                                position == 26 || position == 28 || position == 29 || position == 31 ||
-//                                position == 33 || position == 35) {//Brand
-//                        Brand brand = Brand.returnBrandWithPosition(position);
-//                        if(brand.hasOwner()) {
-//                                if(player.hasMoney(brand.getOwner().getMoney())) {
-//                                        player.decreaseMoney(brand.getOwner().getMoney());
-//                                }
-//                                else{
-//                                        // ???
-//                                }
-//                        }
-//                        else {
-//                                // ???
-//                        }
-//                } else if(position == 12 || position == 30) {//Utility //??????????
-//                        if(position == 12 && Utility.hasMoreElectric()){
-//                                if(player.hasMoney(150)) {
-//                                        int optionPane = JOptionPane.showConfirmDialog(null,
-//                                                        "Would you like to buy the electric company?",
-//                                                        "Electric Company",
-//                                                        JOptionPane.YES_NO_OPTION);
-//                                        if(optionPane == JOptionPane.YES_OPTION){
-//                                                player.decreaseMoney(150);
-//                                                player.getMyScyscraper().addBrutility(new Utility("Utility"));
-//                                                Utility.decreaseElectric();
-//                                        }
-//                                }
-//                        }
-//                        if(position == 30 && Utility.hasMoreWater()){
-//                                if(player.hasMoney(150)) {
-//                                        int optionPane = JOptionPane.showConfirmDialog(null,
-//                                                        "Would you like to buy the water works?",
-//                                                        "Electric Company",
-//                                                        JOptionPane.YES_NO_OPTION);
-//                                        if(optionPane == JOptionPane.YES_OPTION){
-//                                                player.decreaseMoney(150);
-//                                                player.getMyScyscraper().addBrutility(new Utility("Utility"));
-//                                                Utility.decreaseWater();
-//                                        }
-//                                }
-//                        }
-//                       
-//                } else if(position == 2 || position == 34) {//TowerTax
-//                       
-//                } else if(position == 4 || position == 25) {//Empire
-//                       
-//                } else if(position == 6 || position == 15 || position == 21 || position == 32) {//Chance
-//                       
-//                } else if(position == 9) {//JustVisiting
-//                       
-//                } else if(position == 18) {//FreeParking
-//                       
-//                } else if(position == 27) {//GoToJail
-//                       
-//                }
-//               
-//                // If the player passed GO without standing on GO.
-//                if( (previousPosition<=35 && previousPosition>= 25) && (position>=1 && position<=12) )
-//                        go.passGo(player);
-//                player.setPreviousPosition(position);
-//               
-//               
-//               
-//               
-//               
-//        }
+
        
         public void setActivePlayer(int activePlayerCode){
         activePlayer = players.get(activePlayerCode);
@@ -287,57 +203,58 @@ public class Game {
         return activePlayer;
         }
  
-        public void play(){
-               
-        	do
-                {
-                	
-                        if(activePlayer.isInJail()){
-                          System.out.println("You're in jail. Normally you'd be offered some options, but you're unlucky. You have to stay in for 3 rounds");
-                          activePlayer.increaseInJail();
-                          activePlayer.setFreeFromJail();                        
-                        }
-                        else{
-                                int roll = dice.rollTheDice();
-                               
-                                if(dice.isSneaky()){ //If the player rolls a sneaky exchange
-                                        if(gameFeedbackListener.onSneakyDiceRolled() == Game.DICE_YES){ //He is asked if he wants to make the exchange
-                                               int playerCode = onChooseEnemyPlayer(activePlayer.getCode(), "Choose a player to swap with other than yourself"); //If he agrees, he is asked for the opponent player's code
-                                               activePlayer.getSkyscraper().diceRollSneakyExchange(players.get(playerCode).getSkyscraper()); //and the exchange takes place 
-                                               
-                                               Brutility tempBru = activePlayer.getSkyscraper().getBrutility();
-                                               
-                                               if (tempBru instanceof Brand){
-                                            	   ((Brand) tempBru).setOwner(players.get(playerCode));
-                                               }
-                                               
-                                               tempBru = players.get(playerCode).getSkyscraper().getBrutility();
-                                               
-                                               if (tempBru instanceof Brand){
-                                            	   ((Brand) tempBru).setOwner(activePlayer);
-                                               }
-                                        }
-                                        else{ //Player has refused to use the sneaky exchange
-                                        	activePlayer.movePlayer(roll);
-                                        	onPlayerMoved();
-                                        	actOnPosition();
-                                        }
-                                        
-                               
-                                       
-                                }
-                                else{ //The player didn't roll a sneaky exchange
-                                	activePlayer.movePlayer(roll);
-                                	onPlayerMoved();
-                                	actOnPosition();
-                                }
-                        }
-                       
-                       
-                }while(! (winConditions()));
-              int  winner = activePlayerCode - 1;
-               System.out.print("Game Over. Player "+winner+" has won!");
-               
+        public void playRound(){
+        	int roll = dice.rollTheDice();
+        	gameFeedbackListener.returnDiceResult(dice);
+        	            	
+                if(activePlayer.isInJail()){
+                  System.out.println("You're in jail. Normally you'd be offered some options, but you're unlucky. You have to stay in for 3 rounds");
+                  activePlayer.increaseInJail();
+                  activePlayer.setFreeFromJail();                        
+                }
+                else{
+                	if(dice.isSneaky()){ //If the player rolls a sneaky exchange
+                
+                    if(gameFeedbackListener.onSneakyDiceRolled() == Game.DICE_YES){ //He is asked if he wants to make the exchange
+                           int playerCode = onChooseEnemyPlayer(activePlayer.getCode(), "Choose a player to swap with other than yourself"); //If he agrees, he is asked for the opponent player's code
+                           activePlayer.getSkyscraper().diceRollSneakyExchange(players.get(playerCode).getSkyscraper()); //and the exchange takes place 
+                           
+                           Brutility tempBru = activePlayer.getSkyscraper().getBrutility();
+                           
+                           if (tempBru instanceof Brand){
+                        	   ((Brand) tempBru).setOwner(players.get(playerCode));
+                           }
+                           
+                           tempBru = players.get(playerCode).getSkyscraper().getBrutility();
+                           
+                           if (tempBru instanceof Brand){
+                        	   ((Brand) tempBru).setOwner(activePlayer);
+                           }
+                    }
+                    else{ //Player has refused to use the sneaky exchange
+                    	activePlayer.movePlayer(roll);
+                    	onPlayerMoved();
+                    	actOnPosition();
+                    }
+                    
+           
+                   
+                	}
+                	else{ //The player didn't roll a sneaky exchange
+                		activePlayer.movePlayer(roll);
+                		onPlayerMoved();
+                		actOnPosition();
+                	}
+                }
+            
+                if (! (winConditions())){
+                	gameFeedbackListener.onDiceCanBeRolled();
+                }
+                else {
+                	int  winner = activePlayerCode - 1;
+                	if (winner == -1 ) winner = 0;
+                	System.out.print("Game Over. Player "+winner+" has won!");
+                }
         }
        
         private void actOnPosition(){
@@ -345,8 +262,8 @@ public class Game {
         	Space spacePosition = spaces.get(activePlayer.getPosition());
         	
         	if (spacePosition instanceof Go){
-        		Go.passGo(activePlayer);
-        		gameFeedbackListener.onPlayerMovedToGO(activePlayer.getMoney());
+        		
+        		gameFeedbackListener.onPlayerMovedToGO(Go.passGo(activePlayer));
         	}
         	else if(spacePosition instanceof Brand){
         		Brand brand = ((Brand) spacePosition);
@@ -355,6 +272,7 @@ public class Game {
         		String skyscraperName = brand.getName();
         		
         		if (brand.hasOwner()){
+        			
         			Player otherPlayer = brand.getOwner();
         			if (activePlayer == otherPlayer){ //Brand belongs to other player
         				if (activePlayer.canPay(otherPlayer)){ //Player has enough money to pay
@@ -379,32 +297,29 @@ public class Game {
         				
         				gameFeedbackListener.onPlayerMovedToBrandOwnedBySomeoneElse(brand.getName(), hasMoney, activePlayer.getMoney(), brand.getCost(), skyscraperName);
         			}
-        			else { //Brand has no owner
+        		}
+        		else if (brand.hasOwner() == false){ //Brand has no owner
         			
-        				int choice = gameFeedbackListener.onPlayerMovedToBrandNotOwned(brand.getName(), activePlayer.hasMoney(brand.getCost()), activePlayer.getMoney(), brand.getCost());
-        				if (brand.canBuy(activePlayer.getMoney())){
-        					if (choice == JOptionPane.YES_OPTION) {//want to buy)
-        						brand.buyBrand(activePlayer);
+        			int choice = gameFeedbackListener.onPlayerMovedToBrandNotOwned(brand.getName(), activePlayer.hasMoney(brand.getCost()), activePlayer.getMoney(), brand.getCost());
+        			if (brand.canBuy(activePlayer.getMoney())){
+        				if (choice == JOptionPane.YES_OPTION) {//want to buy)
+        					brand.buyBrand(activePlayer);
         						
-        					}
-        					else { // Doesn't want to buy
-        						//No code needed
-        					}
-        				}       							      			
-        				else { // Can't buy
-        					//No code needed
         				}
+        				
+        			}       							      			
+        		
         			
         			
-        			}
-        			System.out.println(activePlayer.getMoney());
-        			
-        		} 
-        		else{// Brand belongs to you
-        			gameFeedbackListener.onPlayerMovedToBrandOwnedByHim(brand.getName());
         		}
         		
         			
+        		
+        		else {// Brand belongs to you
+        			gameFeedbackListener.onPlayerMovedToBrandOwnedByHim(brand.getName());
+        		}
+        		
+        		
         			
         			
         			
@@ -415,7 +330,7 @@ public class Game {
         		
         		Utility utility = ((Utility) spacePosition);
         		
-        		int choice = gameFeedbackListener.onPlayerMovedToUtility(utility.getUtilityName(), utility.hasUtilities(), activePlayer.hasMoney(UTILITY_COST), activePlayer.getMoney());
+        		int choice = gameFeedbackListener.onPlayerMovedToUtility(utility.getName(), utility.hasUtilities(), activePlayer.hasMoney(UTILITY_COST), activePlayer.getMoney());
         		
         		if(choice == JOptionPane.YES_OPTION){
             				utility.decreaseUtilities();
@@ -442,8 +357,10 @@ public class Game {
 //        		}
 //        		else {
 //        			Empire empire = ((Empire) card);
+        			
         			System.out.println("Cards are not implemented. Let's pretended you landed on Go instead :)");
         			Go.passGo(activePlayer);
+        			
 //        		}
             	
         	}
@@ -477,7 +394,7 @@ public class Game {
         	}
         	else if(spacePosition instanceof FreeParking){
         		
-        		//boolean canUseFreeParking = activePlayer.hasMoney(Game.FREE_PARKING_COST);
+        		
         		int code = gameFeedbackListener.onPlayerMovedToFreeParking(activePlayer.hasMoney(Game.FREE_PARKING_COST));
         		
         		if (code != -1){// -1 is used if the player doesn't have money or if he doesn't want to move
@@ -575,10 +492,11 @@ public class Game {
         
         public int onChooseEnemyPlayer(String message);
         
-       
+        public void returnDiceResult(Dice dice);
+        
         public int onSneakyDiceRolled();
        
-               
+               public void onDiceCanBeRolled();
        
        
     }

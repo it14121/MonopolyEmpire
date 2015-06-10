@@ -10,7 +10,7 @@ public class Player {
         private int position;
         private ArrayList<Card> cardsInHand;
         private int inJail; //inJail keeps if you are not in jail (0) or if you are how many rounds you've been in (1-3)
-        private final static int STARTING_MONEY = 100;
+        private final static int STARTING_MONEY = 1000;
         private final static int STARTING_POSITION = 0;
        
         public Player(int aCode) {

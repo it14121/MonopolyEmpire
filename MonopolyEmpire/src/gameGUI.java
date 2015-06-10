@@ -32,16 +32,17 @@ public class gameGUI extends JFrame {
          *
          */
         private static final long serialVersionUID = 1L;
-       // private JFrame mainGame;
+  
        
         private static final int POS_X = 600;
         private static final int POS_Y = 635;
        
-        //private int tempI = 0;
-        //private static Player activePlayer;
+
         private static ArrayList<Coordinates> playerPos;
         private static ArrayList<Coordinates> positions;
-       
+        private JButton rollButton;
+        Game game;
+        
         private Dice dices = new Dice();
        
         public gameGUI() {
@@ -50,21 +51,14 @@ public class gameGUI extends JFrame {
             positions = initializeSpaceGUIpositions();
             createGameGUI();
                
-               Game game = new Game();
+            game = new Game();
                game.setGameFeedbackListener(new Game.GameFeedbackListener() {
                                        
                                         @Override
                                         public void onPlayerMoved(int playerCode, int playerPosition) {
-                                                // TODO Auto-generated method stub
+                                              
                                                 playerMoved(playerCode, playerPosition);
-                                               
-//                                                try {
-//                                                        this.wait(500);
-//                                                } catch (InterruptedException e) {
-//                                                        // TODO Auto-generated catch block
-//                                                        e.printStackTrace();
-//                                                }
-                                           
+
                                                
                                         }
                                        
@@ -74,11 +68,10 @@ public class gameGUI extends JFrame {
  
                                         @Override
                                         public int onSneakyDiceRolled() {
-                                                // TODO Auto-generated method stub
-                                                // Code 1 for isSeanky = true
+                                                
                                                
                                                 return diceRolledSneaky();
-//                                                if(code == Game.IS_SNEAKY_YES) chooseEnemyPlayer("Choose a player to swap with other than yourself");
+                                               
                                                
                                                
                                                
@@ -86,7 +79,7 @@ public class gameGUI extends JFrame {
  
                                         @Override
                                         public void onPlayerMovedToGO(int money) {
-                                                // TODO Auto-generated method stub
+                                               
                                                 playerMovedToGO(money);
                                        
                                         }
@@ -96,7 +89,7 @@ public class gameGUI extends JFrame {
  
                                         @Override
                                         public void onPlayerMovedToJustVisiting() {
-                                                // TODO Auto-generated method stub
+                                              
                                                 playerMovedToJustVisitng();
                                                
                                         }
@@ -105,7 +98,7 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public void onPlayerMovedToGoToJail() {
-											// TODO Auto-generated method stub
+											
 											playerMovedToGoToJail();
 											
 										}
@@ -114,7 +107,7 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public int onChooseEnemyPlayer(String message) {
-											// TODO Auto-generated method stub
+											
 											return chooseEnemyPlayer(message);
 										}
 
@@ -122,7 +115,7 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public int onPlayerMovedToUtility(String utilityName, boolean hasUtilitiesLeft, boolean hasMoney, int money) {
-											// TODO Auto-generated method stub
+											
 											
 											return playerMovedToUtility(utilityName, hasUtilitiesLeft, hasMoney, money);
 										}
@@ -131,7 +124,7 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public void onPlayerMovedToBrandOwnedByHim(String name) {
-											// TODO Auto-generated method stub
+											
 											playerMovedToBrandOwnedByHim(name);
 										}
 
@@ -141,7 +134,7 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public int onPlayerMovedToBrandNotOwned(String name, boolean hasMoney, int money, int cost) {
-											// TODO Auto-generated method stub
+											
 											return playerMovedToBrandONotOwned(name, hasMoney, money, cost);
 										}
 
@@ -154,7 +147,7 @@ public class gameGUI extends JFrame {
 												String name, boolean hasMoney,
 												int cost, int money,
 												String skyscraperName) {
-											// TODO Auto-generated method stub
+											
 											playedMovedToBrandOwnedBySomeoneElse(name, hasMoney, cost, money, skyscraperName);
 										}
 
@@ -164,24 +157,44 @@ public class gameGUI extends JFrame {
 
 										@Override
 										public int onPlayerMovedToFreeParking(boolean canUseFreeParking) {
-											// TODO Auto-generated method stub
+											
 											
 											return playedMovedToFreeParking(canUseFreeParking);
 											
+										}
+
+
+
+
+
+										@Override
+										public void onDiceCanBeRolled() {
+										rollButton.setEnabled(true);
+											
+										}
+
+
+
+
+
+										@Override
+										public void returnDiceResult(Dice dice) {
+											
+											dices = dice;
 										}
  
                
                                 });        
                
  
-                               game.play();
+                         
                                        
                                
                        
  
  
                
-                //activePlayer = game.getActivePlayer();
+    
              
                
                
@@ -189,7 +202,7 @@ public class gameGUI extends JFrame {
        
         private void createGameGUI(){
                
-                //mainGame = new JFrame();
+             
                 JPanel boardPanel = new JPanel();
                 JPanel buttonPanel = new JPanel();
                 JButton exit = new JButton("Exit Game");
@@ -225,7 +238,7 @@ public class gameGUI extends JFrame {
                     }
                 };
                
-                JButton rollButton = new JButton("Roll Dices");
+                rollButton = new JButton("Roll Dices");
                 rollButton.setFont(new Font("Sansserif", Font.PLAIN, 14));
                 rollButton.setPreferredSize(new Dimension(120, 40));
                 roll.add(rollButton, BorderLayout.NORTH);
@@ -351,7 +364,8 @@ public class gameGUI extends JFrame {
        
                        
         private void rollActionPerformed(){
-        	dices.rollTheDice();
+        	rollButton.setEnabled(false);
+        	game.playRound();
         }
        
         private void exitActionPerformed(){
@@ -382,22 +396,7 @@ public class gameGUI extends JFrame {
                         return posY1;
                 }
                
-//                public void setX(int times){
-//                        posX1 = posX1 - times * 58;
-//                }
-//              
-//              
-//                public void setY(int times){
-//                        posY1 = posY1 - times * 58;
-//                }
-//                
-//                public void resetX(int times){
-//                      posX1 = posX - times * 58;
-//                }
-//                
-//                public void resetY(int times){
-//                      posY1 = posY - times * 58;
-//                }
+
                
                 public void setCoord(Coordinates temp){
                         posX1 = temp.posX1;
@@ -413,7 +412,7 @@ public class gameGUI extends JFrame {
                 aPlayerPos.add(new Coordinates(POS_X, POS_Y + 20));
                 aPlayerPos.add(new Coordinates(POS_X + 20, POS_Y + 20));
                
-                //System.out.println("Coordinates for position 0 \nX Coordinate: " + posX + "\nY Coordinate: " + posY);
+
                
                 return aPlayerPos;
         }
@@ -424,13 +423,7 @@ public class gameGUI extends JFrame {
                 int posTENx = POS_X - 9 * 58; //Position for left side of the board
                 int posTENy = POS_Y - 9 * 58; //Position for top side of the board
                
-//              for(int i = 0; i<9; i++){
-//                      int tempPos = i * 58;
-//                      aPositions.add(i, new Coordinates(posX - tempPos, posY));
-//                      aPositions.add(i+9, new Coordinates(posTEN, posY - tempPos));
-//                      aPositions.add(i+2*9, new Coordinates(posTEN + tempPos,posTEN));
-//                      aPositions.add(i+3*9, new Coordinates(posX, posTEN + tempPos));
-//              }
+
                 int tempPos;
                 for(int i = 0; i < 9; i++){
                         tempPos = i * 58;
