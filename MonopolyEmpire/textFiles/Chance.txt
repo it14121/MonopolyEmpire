@@ -1,0 +1,42 @@
+3, 1
+Solar Bonus!
+(Play this card immediately)/n Get one free billboard of Electricity/n Company. Add it to your skyscraper./n If there are no do nothing.
+3, 2
+Fine for hidden transactions!
+(Play this card immediately)/n Pay 200K to the Bank.
+3, 3
+Casino night!
+(Play this card immediately)/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+1, 4 
+Get out of Jail free!
+(Keep this card secret./nUse it whenever you want.)/nYou are free./n Get out of Jail.
+3, 5
+Enterprise of the Year
+(Play this card immediately)/nYou won the prize "Enterprise of the Year"!/n Get 400K from the Bank.
+3, 6
+Launch your new website!
+(Play this card immediately)/nSales ejected!/n Get 300K from the Bank.
+3, 7
+Go to Jail for fraud!
+(Play this card immediately)/nDo not get cash passing/n from the starting point.
+3, 8
+First birthday!
+(Play this card immediately)/nIt is the first birthday of your empire!/n All the other players give you 50K.
+3, 9 
+Earnings ejected!
+(Play this card immediately)/n Go to the starting point /n to get the value of your /n skyscraper in cash.
+3, 10 
+Water bonus!
+(Play this card immediately)/n Get a free billboard Company for /n Water and add it to your skyscraper./n If there are no do nothing.
+3, 11
+Go to Jail!
+(Play this card immediately)/n Do not get cash passing /n from the starting point.
+3, 3
+Casino night!
+(Play this card immediately)/nChoose opponent. Both roll./n The player with the highest roll /n gets 200K by the Bank.
+3, 12 
+Hurry up!
+(Play this card immediately)/nProceed forward up to five places /n with your private limousine.
+3, 13
+Successful advertising campaign!
+(Play this card immediately)/n Get 100K from the Bank.
