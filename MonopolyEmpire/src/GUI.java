@@ -128,17 +128,17 @@ public class GUI {
             }
         });
 		
-		ImageIcon instructionsImage1 = new ImageIcon("Instructions_1.jpg");		
+		ImageIcon instructionsImage1 = new ImageIcon("InstructionsImages/Instructions_1.jpg");		
 		instructionsImageList.add(instructionsImage1);
-		ImageIcon instructionsImage2 = new ImageIcon("Instructions_2.jpg");
+		ImageIcon instructionsImage2 = new ImageIcon("InstructionsImages/Instructions_2.jpg");
 		instructionsImageList.add(instructionsImage2);
-		ImageIcon instructionsImage3 = new ImageIcon("Instructions_3.jpg");
+		ImageIcon instructionsImage3 = new ImageIcon("InstructionsImages/Instructions_3.jpg");
 		instructionsImageList.add(instructionsImage3);
-		ImageIcon instructionsImage4 = new ImageIcon("Instructions_4.jpg");
+		ImageIcon instructionsImage4 = new ImageIcon("InstructionsImages/Instructions_4.jpg");
 		instructionsImageList.add(instructionsImage4);
-		ImageIcon instructionsImage5 = new ImageIcon("Instructions_5.jpg");
+		ImageIcon instructionsImage5 = new ImageIcon("InstructionsImages/Instructions_5.jpg");
 		instructionsImageList.add(instructionsImage5);
-		ImageIcon instructionsImage6 = new ImageIcon("Instructions_6.jpg");
+		ImageIcon instructionsImage6 = new ImageIcon("InstructionsImages/Instructions_6.jpg");
 		instructionsImageList.add(instructionsImage6);
 		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));			
 		instructionsDialog.setLayout(new BorderLayout());
@@ -150,7 +150,7 @@ public class GUI {
 		//instructionsPanel.setBounds(0, 0, 850, 628);
 		instructionsDialog.pack();
 		instructionsDialog.setTitle("Instructions");
-		ImageIcon icon2 = new ImageIcon("info.png");
+		ImageIcon icon2 = new ImageIcon("InstructionsImages/info.png");
 		instructionsDialog.setIconImage(icon2.getImage());
 		instructionsDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		instructionsDialog.setVisible(true);
