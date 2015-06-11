@@ -9,19 +9,16 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class GUI {
-	 private JFrame frame;
-	 private JLayeredPane  mainPanel;
-	 private JPanel  secondaryPanel;
-	 private JButton newGame, instructions, highscore, exit;
 	 
-	 int pagePointer = 0; //Initialize on first page
-	 final JPanel instructionsPanel = new JPanel();
-	 
-	
-	
-	public void createGUI() {
-		
-		
+	private JFrame frame;
+	private JLayeredPane  mainPanel;
+	private JPanel  secondaryPanel;
+	private JButton newGame, instructions, highscore, exit;
+	int pagePointer = 0; //Initialize on first page
+	final JPanel instructionsPanel = new JPanel();
+
+	public void createGUI() 
+	{
 		frame = new JFrame();
 		mainPanel = new JLayeredPane();
 		mainPanel.setLayout(new GridLayout(4,1));
@@ -39,7 +36,6 @@ public class GUI {
 		exit = new  JButton("Exit");
 		exit.setBackground(Color.LIGHT_GRAY);
 		exit.setFont(new Font("Arial", Font.BOLD, 16));
-		
 		
 		//Add Action Listeners for the 4 available buttons when you open the game
 		newGame.addActionListener(new ActionListener() {
@@ -70,10 +66,8 @@ public class GUI {
 		mainPanel.add(instructions);	
 		mainPanel.add(highscore);	
 		mainPanel.add(exit);
-		
-		ImageIcon pic = new ImageIcon("Background.jpg");
+		ImageIcon pic = new ImageIcon("GUIimages/Background.jpg");
 	    secondaryPanel.add(new JLabel(pic));
-		
 		frame.setLayout(new BorderLayout());
 		frame.add(mainPanel, BorderLayout.CENTER);
         mainPanel.setBounds(360, 370, 150, 110);
@@ -86,16 +80,13 @@ public class GUI {
 		frame.setVisible(true);
 		frame.setPreferredSize(new Dimension(850, 628));
 		frame.setResizable(false);
-		ImageIcon icon1 = new ImageIcon("Icon.jpg");
+		ImageIcon icon1 = new ImageIcon("GUIimages/Icon.jpg");
 		frame.setIconImage(icon1.getImage());
 		
 	}	
 
-	
-	private void newGameActionPerformed(){
-		
-
-		
+	private void newGameActionPerformed()
+	{
 		gameGUI game = new gameGUI(); 
 		frame.setVisible(false);
 				
@@ -103,32 +94,21 @@ public class GUI {
 		      public void windowClosing(WindowEvent w) {
 		        frame.setVisible(true);;
 		
-		      }};
-		      game.setWindowListener(listener);
-		      }
+		 }};
+		 game.setWindowListener(listener);
+	}
 	
-	
-	private void instructionsActionPerformed(){
-		
+	private void instructionsActionPerformed()
+	{
 		//Left/Right will cycle through the available pages.
-		
 		final JDialog instructionsDialog;
-		
-		
-		
 		JLayeredPane instructionsArrowsPanel;
 		GridLayout instructionsArrowGrid;
 		final JButton leftArrow;
 		final JButton rightArrow;
-		
 		final ArrayList<ImageIcon> instructionsImageList = new ArrayList<ImageIcon>();  	
-		
-		
 		instructionsDialog = new JDialog();
-		
-		
 		instructionsArrowsPanel = new JLayeredPane();
-		
 		instructionsArrowGrid = new GridLayout(1,2);
 		instructionsArrowGrid.setHgap(15);
 		instructionsArrowsPanel.setLayout(instructionsArrowGrid);
@@ -136,15 +116,11 @@ public class GUI {
 		rightArrow = new JButton("Next");
 		instructionsArrowsPanel.add(leftArrow);
 		instructionsArrowsPanel.add(rightArrow);
-		
 		leftArrow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 pagePointer = instructionsArrowActionPerformed(pagePointer, instructionsImageList, evt);
-                
-            }
-            
+            }  
         });
-		
 		rightArrow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	pagePointer = instructionsArrowActionPerformed(pagePointer, instructionsImageList, evt);
@@ -164,21 +140,14 @@ public class GUI {
 		instructionsImageList.add(instructionsImage5);
 		ImageIcon instructionsImage6 = new ImageIcon("Instructions_6.jpg");
 		instructionsImageList.add(instructionsImage6);
-		
-		
 		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));			
-		
-		
 		instructionsDialog.setLayout(new BorderLayout());
 		instructionsDialog.add(instructionsArrowsPanel, BorderLayout.CENTER);
-		
-		
 		instructionsArrowsPanel.setBounds(495,600,150,100);
 		//495,700,150,100
 		instructionsArrowsPanel.setOpaque(true);
 		instructionsDialog.add(instructionsPanel, BorderLayout.CENTER);
 		//instructionsPanel.setBounds(0, 0, 850, 628);
-		
 		instructionsDialog.pack();
 		instructionsDialog.setTitle("Instructions");
 		ImageIcon icon2 = new ImageIcon("info.png");
@@ -186,22 +155,21 @@ public class GUI {
 		instructionsDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		instructionsDialog.setVisible(true);
 		instructionsDialog.setPreferredSize(new Dimension(1120,790));
-
 		instructionsDialog.setResizable(true);
-		
 	}
 
-
-
-	private int instructionsArrowActionPerformed(int pagePointer,  ArrayList<ImageIcon> instructionsImageList, ActionEvent evt){
-		
-		if (evt.getActionCommand().equals("Prev")){
-			if (pagePointer > 0 ) { 
+	private int instructionsArrowActionPerformed(int pagePointer,  ArrayList<ImageIcon> instructionsImageList, ActionEvent evt)
+	{
+		if (evt.getActionCommand().equals("Prev"))
+		{
+			if (pagePointer > 0 ) 
+			{ 
 				pagePointer--;					
 			}
 		}
 		else
-			if(pagePointer < 5){
+			if(pagePointer < 5)
+			{
 				pagePointer++;
 			}
 		
@@ -210,32 +178,18 @@ public class GUI {
 		instructionsPanel.removeAll();
 		instructionsPanel.add(new JLabel(instructionsImageList.get(pagePointer)));		
 		instructionsPanel.revalidate();
-
 		return pagePointer;
 	}
 
-
-
-	
-
-	private void highscoreActionPerformed(){
-	
+	private void highscoreActionPerformed()
+	{
 		JOptionPane.showMessageDialog(frame, "This feature is currently disabled");
-		
 	}
 
-	private void exitActionPerformed(){
-		
+	private void exitActionPerformed()
+	{
 		int flag = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
 		if (flag == JOptionPane.YES_OPTION) frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));    	
-		
-	
 	}
-	
-	
-	
-
-	
 		
 }
-

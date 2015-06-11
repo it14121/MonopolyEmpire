@@ -1,35 +1,32 @@
-
 public class Utility extends Brutility {
 	
-
 	private  int utilitiesLeft;
 	private String utilityName;
 	
-	
-	public Utility(String aName) {
+	public Utility(String aName) 
+	{
 		super(aName);
-
-			utilitiesLeft = 4;
-
-		
+		utilitiesLeft = 4;		
 	}
 	
-	public  boolean hasUtilities() {
+	public  boolean hasUtilities() 
+	{
 		return (utilitiesLeft > 0);
 	}
 	
-	public void decreaseUtilities(){
+	public void decreaseUtilities()
+	{
 		utilitiesLeft--;
 	}
 	
-	public  void increaseUtilities() {
+	public  void increaseUtilities() 
+	{
 		utilitiesLeft++;
-	
 	}
 	
-	public String getUtilityName(){
+	public String getUtilityName()
+	{
 		return utilityName;
 	}
-	
-	
+		
 }
